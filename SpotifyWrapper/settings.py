@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2)z$$5mi&y18c%=k*dq#@i_4+w!9m^#tq#=-ks@#zs^7!31+3$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "spotifywrapped.theoh.dev"]
 
 
 # Application definition
