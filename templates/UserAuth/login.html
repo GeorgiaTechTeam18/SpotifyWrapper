@@ -1,0 +1,8 @@
+{% extends 'UserAuth/base.html' %}
+
+{% block body %}
+    <form action='{% url 'login' %}' method="POST">
+        {% csrf_token %}
+        <button type="submit">Login with Spotify</button>
+    </form>
+{% endblock %}
