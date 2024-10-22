@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 load_dotenv()
 
@@ -85,6 +86,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+Postgres_URL = os.environ.get('DJANGO_Postgres_URL', None)
+if (Postgres_URL != None):
+    DATABASES = {
+        'default': dj_database_url.config(
+            # Replace this value with your local database's connection string.
+            default=Postgres_URL,
+            conn_max_age=600
+        )
+    }
 
 
 # Password validation
