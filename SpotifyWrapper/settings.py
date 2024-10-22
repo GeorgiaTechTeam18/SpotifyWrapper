@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2)z$$5mi&y18c%=k*dq#@i_4+w!9m^#tq#=-ks@#zs^7!31+3$'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-2)z$$5mi&y18c%=k*dq#@i_4+w!9m^#tq#=-ks@#zs^7!31+3$')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ["localhost", "spotifywrapped.theoh.dev"]
 
