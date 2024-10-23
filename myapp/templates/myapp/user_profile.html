@@ -1,0 +1,24 @@
+<!-- templates/myapp/user_profile.html -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<h2>{{ user.username }}'s Profile</h2>
+<h3>Posted Wraps</h3>
+<ul>
+    {% for wrap in user.spotifywrap_set.all %}
+    <li>
+        <a href="{% url 'wrap_detail' wrap.id %}">{{ wrap.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<h3>Liked Wraps</h3>
+<ul>
+    {% for like in user.like_set.all %}
+    <li>
+        <a href="{% url 'wrap_detail' like.wrap.id %}">{{ like.wrap.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
