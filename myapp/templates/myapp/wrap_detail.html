@@ -1,0 +1,14 @@
+<!-- templates/myapp/wrap_detail.html -->
+{% extends 'myapp/base.html' %}
+
+{% block title %}Wrap Detail{% endblock %}
+
+{% block content %}
+<h2>{{ wrap.title }}</h2>
+<p>{{ wrap.description }}</p>
+<p>Posted by: {{ wrap.user.username }}</p>
+<form method="post" action="{% url 'like_wrap' wrap.id %}">
+    {% csrf_token %}
+    <button type="submit">Like</button>
+</form>
+{% endblock %}

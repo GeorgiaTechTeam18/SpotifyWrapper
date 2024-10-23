@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import dj_database_url
-import os
 from dotenv import load_dotenv
+import os
+import dj_database_url
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,10 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2)z$$5mi&y18c%=k*dq#@i_4+w!9m^#tq#=-ks@#zs^7!31+3$'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-2)z$$5mi&y18c%=k*dq#@i_4+w!9m^#tq#=-ks@#zs^7!31+3$')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'spotifywrapped.theoh.dev']
 
@@ -41,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'UserAuth.apps.UserauthConfig'
+    'UserAuth.apps.UserauthConfig',
+    'myapp'
 ]
 
 MIDDLEWARE = [
@@ -80,12 +83,20 @@ WSGI_APPLICATION = 'SpotifyWrapper.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('POSTGRESQL_CONNECTION_STRING', 'postgres://username:password@localhost:5434/spotifywrapper'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    ),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+Postgres_URL = os.environ.get('DJANGO_Postgres_URL', None)
+if (Postgres_URL != None):
+    DATABASES = {
+        'default': dj_database_url.config(
+            # Replace this value with your local database's connection string.
+            default=Postgres_URL,
+            conn_max_age=600
+        )
+    }
 
 
 # Password validation
