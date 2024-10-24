@@ -22,7 +22,11 @@ def home(request):
 def generate_random_string(length):
     return secrets.token_hex(length // 2)
 
-def login(request):
+def login(request, isSignUpSelectedInitally = "false"):
+    return render(request, 'UserAuth/login.html')
+
+
+def authenticateWithSpotify(request):
     state = generate_random_string(16)
     request.session[STATE_KEY] = state
 

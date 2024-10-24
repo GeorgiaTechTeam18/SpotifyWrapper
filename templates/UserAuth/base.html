@@ -15,7 +15,8 @@
     </li>
     {% if not is_authenticated %}
         <li>
-            <a href="{% url 'login' %}">Log in with Spotify</a>
+            <a href="{% url 'signup' %}">Create an Account</a>
+            <a href="{% url 'login' %}">Log in</a>
         </li>
     {% else %}
         <li>
