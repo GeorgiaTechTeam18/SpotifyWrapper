@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ef1d72b-5da3-4264-a751-398786dc15c5" name="Changes" comment="create base webpage and template">
-      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0002_alter_spotifytoken_access_token_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0003_alter_spotifytoken_refresh_token.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0004_alter_spotifytoken_user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0005_spotifytoken_session_id_alter_spotifytoken_user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0006_alter_spotifytoken_session_id_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/migrations/0007_remove_spotifytoken_session_id_and_more.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UserAuth/util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpotifyWrapper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SpotifyWrapper/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/UserAuth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/UserAuth/login.html" beforeDir="false" />
-    </list>
+    <list default="true" id="5ef1d72b-5da3-4264-a751-398786dc15c5" name="Changes" comment="create base webpage and template" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +50,7 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2nlNH9U5UiaWe8Tt6nZ39NUNk0h" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -82,12 +64,13 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "UserAuth",
-    "last_opened_file_path": "C:/Users/alexh/OneDrive - Georgia Institute of Technology/Documents/Georgia Tech/3 - Fall 2024/Objects and Design (CS-2340-B)/Project 2/SpotifyWrapper",
+    "last_opened_file_path": "C:/Users/theom/Desktop/Programming/cs2340/SpotifyWrapper",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
