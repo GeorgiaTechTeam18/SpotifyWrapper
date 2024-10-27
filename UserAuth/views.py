@@ -1,12 +1,12 @@
 import secrets
 from urllib.parse import urlencode
 from django.shortcuts import render, redirect
-from rest_framework.response import Response
 from requests import Request, post, exceptions
 from .util import update_or_create_user_tokens, is_spotify_authenticated
 from .models import SpotifyToken
 import os
 from dotenv import load_dotenv
+from django.http import JsonResponse
 
 load_dotenv()
 
@@ -22,7 +22,11 @@ def home(request):
 def generate_random_string(length):
     return secrets.token_hex(length // 2)
 
-def login(request):
+def login(request, isSignUpSelectedInitally = "false"):
+    return render(request, 'UserAuth/login.html')
+
+
+def authenticateWithSpotify(request):
     state = generate_random_string(16)
     request.session[STATE_KEY] = state
 
@@ -85,4 +89,4 @@ def callback(request):
 
 def isauthenticated(request):
     is_authenticated = is_spotify_authenticated(request.session.session_key)
-    return Response({'status': is_authenticated})
+    return JsonResponse({'status': is_authenticated})
