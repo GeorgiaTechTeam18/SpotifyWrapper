@@ -1,0 +1,7 @@
+/* Resetting bad html defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Futura,Trebuchet MS,Arial,sans-serif;
+}
