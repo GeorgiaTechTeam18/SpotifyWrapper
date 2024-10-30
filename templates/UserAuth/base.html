@@ -4,25 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Spotify Wrap{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'UserAuth/style.css' %}">
+    <link rel="stylesheet" href="{% static 'UserAuth/styles.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
 </head>
 <body>
-<ul>
-    <li>
-        <a href="{% url 'home' %}">Home</a>
-    </li>
-    {% if not is_authenticated %}
-        <li>
-            <a href="{% url 'login' %}">Log in with Spotify</a>
+<div class="banner">
+    <ul class="icon-menu">
+        <li class="icon-section">
+            {% if is_authenticated %}
+            <a href="{% url 'deepcut' %}">
+                🎮 Play Deep Cut
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}">
+                🎮 Play Deep Cut
+            </a>
+            {% endif %}
         </li>
-    {% else %}
-        <li>
-            <a href="{% url 'logout' %}">Log out</a>
+        <li class="icon-section">
+            {% if is_authenticated %}
+            <a href="{% url 'home' %}">
+                📦Generate Wrap
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}">
+                📦Generate Wrap
+            </a>
+            {% endif %}
         </li>
-    {% endif %}
-</ul>
+        <li class="icon-section">
+            {% if not is_authenticated %}
+                <a href="{% url 'login' %}">
+                    🔒 Log in with Spotify
+                </a>
+            {% else %}
+                <a href="{% url 'logout' %}">
+                    🚪 Log out
+                </a>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+
 <main>
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
