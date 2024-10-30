@@ -5,20 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ef1d72b-5da3-4264-a751-398786dc15c5" name="Changes" comment="create base webpage and template">
-      <change afterPath="$PROJECT_DIR$/templates/UserAuth/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/SpotifyWrapper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SpotifyWrapper.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SpotifyWrapper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SpotifyWrapper/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/form.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/UserAuth/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/UserAuth/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -210,7 +211,7 @@
       <workItem from="1729548199532" duration="2147000" />
       <workItem from="1729645170984" duration="7198000" />
       <workItem from="1729910169544" duration="376000" />
-      <workItem from="1730312461499" duration="7597000" />
+      <workItem from="1730312461499" duration="14340000" />
     </task>
     <task id="LOCAL-00001" summary="update gitignores">
       <option name="closed" value="true" />

@@ -11,6 +11,8 @@ class SpotifyToken(models.Model):
                              models.SET_NULL,
                              blank=True,
                              null=True,)
+    spotify_account_email = models.CharField(max_length=255, null=True, blank=True)
+    spotify_account_username = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     refresh_token = models.CharField(max_length=150)
     access_token = models.CharField(max_length=255)

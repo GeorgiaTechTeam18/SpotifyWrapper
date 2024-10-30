@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, get_user_model, authenticate
 from .form import RegistrationForm
+import requests
+
 load_dotenv()
 
 STATE_KEY = os.getenv('STATE_KEY')
@@ -18,11 +20,29 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 User = get_user_model()
 
+
 def home(request):
     return render(request, 'UserAuth/index.html')
 
+
 def generate_random_string(length):
     return secrets.token_hex(length // 2)
+
+
+def authWithSpotify(request):
+    state = generate_random_string(16)
+    request.session[STATE_KEY] = state
+
+    url = Request('GET', 'https://accounts.spotify.com/authorize', params={
+        'scope': 'user-read-email user-read-playback-state user-modify-playback-state user-read-currently-playing',
+        'response_type': 'code',
+        'redirect_uri': REDIRECT_URI,
+        'client_id': CLIENT_ID,
+        'state': state
+    }).prepare().url
+
+    return redirect(url)
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -56,6 +76,7 @@ def signup_view(request):
         form = RegistrationForm()
 
     return render(request, 'UserAuth/signup.html', {'form': form})
+
 
 def authenticateWithSpotify(request):
     state = generate_random_string(16)
@@ -94,7 +115,7 @@ def callback(request):
             'code': code,
             'redirect_uri': REDIRECT_URI,
             'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET
+            'client_secret': CLIENT_SECRET,
         })
         response.raise_for_status()
     except exceptions.RequestException as e:
@@ -106,10 +127,21 @@ def callback(request):
     refresh_token = response_data.get('refresh_token')
     expires_in = response_data.get('expires_in')
 
-    if not request.session.exists(request.session.session_key):
-        request.session.create()
+    spotifyUserData = getSpotifyUserData(access_token)
 
-    update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
+    if (not request.user.is_authenticated):
+        if User.objects.filter(email=email).exists():
+            raise Exception(
+                f"Failed to create account with email: {spotifyUserData['email']}, either create an account with username and password and then link or log in to the an account and then link")
+        user = User.objects.create_user(username=spotifyUserData["email"])
+        if user is not None:
+            login(request, user)
+        else:
+            redirect("/login?error=an account with this email already exists")
+
+    update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
+                                 spotify_account_email=spotifyUserData["email"],
+                                 spotify_account_username=spotifyUserData["display_name"])
 
     return redirect('home')
 
@@ -117,3 +149,28 @@ def callback(request):
 def isauthenticated(request):
     is_authenticated = is_spotify_authenticated(request.session.session_key)
     return JsonResponse({'status': is_authenticated})
+
+
+def getSpotifyUserData(access_token):
+    """
+    Retrieve Spotify user information.
+
+    Args:
+    access_token (str): Spotify API access token.
+
+    Returns:
+    dict: User information.
+    """
+
+    url = "https://api.spotify.com/v1/me"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to retrieve user info. Status code: {response.status_code}")
