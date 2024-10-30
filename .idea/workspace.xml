@@ -6,22 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="5ef1d72b-5da3-4264-a751-398786dc15c5" name="Changes" comment="create base webpage and template">
       <change afterPath="$PROJECT_DIR$/templates/UserAuth/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/SpotifyWrapper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SpotifyWrapper.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SpotifyWrapper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SpotifyWrapper/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0002_alter_spotifytoken_access_token_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0003_alter_spotifytoken_refresh_token.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0004_alter_spotifytoken_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0005_spotifytoken_session_id_alter_spotifytoken_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0006_alter_spotifytoken_session_id_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0007_remove_spotifytoken_session_id_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myapp/migrations/0002_follow_like_spotifywrap_delete_examplemodel_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/UserAuth/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -57,6 +56,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dumax315&quot;
+  }
+}</component>
   <component name="GitToolBoxStore">
     <option name="recentBranches">
       <RecentBranches>
@@ -82,6 +87,12 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:GeorgiaTechTeam18/SpotifyWrapper.git&quot;,
+    &quot;accountId&quot;: &quot;b7805982-b98b-4f12-8504-c9d48cfc5676&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -102,7 +113,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
     "git-widget-placeholder": "UserAuth",
-    "last_opened_file_path": "C:/Users/theom/Desktop/Programming/cs2340/SpotifyWrapper",
+    "last_opened_file_path": "/mnt/c/Users/theom/Desktop/Programming/cs2340/SpotifyWrapper/templates/UserAuth",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -112,6 +123,46 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
+      <window_info id="Merge Requests" show_stripe_button="false" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info id="Pull Requests" show_stripe_button="false" />
+      <window_info id="Django.Structure" show_stripe_button="false" side_tool="true" />
+      <window_info id="Learn" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33033141" />
+      <window_info id="Commit" order="1" weight="0.25" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" show_stripe_button="false" />
+      <window_info anchor="bottom" id="HfCacheToolWindow" show_stripe_button="false" />
+      <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.3296767" />
+      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info anchor="bottom" id="Python Packages" order="5" weight="0.1" />
+      <window_info anchor="bottom" id="Python Console" order="6" weight="0.1" />
+      <window_info anchor="right" id="Endpoints" show_stripe_button="false" />
+      <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
+      <window_info anchor="right" id="SciView" show_stripe_button="false" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Database" order="2" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="3" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.25" />
+      <window_info anchor="right" id="Plots" order="5" weight="0.1" />
+    </layout>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/UserAuth" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="SpotifyWrapper" type="Python.DjangoServer" factoryName="Django server">
       <module name="SpotifyWrapper" />
@@ -141,8 +192,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
-        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.44" />
+        <option value="bundled-python-sdk-b49a3d4682c8-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.44" />
       </set>
     </attachedChunks>
   </component>
@@ -158,6 +209,8 @@
       <workItem from="1729547443092" duration="742000" />
       <workItem from="1729548199532" duration="2147000" />
       <workItem from="1729645170984" duration="7198000" />
+      <workItem from="1729910169544" duration="376000" />
+      <workItem from="1730312461499" duration="7597000" />
     </task>
     <task id="LOCAL-00001" summary="update gitignores">
       <option name="closed" value="true" />

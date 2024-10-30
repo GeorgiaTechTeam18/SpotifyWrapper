@@ -1,8 +1,8 @@
 {% extends 'UserAuth/base.html' %}
 
 {% block body %}
-    <form class="authForm" action='{% url 'login' %}' method="post">
-        <h3>Login to Account with Email and Password</h3>
+    <form class="authForm" action='{% url 'signup' %}' method="post">
+        <h3>Create an Account with Email and Password</h3>
         {% csrf_token %}
         <div>
             <label for="id_email">Email</label>
@@ -16,7 +16,7 @@
         </div>
 
         <span class="clearfix">
-            <button type="submit">Log in to Account</button>
+            <button type="submit">Create Account</button>
         </span>
     </form>
 {% endblock %}

@@ -7,7 +7,8 @@ from .models import SpotifyToken
 import os
 from dotenv import load_dotenv
 from django.http import JsonResponse
-
+from django.contrib.auth import login, logout, get_user_model, authenticate
+from .form import RegistrationForm
 load_dotenv()
 
 STATE_KEY = os.getenv('STATE_KEY')
@@ -15,16 +16,46 @@ REDIRECT_URI = os.getenv('REDIRECT_URI')
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
+User = get_user_model()
+
 def home(request):
-    is_authenticated = is_spotify_authenticated(request.session.session_key)
-    return render(request, 'UserAuth/index.html', {'is_authenticated': is_authenticated})
+    return render(request, 'UserAuth/index.html')
 
 def generate_random_string(length):
     return secrets.token_hex(length // 2)
 
-def login(request, isSignUpSelectedInitally = "false"):
-    return render(request, 'UserAuth/login.html')
+def login_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        print(form)
+        if form.is_valid():
+            user_data = form.cleaned_data
+            user = authenticate(request, username=user_data.get('email'), password=user_data.get('password'))
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            return redirect('login')
+    else:
+        form = RegistrationForm()
 
+    return render(request, 'UserAuth/login.html', {'form': form})
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        print(form)
+        if form.is_valid():
+            user_data = form.cleaned_data
+            user = User.objects.create_user(username=user_data.get('email'), password=user_data.get('password'))
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            return redirect('signup')
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'UserAuth/signup.html', {'form': form})
 
 def authenticateWithSpotify(request):
     state = generate_random_string(16)
@@ -41,12 +72,8 @@ def authenticateWithSpotify(request):
     return redirect(url)
 
 
-def logout(request):
-    if request.session.exists(request.session.session_key):
-        session_id = request.session.session_key
-        SpotifyToken.objects.filter(user=session_id).delete()
-        request.session.flush()
-
+def logout_view(request):
+    logout(request)
     return redirect('home')
 
 
