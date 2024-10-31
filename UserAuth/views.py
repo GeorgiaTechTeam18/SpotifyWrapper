@@ -127,21 +127,28 @@ def callback(request):
     refresh_token = response_data.get('refresh_token')
     expires_in = response_data.get('expires_in')
 
-    spotifyUserData = getSpotifyUserData(access_token)
-
-    if (not request.user.is_authenticated):
-        if User.objects.filter(email=email).exists():
+    spotify_user_data = getSpotifyUserData(access_token)
+    matching_existing_tokens = SpotifyToken.objects.filter(spotify_account_email=spotify_user_data["email"])
+    if not request.user.is_authenticated:
+        if matching_existing_tokens.exists():
+            login(request, matching_existing_tokens[0].user)
+            matching_existing_tokens[0].user.default_spotify_token = matching_existing_tokens[0]
+            matching_existing_tokens[0].user.save()
+        elif (User.objects.filter(username=spotify_user_data["email"]).exists()):
             raise Exception(
-                f"Failed to create account with email: {spotifyUserData['email']}, either create an account with username and password and then link or log in to the an account and then link")
-        user = User.objects.create_user(username=spotifyUserData["email"])
-        if user is not None:
-            login(request, user)
+                f"Failed to create account or Oauth with email: {spotify_user_data['email']}, either create an account with username and password and then link or log in to the an account and then link.")
         else:
-            redirect("/login?error=an account with this email already exists")
+            user = User.objects.create_user(username=spotify_user_data["email"])
+            if user is not None:
+                login(request, user)
+            else:
+                redirect("/login?error=an account with this email already exists")
+    elif (matching_existing_tokens.exists()):
+        raise Exception(f"This spotify account has already been linked with another Wrapped account")
 
     update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
-                                 spotify_account_email=spotifyUserData["email"],
-                                 spotify_account_username=spotifyUserData["display_name"])
+                                 spotify_account_email=spotify_user_data["email"],
+                                 spotify_account_username=spotify_user_data["id"])
 
     return redirect('home')
 
