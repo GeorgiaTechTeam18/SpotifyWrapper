@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ef1d72b-5da3-4264-a751-398786dc15c5" name="Changes" comment="create base webpage and template">
-      <change beforePath="$PROJECT_DIR$/.idea/SpotifyWrapper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SpotifyWrapper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UserAuth/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UserAuth/static/UserAuth/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SpotifyWrapper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SpotifyWrapper/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/static/UserAuth/style.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/UserAuth/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/UserAuth/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/UserAuth/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,20 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
-        <option value="HTML File" />
+        <option value="CSS File" />
       </list>
-    </option>
-  </component>
-  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
-    <envs>
-      <env key="FLASK_APP" value="app" />
-    </envs>
-    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
-    <option name="myEnvs">
-      <map>
-        <entry key="FLASK_APP" value="app" />
-      </map>
     </option>
   </component>
   <component name="Git.Settings">
@@ -60,7 +37,7 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;dumax315&quot;
+    &quot;assignee&quot;: &quot;VarindraSeegobin&quot;
   }
 }</component>
   <component name="GitToolBoxStore">
@@ -90,8 +67,8 @@
   </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:GeorgiaTechTeam18/SpotifyWrapper.git&quot;,
-    &quot;accountId&quot;: &quot;b7805982-b98b-4f12-8504-c9d48cfc5676&quot;
+    &quot;url&quot;: &quot;https://github.com/GeorgiaTechTeam18/SpotifyWrapper.git&quot;,
+    &quot;accountId&quot;: &quot;43c2d4b0-80f9-4de4-9335-eac8ddb21eb7&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -113,8 +90,9 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "UserAuth",
-    "last_opened_file_path": "/mnt/c/Users/theom/Desktop/Programming/cs2340/SpotifyWrapper/templates/UserAuth",
+    "git-widget-placeholder": "Merging UserAuth",
+    "last_opened_file_path": "C:/Users/alexh/OneDrive - Georgia Institute of Technology/Documents/Georgia Tech/3 - Fall 2024/Objects and Design (CS-2340-B)/Project 2/SpotifyWrapper",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -160,8 +138,9 @@
     </layout>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/templates/UserAuth" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\seego\PycharmProjects\SpotifyWrapper" />
+      <recent name="C:\Users\seego\PycharmProjects\SpotifyWrapper\templates\static" />
     </key>
   </component>
   <component name="RunManager">
@@ -193,8 +172,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.44" />
-        <option value="bundled-python-sdk-b49a3d4682c8-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.44" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-PY-242.20224.428" />
+        <option value="bundled-python-sdk-80e8e15d2b92-39cff9de6eef-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.20224.428" />
       </set>
     </attachedChunks>
   </component>
@@ -210,8 +189,7 @@
       <workItem from="1729547443092" duration="742000" />
       <workItem from="1729548199532" duration="2147000" />
       <workItem from="1729645170984" duration="7198000" />
-      <workItem from="1729910169544" duration="376000" />
-      <workItem from="1730312461499" duration="17623000" />
+      <workItem from="1730325640460" duration="2064000" />
     </task>
     <task id="LOCAL-00001" summary="update gitignores">
       <option name="closed" value="true" />
