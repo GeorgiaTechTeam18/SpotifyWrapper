@@ -9,4 +9,5 @@ urlpatterns = [
     path('authWithSpotify/', views.authWithSpotify, name='authWithSpotify'),
     path('callback/', views.callback, name='callback'),
     path('is-authenticated/', views.isauthenticated, name='is-authenticated'),
+    path('profile/', views.profile_view, name='profile')
 ]

@@ -21,7 +21,7 @@ def get_user_tokens(user: User):
 def setEmailAndUsernameIfProvided(tokens, email, username):
     if (email != None and username != None):
         tokens.spotify_account_email = email
-        tokens.spotify_account_username = email
+        tokens.spotify_account_username = username
 
 
 def update_or_create_user_tokens(user: User, access_token, token_type, expires_in, refresh_token,

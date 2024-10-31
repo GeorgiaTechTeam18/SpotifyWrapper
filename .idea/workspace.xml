@@ -11,6 +11,7 @@
       <change beforePath="$PROJECT_DIR$/SpotifyWrapper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SpotifyWrapper/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserAuth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/myapp/migrations/0001_initial.py" afterDir="false" />
@@ -18,6 +19,7 @@
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/UserAuth/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,8 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -142,7 +144,7 @@
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.31270537" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.3181818" />
       <window_info anchor="bottom" id="Services" order="4" />
       <window_info anchor="bottom" id="Python Packages" order="5" weight="0.1" />
       <window_info anchor="bottom" id="Python Console" order="6" weight="0.1" />
@@ -209,7 +211,7 @@
       <workItem from="1729548199532" duration="2147000" />
       <workItem from="1729645170984" duration="7198000" />
       <workItem from="1729910169544" duration="376000" />
-      <workItem from="1730312461499" duration="15575000" />
+      <workItem from="1730312461499" duration="17623000" />
     </task>
     <task id="LOCAL-00001" summary="update gitignores">
       <option name="closed" value="true" />

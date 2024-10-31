@@ -21,6 +21,7 @@
     {% else %}
         <li>
             <span>Hi {{ user.get_username }}</span>
+            <a href="{% url 'profile' %}">Profile</a>
             <a href="{% url 'logout' %}">Log out</a>
         </li>
     {% endif %}

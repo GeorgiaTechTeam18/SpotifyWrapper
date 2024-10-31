@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login, logout, get_user_model, authenticate
 from .form import RegistrationForm
 import requests
-
+from django.contrib.auth.decorators import login_required
 load_dotenv()
 
 STATE_KEY = os.getenv('STATE_KEY')
@@ -77,21 +77,10 @@ def signup_view(request):
 
     return render(request, 'UserAuth/signup.html', {'form': form})
 
-
-def authenticateWithSpotify(request):
-    state = generate_random_string(16)
-    request.session[STATE_KEY] = state
-
-    url = Request('GET', 'https://accounts.spotify.com/authorize', params={
-        'scope': 'user-read-playback-state user-modify-playback-state user-read-currently-playing',
-        'response_type': 'code',
-        'redirect_uri': REDIRECT_URI,
-        'client_id': CLIENT_ID,
-        'state': state
-    }).prepare().url
-
-    return redirect(url)
-
+@login_required()
+def profile_view(request):
+    associated_spotify_tokens = SpotifyToken.objects.filter(user__email=request.user.email)
+    return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens})
 
 def logout_view(request):
     logout(request)
@@ -143,9 +132,9 @@ def callback(request):
                 login(request, user)
             else:
                 redirect("/login?error=an account with this email already exists")
-    elif (matching_existing_tokens.exists()):
+    elif (matching_existing_tokens.exists() and matching_existing_tokens[0].user.email != request.user.email):
         raise Exception(f"This spotify account has already been linked with another Wrapped account")
-
+    print(spotify_user_data)
     update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
                                  spotify_account_email=spotify_user_data["email"],
                                  spotify_account_username=spotify_user_data["id"])
