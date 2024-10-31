@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ef1d72b-5da3-4264-a751-398786dc15c5" name="Changes" comment="create base webpage and template">
+      <change afterPath="$PROJECT_DIR$/UserAuth/static/UserAuth/base1-default.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserAuth/static/UserAuth/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserAuth/static/UserAuth/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/UserAuth/static/UserAuth/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/UserAuth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/UserAuth/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/UserAuth/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +34,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "VarindraSeegobin"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;VarindraSeegobin&quot;
   }
-}]]></component>
+}</component>
   <component name="GitToolBoxStore">
     <option name="recentBranches">
       <RecentBranches>
@@ -63,12 +65,12 @@
       </RecentBranches>
     </option>
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/GeorgiaTechTeam18/SpotifyWrapper.git",
-    "accountId": "43c2d4b0-80f9-4de4-9335-eac8ddb21eb7"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/GeorgiaTechTeam18/SpotifyWrapper.git&quot;,
+    &quot;accountId&quot;: &quot;43c2d4b0-80f9-4de4-9335-eac8ddb21eb7&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -87,8 +89,8 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/alexh/OneDrive - Georgia Institute of Technology/Documents/Georgia Tech/3 - Fall 2024/Objects and Design (CS-2340-B)/Project 2/SpotifyWrapper",
+    "git-widget-placeholder": "Base",
+    "last_opened_file_path": "C:/Users/seego/PycharmProjects/SpotifyWrapper/UserAuth/static/UserAuth",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -99,6 +101,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\seego\PycharmProjects\SpotifyWrapper\UserAuth\static\UserAuth" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\seego\PycharmProjects\SpotifyWrapper" />
       <recent name="C:\Users\seego\PycharmProjects\SpotifyWrapper\templates\static" />
