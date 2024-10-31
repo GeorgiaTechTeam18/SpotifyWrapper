@@ -79,8 +79,12 @@ def signup_view(request):
 
 @login_required()
 def profile_view(request):
-    associated_spotify_tokens = SpotifyToken.objects.filter(user__email=request.user.email)
+    associated_spotify_tokens = SpotifyToken.objects.filter(user__username=request.user.username)
     return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens})
+
+def delete_token(request, spotify_account_username):
+    SpotifyToken.objects.filter(spotify_account_username=spotify_account_username).delete()
+    return JsonResponse({"success":True})
 
 def logout_view(request):
     logout(request)
