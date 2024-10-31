@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Spotify Wrap{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'UserAuth/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'UserAuth/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
 </head>
@@ -12,32 +12,37 @@
 <div class="banner">
     <ul class="icon-menu">
         <li class="icon-section">
-            {% if is_authenticated %}
-            <a href="{% url 'deepcut' %}">
-                🎮 Play Deep Cut
-            </a>
+            {% if user.is_authenticated %}
+                <a>
+                    🎮 Play Deep Cut
+                </a>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">Log out</a>
             {% else %}
-            <a href="{% url 'login' %}">
-                🎮 Play Deep Cut
-            </a>
+                <a href="{% url 'signup' %}">Create an Account</a>
+                <a href="{% url 'login' %}">Log in</a>
             {% endif %}
         </li>
+        <li>
+
         <li class="icon-section">
             {% if is_authenticated %}
-            <a href="{% url 'home' %}">
-                📦Generate Wrap
-            </a>
+
+                <span>Hi {{ user.get_username }}</span>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'home' %}">
+                    📦Generate Wrap
+                </a>
             {% else %}
-            <a href="{% url 'login' %}">
-                📦Generate Wrap
-            </a>
+                <a href="{% url 'login' %}">
+                    📦Generate Wrap
+                </a>
             {% endif %}
         </li>
         <li class="icon-section">
             {% if not is_authenticated %}
-                <a href="{% url 'login' %}">
-                    🔒 Log in with Spotify
-                </a>
+                <a href="{% url 'signup' %}">Create an Account</a>
+                <a href="{% url 'login' %}">Log in</a>
             {% else %}
                 <a href="{% url 'logout' %}">
                     🚪 Log out

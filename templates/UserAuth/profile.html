@@ -1,0 +1,11 @@
+{% extends 'UserAuth/base.html' %}
+
+{% block body %}
+    {% for token in associated_spotify_tokens %}
+      <li>
+        {{ token.spotify_account_email }}
+        {{ token.spotify_account_username }}
+      </li>
+    {% endfor %}
+    <a href="{% url 'authWithSpotify' %}">Link another spotify account with your account</a>
+{% endblock %}

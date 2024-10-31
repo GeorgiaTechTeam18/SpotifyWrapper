@@ -1,0 +1,23 @@
+{% extends 'UserAuth/base.html' %}
+
+{% block body %}
+    <form class="authForm" action='{% url 'login' %}' method="post">
+        <h3>Login to Account with Email and Password</h3>
+        {% csrf_token %}
+        <div>
+            <label for="id_email">Email</label>
+            {{ form.email.errors }}
+            {{ form.email }}
+        </div>
+        <div>
+            <label for="id_password">Password</label>
+            {{ form.password.errors }}
+            {{ form.password }}
+        </div>
+
+        <span class="clearfix">
+            <button type="submit">Login with email</button>
+        </span>
+    </form>
+    <a href="{% url 'authWithSpotify' %}">Login with Spotify</a>
+{% endblock %}

@@ -37,15 +37,18 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'spotifywrapped.theoh.dev']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'UserAuth',
+    'UserAuth.apps.UserauthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'UserAuth.apps.UserauthConfig',
     'myapp'
 ]
+
+AUTH_USER_MODEL = 'UserAuth.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
