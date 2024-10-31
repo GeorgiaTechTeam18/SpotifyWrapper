@@ -74,4 +74,7 @@ main {
     .side-image {
         display: none;
     }
+    .HiddenOnMobile {
+        display: none;
+    }
 }

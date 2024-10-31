@@ -14,57 +14,33 @@
         <li class="icon-section">
             {% if is_authenticated %}
                 <a href="{% url 'deepcut' %}">
-                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
-                        🎮
-                    {% else %}
-                        🎮 Play Deep Cut
-                    {% endif %}
+                    🎮<span class="HiddenOnMobile"> Play Deep Cut</span>
                 </a>
-            {% else %}
+                {% else %}
                 <a href="{% url 'login' %}">
-                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
-                        🎮
-                    {% else %}
-                        🎮 Play Deep Cut
-                    {% endif %}
+                    🎮<span class="HiddenOnMobile"> Play Deep Cut</span>
                 </a>
             {% endif %}
         </li>
         <li class="icon-section">
             {% if is_authenticated %}
                 <a href="{% url 'home' %}">
-                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
-                        📦
-                    {% else %}
-                        📦 Generate Wrap
-                    {% endif %}
+                    📦<span class="HiddenOnMobile">Generate Wrap</span> 
                 </a>
             {% else %}
                 <a href="{% url 'login' %}">
-                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
-                        📦
-                    {% else %}
-                        📦 Generate Wrap
-                    {% endif %}
+                    📦<span class="HiddenOnMobile">Generate Wrap</span>
                 </a>
             {% endif %}
         </li>
         <li class="icon-section">
             {% if not is_authenticated %}
                 <a href="{% url 'login' %}">
-                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
-                        🔒
-                    {% else %}
-                        🔒 Log in with Spotify
-                    {% endif %}
+                    🔒 <span class="HiddenOnMobile">Log in</span>
                 </a>
             {% else %}
                 <a href="{% url 'logout' %}">
-                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
-                        🚪
-                    {% else %}
-                        🚪 Log out
-                    {% endif %}
+                    🚪<span class="HiddenOnMobile">Log Out</span>
                 </a>
             {% endif %}
         </li>
