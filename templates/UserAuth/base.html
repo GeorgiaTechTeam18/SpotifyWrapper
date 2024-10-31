@@ -13,34 +13,58 @@
     <ul class="icon-menu">
         <li class="icon-section">
             {% if is_authenticated %}
-            <a href="{% url 'deepcut' %}">
-                🎮 Play Deep Cut
-            </a>
+                <a href="{% url 'deepcut' %}">
+                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
+                        🎮
+                    {% else %}
+                        🎮 Play Deep Cut
+                    {% endif %}
+                </a>
             {% else %}
-            <a href="{% url 'login' %}">
-                🎮 Play Deep Cut
-            </a>
+                <a href="{% url 'login' %}">
+                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
+                        🎮
+                    {% else %}
+                        🎮 Play Deep Cut
+                    {% endif %}
+                </a>
             {% endif %}
         </li>
         <li class="icon-section">
             {% if is_authenticated %}
-            <a href="{% url 'home' %}">
-                📦Generate Wrap
-            </a>
+                <a href="{% url 'home' %}">
+                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
+                        📦
+                    {% else %}
+                        📦 Generate Wrap
+                    {% endif %}
+                </a>
             {% else %}
-            <a href="{% url 'login' %}">
-                📦Generate Wrap
-            </a>
+                <a href="{% url 'login' %}">
+                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
+                        📦
+                    {% else %}
+                        📦 Generate Wrap
+                    {% endif %}
+                </a>
             {% endif %}
         </li>
         <li class="icon-section">
             {% if not is_authenticated %}
                 <a href="{% url 'login' %}">
-                    🔒 Log in with Spotify
+                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
+                        🔒
+                    {% else %}
+                        🔒 Log in with Spotify
+                    {% endif %}
                 </a>
             {% else %}
                 <a href="{% url 'logout' %}">
-                    🚪 Log out
+                    {% if "Mobile" in request.META.HTTP_USER_AGENT%}
+                        🚪
+                    {% else %}
+                        🚪 Log out
+                    {% endif %}
                 </a>
             {% endif %}
         </li>

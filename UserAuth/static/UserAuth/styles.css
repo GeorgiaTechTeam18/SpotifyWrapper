@@ -60,10 +60,15 @@ main {
 @media (max-width: 768px) {
     main {
         padding-right: 0;
+        padding-bottom: 30px;
     }
 
     .banner {
-        flex-wrap: wrap;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
     }
 
     .side-image {
