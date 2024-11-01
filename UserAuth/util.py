@@ -30,7 +30,7 @@ def update_or_create_user_tokens(user: User, access_token, token_type, expires_i
     expires_in = timezone.now() + timedelta(seconds=expires_in)
 
     # creates a new token if the email doesn't equal the current token's account email
-    if tokens and (spotify_account_email == None or tokens.spotify_account_username == spotify_account_username):
+    if tokens and (spotify_account_email is None or tokens.spotify_account_username == spotify_account_username):
         tokens.access_token = access_token
         tokens.refresh_token = refresh_token
         tokens.expires_in = expires_in
