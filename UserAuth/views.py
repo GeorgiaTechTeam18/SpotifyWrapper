@@ -13,7 +13,6 @@ import requests
 from django.contrib.auth.decorators import login_required
 load_dotenv()
 
-STATE_KEY = os.getenv('STATE_KEY')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
@@ -30,15 +29,11 @@ def generate_random_string(length):
 
 
 def authWithSpotify(request):
-    state = generate_random_string(16)
-    request.session[STATE_KEY] = state
-
     url = Request('GET', 'https://accounts.spotify.com/authorize', params={
-        'scope': 'user-read-email user-read-playback-state user-modify-playback-state user-read-currently-playing',
+        'scope': 'user-read-email user-top-read',
         'response_type': 'code',
         'redirect_uri': REDIRECT_URI,
-        'client_id': CLIENT_ID,
-        'state': state
+        'client_id': CLIENT_ID
     }).prepare().url
 
     return redirect(url)
@@ -77,10 +72,17 @@ def signup_view(request):
 
     return render(request, 'UserAuth/signup.html', {'form': form})
 
+
 @login_required()
 def profile_view(request):
-    associated_spotify_tokens = SpotifyToken.objects.filter(user__email=request.user.email)
+    associated_spotify_tokens = SpotifyToken.objects.filter(user__username=request.user.username)
     return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens})
+
+
+def delete_token(request, spotify_account_username):
+    SpotifyToken.objects.filter(spotify_account_username=spotify_account_username).delete()
+    return JsonResponse({"success":True})
+
 
 def logout_view(request):
     logout(request)
@@ -89,14 +91,6 @@ def logout_view(request):
 
 def callback(request):
     code = request.GET.get('code')
-    state = request.GET.get('state')
-    stored_state = request.session.get(STATE_KEY)
-
-    if state is None or state != stored_state:
-        return redirect(f"/?{urlencode({'error': 'state_mismatch'})}")
-
-    if STATE_KEY in request.session:
-        del request.session[STATE_KEY]
 
     try:
         response = post('https://accounts.spotify.com/api/token', data={
@@ -108,7 +102,7 @@ def callback(request):
         })
         response.raise_for_status()
     except exceptions.RequestException as e:
-        return redirect(f"/?{urlencode({'error': 'token_request_failed'})}")
+        return redirect("/login?error=spotify_auth_failed")
 
     response_data = response.json()
     access_token = response_data.get('access_token')
@@ -123,7 +117,7 @@ def callback(request):
             login(request, matching_existing_tokens[0].user)
             matching_existing_tokens[0].user.default_spotify_token = matching_existing_tokens[0]
             matching_existing_tokens[0].user.save()
-        elif (User.objects.filter(username=spotify_user_data["email"]).exists()):
+        elif User.objects.filter(username=spotify_user_data["email"]).exists():
             raise Exception(
                 f"Failed to create account or Oauth with email: {spotify_user_data['email']}, either create an account with username and password and then link or log in to the an account and then link.")
         else:
@@ -132,7 +126,7 @@ def callback(request):
                 login(request, user)
             else:
                 redirect("/login?error=an account with this email already exists")
-    elif (matching_existing_tokens.exists() and matching_existing_tokens[0].user.email != request.user.email):
+    elif matching_existing_tokens.exists() and matching_existing_tokens[0].user.email != request.user.email:
         raise Exception(f"This spotify account has already been linked with another Wrapped account")
     print(spotify_user_data)
     update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
@@ -140,11 +134,6 @@ def callback(request):
                                  spotify_account_username=spotify_user_data["id"])
 
     return redirect('home')
-
-
-def isauthenticated(request):
-    is_authenticated = is_spotify_authenticated(request.session.session_key)
-    return JsonResponse({'status': is_authenticated})
 
 
 def getSpotifyUserData(access_token):

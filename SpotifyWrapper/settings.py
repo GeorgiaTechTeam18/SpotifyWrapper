@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-2)z$$5mi&y18c%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'spotifywrapped.theoh.dev', 'spotifywrapped.theoh.dev']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'spotifywrapped.theoh.dev']
 
 CSRF_TRUSTED_ORIGINS = ['https://spotifywrapped.theoh.dev']
 
