@@ -4,26 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Spotify Wrap{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'UserAuth/style.css' %}">
+    <link rel="stylesheet" href="{% static 'UserAuth/styles.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
 </head>
 <body>
-<ul>
-    <li>
-        <a href="{% url 'home' %}">Home</a>
-    </li>
-    {% if not is_authenticated %}
-        <li>
-            <a href="{% url 'signup' %}">Create an Account</a>
-            <a href="{% url 'login' %}">Log in</a>
+<div class="banner">
+    <ul class="icon-menu">
+        <li class="icon-section">
+            {% if user.is_authenticated %}
+                <a>
+                    🎮 Play Deep Cut
+                </a>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">Log out</a>
+            {% else %}
+                <a href="{% url 'signup' %}">Create an Account</a>
+                <a href="{% url 'login' %}">Log in</a>
+            {% endif %}
         </li>
-    {% else %}
         <li>
-            <a href="{% url 'logout' %}">Log out</a>
+
+        <li class="icon-section">
+            {% if is_authenticated %}
+
+                <span>Hi {{ user.get_username }}</span>
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'home' %}">
+                    📦Generate Wrap
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}">
+                    📦Generate Wrap
+                </a>
+            {% endif %}
         </li>
-    {% endif %}
-</ul>
+        <li class="icon-section">
+            {% if not is_authenticated %}
+                <a href="{% url 'signup' %}">Create an Account</a>
+                <a href="{% url 'login' %}">Log in</a>
+            {% else %}
+                <a href="{% url 'logout' %}">
+                    🚪 Log out
+                </a>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+
 <main>
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
