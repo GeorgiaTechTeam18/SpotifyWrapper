@@ -30,7 +30,7 @@ def generate_random_string(length):
 
 def authWithSpotify(request):
     url = Request('GET', 'https://accounts.spotify.com/authorize', params={
-        'scope': 'user-read-email user-read-playback-state user-modify-playback-state user-read-currently-playing',
+        'scope': 'user-read-email user-top-read',
         'response_type': 'code',
         'redirect_uri': REDIRECT_URI,
         'client_id': CLIENT_ID
@@ -102,7 +102,7 @@ def callback(request):
         })
         response.raise_for_status()
     except exceptions.RequestException as e:
-        return redirect(f"/?{urlencode({'error': 'token_request_failed'})}")
+        return redirect("/login?error=spotify_auth_failed")
 
     response_data = response.json()
     access_token = response_data.get('access_token')
