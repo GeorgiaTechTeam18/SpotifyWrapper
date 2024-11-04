@@ -3,6 +3,8 @@ import requests
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from UserAuth.util import get_user_tokens
+
 
 @login_required
 def post_wrap(request):
@@ -12,7 +14,7 @@ def view_wraps(request):
     return render(request, 'myapp/view_wraps.html')
 
 def get_artists(request):
-    access_token = request.user.social_auth.get(provider='spotify').extra_data['access_token']
+    access_token = get_user_tokens(request.user).access_token
 
     headers = {'Authorization': f'Bearer {access_token}'}
     time_range = 'time_range=medium_term'
@@ -30,14 +32,12 @@ def get_artists(request):
                 'genres': item.get('genres'),
                 'artist_url': item.get('external_urls').get('spotify')
             })
-        return JsonResponse({'status': 'success', 'data': artist_data})
+        return render(request, 'myapp/get-artists.html', {'artist_data': artist_data})
     else:
-        return JsonResponse({'status': 'error', 'message': 'Failed to retrieve top items'})
-
-    return render(request, 'myapp/get_artists.html')
+        return render(request, 'myapp/get-artists.html', {'error': 'Failed to retrieve top artists.'})
 
 def get_tracks(request):
-    access_token = request.user.social_auth.get(provider='spotify').extra_data['access_token']
+    access_token = get_user_tokens(request.user).access_token
 
     headers = { 'Authorization': f'Bearer {access_token}' }
     time_range = 'time_range=medium_term'
@@ -60,8 +60,6 @@ def get_tracks(request):
                 'song_name': item.get('name'),
                 'preview_url': item.get('preview_url')
             })
-        return JsonResponse({'status': 'success', 'data': track_data})
+        return render(request, 'myapp/get_tracks.html', {'track_data': track_data})
     else:
-        return JsonResponse({'status': 'error', 'message': 'Failed to retrieve top items'})
-
-    return render(request, 'myapp/track_data.html')
+        return render(request, 'myapp/get_tracks.html', {'error': 'Failed to retrieve top tracks.'})
