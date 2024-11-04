@@ -8,6 +8,20 @@ body {
     font-family: Arial, sans-serif;
 }
 
+#Index-main-text {
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 20px;
+}
+
+.content-container {
+    max-width: 950px;
+    margin: auto;
+    padding-left: 1.5em;
+    padding-right: 1.51em;
+}
+
 main {
     position: relative;
     padding-right: 15%;
@@ -64,7 +78,7 @@ main {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    width: 1000px; /* Optional: limit the width */
+    width: 100%; /* Optional: limit the width */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
     margin-bottom: 32px; /* 2-line space between items */
 }
@@ -93,22 +107,27 @@ main {
     flex-direction: column;
 }
 
+#loginorsignup {
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
 @media (max-width: 768px) {
     main {
-        padding-right: 0;
-        padding-bottom: 30px;
-    }
-
-    .banner {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 0;
+        padding-right: unset;
+        min-height: 100vh;
+        min-height: calc(100dvh - 20px);
     }
 
     .side-image {
-        display: none;
+        width: 100%;
+        height: 4em;
+        margin-top: 1em;
+        bottom: 0;
+        top: unset;
+    }
+    .content-container {
+        padding-bottom: 5em;
     }
     .HiddenOnMobile {
         display: none;
