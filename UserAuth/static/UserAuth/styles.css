@@ -57,6 +57,42 @@ main {
     object-fit: cover;
 }
 
+.IndexAboutInfo {
+    background-color: #f9f1fd; /* Light purple background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Padding for inner spacing */
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 1000px; /* Optional: limit the width */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+    margin-bottom: 32px; /* 2-line space between items */
+}
+
+.IndexAboutInfo h3 {
+    font-size: 18px; /* Adjust font size */
+    margin: 0 0 4px 0; /* Bottom margin only for spacing */
+    color: #333; /* Text color */
+}
+
+.IndexAboutInfo p {
+    font-size: 14px;
+    color: #555; /* Slightly darker text */
+    margin: 0; /* Remove extra margins */
+}
+
+.IndexAboutInfo img {
+    width: 20px; /* Set width for checkmark */
+    height: 20px; /* Set height for checkmark */
+    align-self: center; /* Align checkmark vertically */
+}
+
+/* Additional styling to align text in a single column */
+.text-container {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (max-width: 768px) {
     main {
         padding-right: 0;
