@@ -13,39 +13,30 @@
     <ul class="icon-menu">
         <li class="icon-section">
             {% if user.is_authenticated %}
-                <a>
-                    🎮 Play Deep Cut
+                <a href="{% url 'deepcut' %}">
+                    🎮<span class="HiddenOnMobile"> Play Deep Cut</span>
                 </a>
-                <a href="{% url 'profile' %}">Profile</a>
-                <a href="{% url 'logout' %}">Log out</a>
-            {% else %}
-                <a href="{% url 'signup' %}">Create an Account</a>
-                <a href="{% url 'login' %}">Log in</a>
+                {% else %}
+                <a href="{% url 'login' %}">
+                    🔒<span class="HiddenOnMobile"> Log in</span>
+                </a>
             {% endif %}
         </li>
-        <li>
-
         <li class="icon-section">
-            {% if is_authenticated %}
-
-                <span>Hi {{ user.get_username }}</span>
-                <a href="{% url 'profile' %}">Profile</a>
+            {% if user.is_authenticated %}
                 <a href="{% url 'home' %}">
-                    📦Generate Wrap
+                    📦<span class="HiddenOnMobile">Generate Wrap</span>
                 </a>
             {% else %}
                 <a href="{% url 'login' %}">
-                    📦Generate Wrap
+                    🔒<span class="HiddenOnMobile">Sign up</span>
                 </a>
             {% endif %}
         </li>
-        <li class="icon-section">
-            {% if not is_authenticated %}
-                <a href="{% url 'signup' %}">Create an Account</a>
-                <a href="{% url 'login' %}">Log in</a>
-            {% else %}
+        <li>
+            {% if is_authenticated %}
                 <a href="{% url 'logout' %}">
-                    🚪 Log out
+                    🚪<span class="HiddenOnMobile">Log Out</span>
                 </a>
             {% endif %}
         </li>
@@ -62,6 +53,9 @@
             </button>
         </div>
     {% endfor %}
+    <div class="side-image">
+        <img src="{% static 'UserAuth/base1-default.jpg' %}" alt="Abstract Art">
+    </div>
     {% block body %}{% endblock %}
 </main>
 </body>
