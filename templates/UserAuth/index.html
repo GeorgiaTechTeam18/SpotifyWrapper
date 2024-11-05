@@ -1,7 +1,6 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
 {% block body %}
-    <div class="content-container">
         <div id="Index-main-text">
         <h1>Unwrap any time with year round spotify wrapped.</h1>
         </div>
@@ -43,10 +42,10 @@
                 </li>
             </ul>
             <div id="loginorsignup">
-
-                <p><a href="{% url 'signup' %}">Sign up</a> or already have an account? <a href="{% url 'login' %}">Log in</a></p>
+                <a href="{% url 'signup' %}">Sign up</a>
+                <p> or </p>
+                <a href="{% url 'login' %}">Log in</a>
             </div>
         </div>
-    </div>
 
 {% endblock %}

@@ -20,6 +20,7 @@ body {
     margin: auto;
     padding-left: 1.5em;
     padding-right: 1.51em;
+    padding-top: 1.5em;
 }
 
 main {
@@ -28,7 +29,7 @@ main {
 }
 
 .banner {
-    background-color: #bfbfbf;
+    background-color: #6ABD93;
     padding: 10px 0;
 }
 
@@ -107,9 +108,123 @@ main {
     flex-direction: column;
 }
 
+/* Container styling */
 #loginorsignup {
-    margin-left: 40%;
-    margin-right: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between elements */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #1DB954; /* Spotify green */
+}
+
+/* Anchor tag styling */
+#loginorsignup a {
+    color: #1DB954; /* Spotify green */
+    font-weight: bold;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #1DB954;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* login form*/
+.authForm {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #B488F2;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    background-color: #FFFFFF;
+}
+
+.authForm label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.authForm input[type="email"],
+.authForm input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+
+.authForm button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.authForm button:hover {
+    background-color: #555;
+}
+
+.authForm a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #B488F2;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.authForm a:hover {
+    color: #A268DB;
+}
+
+#login-alternate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+#login-alternate p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.spotify-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #1DB954;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.spotify-login:hover {
+    background-color: #1AA34A;
+}
+
+.spotify-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
 }
 
 @media (max-width: 768px) {
