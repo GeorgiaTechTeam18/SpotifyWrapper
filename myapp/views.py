@@ -1,9 +1,10 @@
 # myapp/views.py
 import requests
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from UserAuth.util import get_user_tokens
+from .models import SpotifyWrap
 
 
 @login_required
@@ -13,42 +14,38 @@ def post_wrap(request):
 def view_wraps(request):
     return render(request, 'myapp/view_wraps.html')
 
-def get_artists(request):
+def get_top(request):
+    if isinstance(request.user, AnonymousUser):
+        return redirect('/login?error=spotify_auth_failed')
     access_token = get_user_tokens(request.user).access_token
 
     headers = {'Authorization': f'Bearer {access_token}'}
     time_range = 'time_range=medium_term'
     limit = 'limit=10'
-    endpoint = 'https://api.spotify.com/v1/me/top/artists?' + time_range + '&' + limit
-    response = requests.get(endpoint, headers=headers)
 
-    if response.status_code == 200:
-        top_items = response.json()
-        artist_data = []
-        for item in top_items.get('items', []):
+    # Get top artists
+    artist_endpoint = 'https://api.spotify.com/v1/me/top/artists?' + time_range + '&' + limit
+    artist_response = requests.get(artist_endpoint, headers=headers)
+
+    artist_data = []
+    if artist_response.status_code == 200:
+        top_artists = artist_response.json()
+        for item in top_artists.get('items', []):
             artist_data.append({
                 'image': item.get('images')[0].get('url'),
                 'name': item.get('name'),
                 'genres': item.get('genres'),
                 'artist_url': item.get('external_urls').get('spotify')
             })
-        return render(request, 'myapp/get-artists.html', {'artist_data': artist_data})
-    else:
-        return render(request, 'myapp/get-artists.html', {'error': 'Failed to retrieve top artists.'})
 
-def get_tracks(request):
-    access_token = get_user_tokens(request.user).access_token
+    # Get top tracks
+    track_endpoint = 'https://api.spotify.com/v1/me/top/tracks?' + time_range + '&' + limit
+    track_response = requests.get(track_endpoint, headers=headers)
 
-    headers = { 'Authorization': f'Bearer {access_token}' }
-    time_range = 'time_range=medium_term'
-    limit = 'limit=10'
-    endpoint = 'https://api.spotify.com/v1/me/top/tracks?' + time_range + '&' + limit
-    response = requests.get(endpoint, headers=headers)
-
-    if response.status_code == 200:
-        top_items = response.json()
-        track_data = []
-        for item in top_items.get('items', []):
+    track_data = []
+    if track_response.status_code == 200:
+        top_tracks = track_response.json()
+        for item in top_tracks.get('items', []):
             track_data.append({
                 'artist_url': item.get('album').get('artists')[0].get('external_urls').get('spotify'),
                 'artist_name': item.get('album').get('artists')[0].get('name'),
@@ -60,6 +57,10 @@ def get_tracks(request):
                 'song_name': item.get('name'),
                 'preview_url': item.get('preview_url')
             })
-        return render(request, 'myapp/get_tracks.html', {'track_data': track_data})
-    else:
-        return render(request, 'myapp/get_tracks.html', {'error': 'Failed to retrieve top tracks.'})
+
+    wrap = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
+    wrap.set_top_artists(artist_data)
+    wrap.set_top_tracks(track_data)
+    wrap.save()
+
+    return render(request, 'myapp/get_top.html', {'artist_data': artist_data, 'track_data': track_data})

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Tracks</title>
+    <title>Top Tracks and Artists</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,6 +28,9 @@
             margin-right: 15px;
             border-radius: 5px;
         }
+        .artist img {
+            border-radius: 50%;
+        }
         a {
             text-decoration: none;
             color: #1DB954;
@@ -51,6 +54,23 @@
                     <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
                     <p><strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a></p>
                     <p><strong>Duration:</strong> {{ track.duration_ms }} ms</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<h1>Top Artists</h1>
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% else %}
+    <ul>
+        {% for artist in artist_data %}
+            <li class="artist">
+                <img src="{{ artist.image }}" alt="{{ artist.name }}" width="50" height="50" />
+                <div>
+                    <p><strong>Name:</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a></p>
+                    <p><strong>Genres:</strong> {{ artist.genres|join:", " }}</p>
                 </div>
             </li>
         {% endfor %}
