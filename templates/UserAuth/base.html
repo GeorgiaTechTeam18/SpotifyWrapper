@@ -13,12 +13,12 @@
     <ul class="icon-menu">
         {% if user.is_authenticated %}
             <li class="icon-section">
-                <a href="{% url 'deepcut' %}">
+                <a href="{% url 'myapp:deepcut' %}">
                     🎮<span class="HiddenOnMobile"> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section">
-                <a href="{% url 'home' %}">
+                <a href="{% url 'myapp:view_wraps' %}">
                     📦<span class="HiddenOnMobile">Generate</span>  Wrapped
                 </a>
             </li>

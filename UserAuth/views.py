@@ -1,4 +1,5 @@
 import secrets
+from audioop import reverse
 from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from requests import Request, post, exceptions
@@ -159,3 +160,8 @@ def getSpotifyUserData(access_token):
         return response.json()
     else:
         raise Exception(f"Failed to retrieve user info. Status code: {response.status_code}")
+
+
+@login_required
+def deepcut(request):
+    return redirect(request,reverse('myapp:deepcut'))

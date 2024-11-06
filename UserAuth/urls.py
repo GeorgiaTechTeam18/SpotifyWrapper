@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -8,5 +8,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('authWithSpotify/', views.authWithSpotify, name='authWithSpotify'),
     path('callback/', views.callback, name='callback'),
-    path('profile/', views.profile_view, name='profile')
+    path('profile/', views.profile_view, name='profile'),
+    path('deepcut/', include('myapp.urls'), name='deepcut'),
+    path('view_wraps/', include('myapp.urls'), name='view_wraps')
 ]
