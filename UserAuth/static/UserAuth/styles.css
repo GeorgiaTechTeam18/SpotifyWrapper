@@ -42,7 +42,13 @@ main {
     list-style-type: none;
 }
 
+#hamburger {
+    display: none;
+}
 
+.ShownOnMobile {
+    display: none;
+}
 
 .icon-menu li a {
     font-weight: bold;
@@ -67,8 +73,24 @@ main {
     border-color: #1DB954;
 }
 
+#hamburger .icon-menu {
+    background: #1AA34A;
+    flex-direction: column;
+    padding: 0;
+    align-items: flex-start;
+}
 
+#hamburger .icon-menu li {
+    width: 100%;
+    margin: 0;
+}
 
+#hamburger .icon-menu li a {
+    display: block;
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid green;
+}
 
 .side-image {
     position: absolute;
@@ -271,5 +293,8 @@ main {
     }
     .HiddenOnMobile {
         display: none;
+    }
+    .ShownOnMobile {
+        display: block;
     }
 }
