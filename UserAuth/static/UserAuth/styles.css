@@ -8,12 +8,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#Index-main-text {
-    text-align: center;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 20px;
+#base-body {
+    background: linear-gradient(to bottom, #ffffff, #9a9999);
+    border-radius: 8px;
 }
+
 
 .content-container {
     max-width: 950px;
@@ -29,8 +28,12 @@ main {
 }
 
 .banner {
-    background-color: #6ABD93;
-    padding: 10px 0;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #66BB6A;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .icon-menu {
@@ -40,19 +43,27 @@ main {
     list-style-type: none;
 }
 
-.icon-section {
-    margin: 0 15px;
+.icon-menu li a {
+    font-weight: bold;
+    color: green;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: white; /* Spotify green */
+    border-radius: 20px;
+    border: 2px solid white;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    margin: 0 5px;
 }
 
-.icon-section a {
-    text-decoration: none;
-    color: #000; /* Text color */
-    font-weight: bold;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.icon-menu li a:hover {
+    background-color: #ffffff; /* White on hover */
+    color: #1DB954; /* Green text on hover */
+    border-color: #1DB954;
 }
+
+
+
 
 .side-image {
     position: absolute;
@@ -64,6 +75,9 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0.85;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .side-image img {
@@ -102,7 +116,12 @@ main {
     align-self: center; /* Align checkmark vertically */
 }
 
-/* Additional styling to align text in a single column */
+#Index-main-text {
+    padding-bottom: 1em;
+    justify-content: center;
+}
+
+
 .text-container {
     display: flex;
     flex-direction: column;
@@ -190,14 +209,14 @@ main {
     color: #A268DB;
 }
 
-#login-alternate {
+.login-alternate {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: Arial, sans-serif;
 }
 
-#login-alternate p {
+.login-alternate p {
     margin: 10px 0;
     font-size: 14px;
     color: #333;

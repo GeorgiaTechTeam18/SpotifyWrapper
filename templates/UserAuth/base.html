@@ -11,35 +11,34 @@
 <body>
 <div class="banner">
     <ul class="icon-menu">
-        <li class="icon-section">
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
+            <li class="icon-section">
                 <a href="{% url 'deepcut' %}">
-                    🎮<span class="HiddenOnMobile"> Play Deep Cut</span>
+                    🎮<span class="HiddenOnMobile"> Play</span> Deep Cut
                 </a>
-                {% else %}
-                <a href="{% url 'login' %}">
-                    🔒<span class="HiddenOnMobile"> Log in</span>
-                </a>
-            {% endif %}
-        </li>
-        <li class="icon-section">
-            {% if user.is_authenticated %}
+            </li>
+            <li class="icon-section">
                 <a href="{% url 'home' %}">
-                    📦<span class="HiddenOnMobile">Generate Wrap</span>
+                    📦<span class="HiddenOnMobile">Generate</span>  Wrapped
                 </a>
-            {% else %}
-                <a href="{% url 'login' %}">
-                    🔒<span class="HiddenOnMobile">Sign up</span>
-                </a>
-            {% endif %}
-        </li>
-        <li>
-            {% if is_authenticated %}
+            </li>
+            <li>
                 <a href="{% url 'logout' %}">
                     🚪<span class="HiddenOnMobile">Log Out</span>
                 </a>
-            {% endif %}
-        </li>
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url 'signup' %}">
+                    🔒 Sign up
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">
+                    🔒 Log in
+                </a>
+            </li>
+        {% endif %}
     </ul>
 </div>
 
