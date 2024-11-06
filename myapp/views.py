@@ -1,9 +1,10 @@
 # myapp/views.py
 import requests
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from UserAuth.util import get_user_tokens
+from .models import SpotifyWrap
 
 
 @login_required
@@ -36,6 +37,34 @@ def get_artists(request):
     else:
         return render(request, 'myapp/get-artists.html', {'error': 'Failed to retrieve top artists.'})
 
+
+def like_wrap(request):
+    access_token = get_user_tokens(request.user).access_token
+    wrap_id = request.POST.get('wrap_id')
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
+
+    # Check if wrap is already liked
+    if request.user in wrap.likes.all():
+        return JsonResponse({'message': 'already liked'})
+    else:
+        wrap.likes.add(request.user)
+        return JsonResponse({'message': 'success'})
+
+def unlike_wrap(request):
+    access_token = get_user_tokens(request.user).access_token
+    wrap_id = request.POST.get('wrap_id')
+    wrap = SpotifyWrap.objects.get(id=wrap_id)
+
+    # Check if unliked wrap is already liked
+    if request.user in wrap.likes.all():
+        wrap.likes.remove(request.user)
+        return JsonResponse({'message': 'success'})
+    else:
+        return JsonResponse({'message': 'not liked'})
+
+
+
+
 def get_tracks(request):
     access_token = get_user_tokens(request.user).access_token
 
@@ -63,3 +92,7 @@ def get_tracks(request):
         return render(request, 'myapp/get_tracks.html', {'track_data': track_data})
     else:
         return render(request, 'myapp/get_tracks.html', {'error': 'Failed to retrieve top tracks.'})
+
+
+
+

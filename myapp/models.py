@@ -5,7 +5,8 @@ from UserAuth.models import User
 class SpotifyWrap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    artists = models.TextField(default='')
+    tracks = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
 
