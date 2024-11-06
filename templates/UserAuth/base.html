@@ -11,6 +11,11 @@
 <body>
 <div class="banner">
     <ul class="icon-menu">
+        <li class="icon-section icon-section-left">
+            <a href="{% url 'home' %}">
+                Spotify Wrapper
+            </a>
+        </li>
         {% if user.is_authenticated %}
             <li class="icon-section">
                 <a href="{% url 'myapp:deepcut' %}">
