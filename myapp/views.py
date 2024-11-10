@@ -12,3 +12,6 @@ def deepcut(request):
 
 def view_wraps(request):
     return render(request, 'myapp/view_wraps.html')
+
+def generate_wraps(request):
+    return render(request, 'myapp/view_wraps.html')
