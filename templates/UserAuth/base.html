@@ -6,43 +6,73 @@
     <title>{% block title %}Spotify Wrap{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'UserAuth/styles.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block head %}{% endblock %}
 </head>
 <body>
 <div class="banner">
     <ul class="icon-menu">
-        <li class="icon-section">
-            {% if user.is_authenticated %}
-                <a href="">
-                    🎮<span class="HiddenOnMobile"> Play Deep Cut</span>
-                </a>
-                {% else %}
-                <a href="{% url 'login' %}">
-                    🔒<span class="HiddenOnMobile"> Log in</span>
-                </a>
-            {% endif %}
+        <li class="icon-section icon-section-left">
+            <a href="{% url 'home' %}">
+                Spotify Wrapper
+            </a>
         </li>
-        <li class="icon-section">
-            {% if user.is_authenticated %}
-                <a href="{% url 'home' %}">
-                    📦<span class="HiddenOnMobile">Generate Wrap</span>
+        {% if user.is_authenticated %}
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'myapp:deepcut' %}">
+                    🎮<span> Play</span> Deep Cut
                 </a>
-            {% else %}
-                <a href="{% url 'login' %}">
-                    🔒<span class="HiddenOnMobile">Sign up</span>
+            </li>
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'myapp:view_wraps' %}">
+                    📦Generate Wrapped
                 </a>
-            {% endif %}
-        </li>
-        <li>
-            {% if is_authenticated %}
+            </li>
+            <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'logout' %}">
-                    🚪<span class="HiddenOnMobile">Log Out</span>
+                    🚪Log Out
                 </a>
-            {% endif %}
-        </li>
+            </li>
+            <li class="icon-section ShownOnMobile">
+                <a onclick="toggleHamburger()">
+                    <i class="fa fa-bars" id="hamburger-button"></i>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url 'signup' %}">
+                    🔒 Sign up
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'login' %}">
+                    🔒 Log in
+                </a>
+            </li>
+        {% endif %}
     </ul>
 </div>
-
+<div id="hamburger">
+    {% if user.is_authenticated %}
+        <ul class="icon-menu">
+            <li class="icon-section">
+                <a href="{% url 'myapp:deepcut' %}">
+                    🎮<span> Play</span> Deep Cut
+                </a>
+            </li>
+            <li class="icon-section">
+                <a href="{% url 'myapp:generate_wraps' %}">
+                    📦Generate Wrapped
+                </a>
+            </li>
+            <li class="icon-section">
+                <a href="{% url 'logout' %}">
+                    🚪Log Out
+                </a>
+            </li>
+        </ul>
+    {% endif %}
+</div>
 <main>
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -56,7 +86,25 @@
     <div class="side-image">
         <img src="{% static 'UserAuth/base1-default.jpg' %}" alt="Abstract Art">
     </div>
-    {% block body %}{% endblock %}
+    <div class="content-container">
+        {% block body %}{% endblock %}
+    </div>
 </main>
+<script>
+    function toggleHamburger() {
+        const x = document.getElementById("hamburger");
+        const button = document.getElementById("hamburger-button")
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            button.classList.add("fa-bars")
+            button.classList.remove("fa-close")
+
+        } else {
+            x.style.display = "block";
+            button.classList.remove("fa-bars")
+            button.classList.add("fa-close")
+        }
+    }
+</script>
 </body>
 </html>

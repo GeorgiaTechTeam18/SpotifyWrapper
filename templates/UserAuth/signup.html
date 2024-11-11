@@ -1,8 +1,8 @@
 {% extends 'UserAuth/base.html' %}
-
+{% load static %}
 {% block body %}
     <form class="authForm" action='{% url 'signup' %}' method="post">
-        <h3>Create an Account with Email and Password</h3>
+        <h3>Create an Account</h3><br>
         {% csrf_token %}
         <div>
             <label for="id_email">Email</label>
@@ -19,5 +19,11 @@
             <button type="submit">Create Account</button>
         </span>
     </form>
-    <a href="{% url 'authWithSpotify' %}">Sign up with Spotify oauth</a>
+        <div class="login-alternate">
+        <p>or</p>
+        <a href="{% url 'authWithSpotify' %}" class="spotify-login">
+            <img src="{% static 'UserAuth/spotify-icon.webp' %}" alt="Spotify Logo" class="spotify-icon">
+            Connect with Spotify
+        </a>
+        </div>
 {% endblock %}

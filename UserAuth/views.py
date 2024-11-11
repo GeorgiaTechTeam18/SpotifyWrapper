@@ -1,4 +1,5 @@
 import secrets
+from audioop import reverse
 from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from requests import Request, post, exceptions
@@ -79,9 +80,11 @@ def profile_view(request):
     return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens})
 
 
-def delete_token(request, spotify_account_username):
-    SpotifyToken.objects.filter(spotify_account_username=spotify_account_username).delete()
-    return JsonResponse({"success":True})
+def delete_token(request):
+    if request.method == "POST":
+        spotify_account_username = request.POST.get('spotify_account_username')
+        SpotifyToken.objects.filter(spotify_account_username=spotify_account_username).delete()
+        return JsonResponse({"success":True})
 
 
 def logout_view(request):
@@ -159,3 +162,8 @@ def getSpotifyUserData(access_token):
         return response.json()
     else:
         raise Exception(f"Failed to retrieve user info. Status code: {response.status_code}")
+
+
+@login_required
+def deepcut(request):
+    return redirect(request,reverse('myapp:deepcut'))

@@ -8,18 +8,18 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#Index-main-text {
-    text-align: center;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 20px;
+#base-body {
+    background: linear-gradient(to bottom, #ffffff, #9a9999);
+    border-radius: 8px;
 }
+
 
 .content-container {
     max-width: 950px;
     margin: auto;
     padding-left: 1.5em;
     padding-right: 1.51em;
+    padding-top: 1.5em;
 }
 
 main {
@@ -28,29 +28,68 @@ main {
 }
 
 .banner {
-    background-color: #bfbfbf;
-    padding: 10px 0;
+    color: darkgrey;
+    background-color: #fbfbfb;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+    padding: .8em 0em;
 }
 
 .icon-menu {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: nowrap;
     align-items: center;
     list-style-type: none;
 }
 
-.icon-section {
-    margin: 0 15px;
+#hamburger {
+    display: none;
 }
 
-.icon-section a {
-    text-decoration: none;
-    color: #000; /* Text color */
+.ShownOnMobile {
+    display: none;
+}
+
+.icon-menu li a {
     font-weight: bold;
+    padding: .5em;
+    text-decoration: none;
+    transition: all 0.3s ease;
     font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    color: #1DB954; /* Spotify green text color */
+    border: 2px solid #1DB954; /* Spotify green border */
+    border-radius: .3em;
+    margin-right: .4em;
+}
+
+.icon-section-left {
+    margin-left: .4em;
+    margin-right: auto;
+}
+
+.icon-menu li a:hover {
+    background-color: #ffffff; /* White on hover */
+    color: #1DB954; /* Green text on hover */
+    border-color: #1DB954;
+}
+
+#hamburger .icon-menu {
+    background: #1AA34A;
+    flex-direction: column;
+    padding: 0;
+    align-items: flex-start;
+}
+
+#hamburger .icon-menu li {
+    width: 100%;
+    margin: 0;
+}
+
+#hamburger .icon-menu li a {
+    display: block;
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid green;
 }
 
 .side-image {
@@ -63,6 +102,9 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0.85;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .side-image img {
@@ -101,15 +143,133 @@ main {
     align-self: center; /* Align checkmark vertically */
 }
 
-/* Additional styling to align text in a single column */
+#Index-main-text {
+    padding-bottom: 1em;
+    justify-content: center;
+}
+
+
 .text-container {
     display: flex;
     flex-direction: column;
 }
 
+/* Container styling */
 #loginorsignup {
-    margin-left: 40%;
-    margin-right: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between elements */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+/* Anchor tag styling */
+#loginorsignup a {
+    color: #1DB954; /* Spotify green */
+    font-weight: bold;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #1DB954;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* login form*/
+.authForm {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #B488F2;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    background-color: #FFFFFF;
+}
+
+.authForm label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.authForm input[type="email"],
+.authForm input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+
+.authForm button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.authForm button:hover {
+    background-color: #555;
+}
+
+.authForm a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #B488F2;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.authForm a:hover {
+    color: #A268DB;
+}
+
+.login-alternate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-alternate p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.spotify-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #1DB954;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.spotify-login:hover {
+    background-color: #1AA34A;
+}
+
+.spotify-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
 }
 
 @media (max-width: 768px) {
@@ -127,9 +287,13 @@ main {
         top: unset;
     }
     .content-container {
-        padding-bottom: 5em;
+        padding-bottom: 4em;
+        padding-top: 25%;
     }
     .HiddenOnMobile {
         display: none;
+    }
+    .ShownOnMobile {
+        display: block;
     }
 }
