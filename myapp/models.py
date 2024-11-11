@@ -1,19 +1,18 @@
 # myapp/models.py
 from django.db import models
 from UserAuth.models import User
-import json
 
 class SpotifyWrap(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    artists = models.TextField(default='')
-    tracks = models.TextField(default='')
+    artists = models.ManyToManyField('Artist', related_name='spotify_wraps')
+    tracks = models.ManyToManyField('Track', related_name='spotify_wraps')
     is_public = models.BooleanField(default=True)
     def set_top_artists(self, artists_list):
-        self.artists = json.dumps(artists_list)
+        self.artists.set(artists_list)
     def set_top_tracks(self, tracks_list):
-        self.tracks = json.dumps(tracks_list)
+        self.tracks.set(tracks_list)
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
