@@ -51,15 +51,39 @@ main {
 }
 
 .icon-menu li a {
+    background-color: #FFFFFF;
     font-weight: bold;
     padding: .5em;
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 16px;
-    color: #1DB954; /* Spotify green text color */
-    border: 2px solid #1DB954; /* Spotify green border */
-    border-radius: .3em;
-    margin-right: .4em;
+    color: #1DB954;
+    border-right: 1px solid #1DB954;
+}
+
+.icon-menu li:nth-child(1) a{
+    border-left: none;
+    border-right: none;
+}
+
+.icon-menu li:nth-child(2) a{
+    border-left: none;
+    border-right: solid .14em #1DB954;
+}
+
+.icon-menu li:nth-child(3) a{
+    border-left: none;
+    border-right: solid .14em #1DB954;
+}
+
+.icon-menu li:nth-child(4) a{
+    border-left: none;
+    border-right: none;
+}
+
+.icon-menu li:last-child a {
+    border-left: none;
+    border-right: none;
 }
 
 .icon-section-left {
