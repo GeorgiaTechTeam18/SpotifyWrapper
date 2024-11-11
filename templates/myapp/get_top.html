@@ -48,7 +48,7 @@
     <ul>
         {% for track in track_data %}
             <li>
-                <img src="{{ track.album_image }}" alt="{{ track.album_name }}" width="50" height="50" />
+                <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50" />
                 <div>
                     <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
                     <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
@@ -67,7 +67,7 @@
     <ul>
         {% for artist in artist_data %}
             <li class="artist">
-                <img src="{{ artist.image }}" alt="{{ artist.name }}" width="50" height="50" />
+                <img src="{{ artist.image_url }}" alt="{{ artist.name }}" width="50" height="50" />
                 <div>
                     <p><strong>Name:</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a></p>
                     <p><strong>Genres:</strong> {{ artist.genres|join:", " }}</p>

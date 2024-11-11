@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from UserAuth.util import get_user_tokens
-from .models import SpotifyWrap, Artist, Track
+from .models import SpotifyWrap
 
 
 @login_required
@@ -58,19 +58,11 @@ def get_top(request, time_range='medium_term'):
     if artist_response.status_code == 200:
         top_artists = artist_response.json()
         for item in top_artists.get('items', []):
-            artist = Artist.objects.create(
-                user=request.user,
-                name=item.get('name'),
-                genres=item.get('genres'),
-                image_url=item.get('images')[0].get('url') if item.get('images') else '',
-                artist_url=item.get('external_urls', {}).get('spotify', ''),
-                time_range=time_range
-            )
             artist_data.append({
-                'image': artist.image_url,
-                'name': artist.name,
-                'genres': artist.genres,
-                'artist_url': artist.artist_url
+                'image_url': item.get('images')[0].get('url') if item.get('images') else '',
+                'name': item.get('name'),
+                'genres': item.get('genres'),
+                'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
         return render(request, 'myapp/get_top.html', {'error': 'Failed to retrieve top artists.'})
@@ -82,31 +74,23 @@ def get_top(request, time_range='medium_term'):
     if track_response.status_code == 200:
         top_tracks = track_response.json()
         for item in top_tracks.get('items', []):
-            track = Track.objects.create(
-                user=request.user,
-                name=item.get('name'),
-                artist_name=item.get('album').get('artists')[0].get('name'),
-                album_name=item.get('album').get('name'),
-                duration_ms=item.get('duration_ms'),
-                song_url=item.get('external_urls', {}).get('spotify', ''),
-                preview_url=item.get('preview_url'),
-                album_image_url=item.get('album').get('images')[0].get('url') if item.get('album').get('images') else '',
-                artist_url=item.get('album').get('artists')[0].get('external_urls', {}).get('spotify', ''),
-                album_url=item.get('album').get('external_urls', {}).get('spotify', ''),
-                time_range=time_range
-            )
             track_data.append({
-                'artist_url': track.artist_url,
-                'artist_name': track.artist_name,
-                'album_url': track.album_url,
-                'album_image': track.album_image_url,
-                'album_name': track.album_name,
-                'duration_ms': track.duration_ms,
-                'song_url': track.song_url,
-                'song_name': track.name,
-                'preview_url': track.preview_url
+                'artist_url': item.get('album').get('artists')[0].get('external_urls', {}).get('spotify', ''),
+                'artist_name': item.get('album').get('artists')[0].get('name'),
+                'album_url': item.get('album').get('external_urls', {}).get('spotify', ''),
+                'album_image_url': item.get('album').get('images')[0].get('url') if item.get('album').get('images') else '',
+                'album_name': item.get('album').get('name'),
+                'duration_ms': item.get('duration_ms'),
+                'song_url': item.get('external_urls', {}).get('spotify', ''),
+                'song_name': item.get('name'),
+                'preview_url': item.get('preview_url')
             })
     else:
         return render(request, 'myapp/get_top.html', {'error': 'Failed to retrieve top tracks.'})
+
+    wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
+    wrap.set_top_artists(artist_data)
+    wrap.set_top_tracks(track_data)
+    wrap.save()
 
     return render(request, 'myapp/get_top.html', {'artist_data': artist_data, 'track_data': track_data})
