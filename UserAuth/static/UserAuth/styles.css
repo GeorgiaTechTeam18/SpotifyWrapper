@@ -28,9 +28,9 @@ main {
 }
 
 .banner {
-    color: white;
+    color: darkgrey;
+    background-color: #fbfbfb;
     text-decoration: none;
-    background-color: #66BB6A;
     transition: background-color 0.3s, transform 0.3s;
     padding: .8em 0em;
 }
@@ -52,12 +52,12 @@ main {
 
 .icon-menu li a {
     font-weight: bold;
-    color: green;
     padding: .5em;
     text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.71); /* Spotify green */
     transition: all 0.3s ease;
     font-size: 16px;
+    color: #1DB954; /* Spotify green text color */
+    border: 2px solid #1DB954; /* Spotify green border */
     border-radius: .3em;
     margin-right: .4em;
 }
@@ -162,7 +162,6 @@ main {
     gap: 8px; /* Space between elements */
     font-family: Arial, sans-serif;
     font-size: 16px;
-    color: #1DB954; /* Spotify green */
 }
 
 /* Anchor tag styling */
