@@ -14,13 +14,12 @@ def post_wrap(request):
 def view_wraps(request):
     return render(request, 'myapp/view_wraps.html')
 
-def get_artists(request):
+def get_artists(request, time_range='medium_term'):
     access_token = get_user_tokens(request.user).access_token
 
     headers = {'Authorization': f'Bearer {access_token}'}
-    time_range = 'time_range=medium_term'
     limit = 'limit=10'
-    endpoint = 'https://api.spotify.com/v1/me/top/artists?' + time_range + '&' + limit
+    endpoint = f'https://api.spotify.com/v1/me/top/artists?time_range={time_range}&{limit}'
     response = requests.get(endpoint, headers=headers)
 
     if response.status_code == 200:
@@ -65,13 +64,12 @@ def unlike_wrap(request):
 
 
 
-def get_tracks(request):
+def get_tracks(request, time_range='medium_term'):
     access_token = get_user_tokens(request.user).access_token
 
-    headers = { 'Authorization': f'Bearer {access_token}' }
-    time_range = 'time_range=medium_term'
+    headers = {'Authorization': f'Bearer {access_token}'}
     limit = 'limit=10'
-    endpoint = 'https://api.spotify.com/v1/me/top/tracks?' + time_range + '&' + limit
+    endpoint = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}&{limit}'
     response = requests.get(endpoint, headers=headers)
 
     if response.status_code == 200:
