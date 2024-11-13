@@ -288,12 +288,17 @@ main {
     }
     .content-container {
         padding-bottom: 4em;
-        padding-top: 25%;
     }
     .HiddenOnMobile {
         display: none;
     }
     .ShownOnMobile {
         display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    #hamburger {
+        display: none !important;
     }
 }
