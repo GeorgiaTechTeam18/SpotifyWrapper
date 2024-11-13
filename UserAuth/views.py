@@ -84,7 +84,8 @@ def delete_token(request):
     if request.method == "POST":
         spotify_account_username = request.POST.get('spotify_account_username')
         SpotifyToken.objects.filter(spotify_account_username=spotify_account_username).delete()
-        return JsonResponse({"success":True})
+
+    return redirect('profile')
 
 
 def logout_view(request):
