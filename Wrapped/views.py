@@ -1,4 +1,4 @@
-# myapp/views.py
+# Wrapped/views.py
 import requests
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,11 +10,11 @@ from .models import SpotifyWrap
 
 @login_required
 def post_wrap(request):
-    return render(request, 'myapp/post_wrap.html')
+    return render(request, 'Wrapped/post_wrap.html')
 
 
 def view_wraps(request):
-    return render(request, 'myapp/view_wraps.html')
+    return render(request, 'Wrapped/view_wraps.html')
 
 
 def like_wrap(request):
@@ -65,7 +65,7 @@ def get_top(request, time_range='medium_term'):
                 'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
-        return render(request, 'myapp/get_top.html', {'error': 'Failed to retrieve top artists.'})
+        return render(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists.'})
 
     # Fetch top tracks from Spotify API
     track_endpoint = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}&{limit}'
@@ -86,11 +86,11 @@ def get_top(request, time_range='medium_term'):
                 'preview_url': item.get('preview_url')
             })
     else:
-        return render(request, 'myapp/get_top.html', {'error': 'Failed to retrieve top tracks.'})
+        return render(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top tracks.'})
 
     wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
     wrap.set_top_artists(artist_data)
     wrap.set_top_tracks(track_data)
     wrap.save()
 
-    return render(request, 'myapp/get_top.html', {'artist_data': artist_data, 'track_data': track_data})
+    return render(request, 'Wrapped/get_top.html', {'artist_data': artist_data, 'track_data': track_data})

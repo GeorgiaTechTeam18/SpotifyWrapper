@@ -1,4 +1,4 @@
-# myapp/urls.py
+# Wrapped/urls.py
 from django.urls import path
 from .views import post_wrap, view_wraps, get_top
 

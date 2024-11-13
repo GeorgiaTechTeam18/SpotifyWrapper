@@ -1,4 +1,4 @@
-# myapp/models.py
+# Wrapped/models.py
 from django.db import models
 from UserAuth.models import User
 import json
