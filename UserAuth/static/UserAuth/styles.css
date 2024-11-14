@@ -40,6 +40,7 @@ main {
     flex-wrap: nowrap;
     align-items: center;
     list-style-type: none;
+    box-sizing: border-box;
 }
 
 #hamburger {
@@ -57,9 +58,19 @@ main {
     transition: all 0.3s ease;
     font-size: 16px;
     color: #1DB954; /* Spotify green text color */
-    border: 2px solid #1DB954; /* Spotify green border */
+    border: 2px solid rgba(0, 0, 0, 0); /* no border but border spacing */
     border-radius: .3em;
     margin-right: .4em;
+}
+
+.icon-menu li:hover a {
+    border-color: #1DB954; /* Spotify green border */
+    background: rgba(38, 255, 116, 0.17)
+}
+
+.icon-menu li:focus a, .icon-menu li:active a {
+    border-color: black;
+    background: rgba(20, 236, 89, 0.33)
 }
 
 .icon-section-left {
@@ -67,17 +78,12 @@ main {
     margin-right: auto;
 }
 
-.icon-menu li a:hover {
-    background-color: #ffffff; /* White on hover */
-    color: #1DB954; /* Green text on hover */
-    border-color: #1DB954;
-}
-
 #hamburger .icon-menu {
-    background: #1AA34A;
+    background: white;
     flex-direction: column;
     padding: 0;
     align-items: flex-start;
+    box-shadow: 0 .375rem .4375rem rgba(0,0,0,.1),0 .625rem 1.75rem rgba(0,0,0,.25);
 }
 
 #hamburger .icon-menu li {
@@ -88,8 +94,9 @@ main {
 #hamburger .icon-menu li a {
     display: block;
     width: 100%;
-    border-right: 0;
+    border: 0;
     border-bottom: 1px solid green;
+    border-radius: unset;
 }
 
 .side-image {
