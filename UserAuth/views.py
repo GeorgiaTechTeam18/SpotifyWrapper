@@ -163,8 +163,3 @@ def getSpotifyUserData(access_token):
         return response.json()
     else:
         raise Exception(f"Failed to retrieve user info. Status code: {response.status_code}")
-
-
-@login_required
-def deepcut(request):
-    return redirect(request,reverse('myapp:deepcut'))

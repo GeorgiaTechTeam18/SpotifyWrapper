@@ -19,12 +19,12 @@
         </li>
         {% if user.is_authenticated %}
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'myapp:deepcut' %}">
+                <a>
                     🎮<span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'myapp:view_wraps' %}">
+                <a href="{% url 'view_wraps' %}">
                     📦Generate Wrapped
                 </a>
             </li>
@@ -61,12 +61,12 @@
     {% if user.is_authenticated %}
         <ul class="icon-menu">
             <li class="icon-section">
-                <a href="{% url 'myapp:deepcut' %}">
+                <a>
                     🎮<span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section">
-                <a href="{% url 'myapp:generate_wraps' %}">
+                <a href="{% url 'view_wraps' %}">
                     📦Generate Wrapped
                 </a>
             </li>
