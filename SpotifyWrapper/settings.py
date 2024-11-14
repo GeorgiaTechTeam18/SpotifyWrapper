@@ -38,15 +38,14 @@ CSRF_TRUSTED_ORIGINS = ['https://spotifywrapped.theoh.dev']
 # Application definition
 
 INSTALLED_APPS = [
-    # 'UserAuth',
-    'UserAuth.apps.UserauthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp'
+    'UserAuth.apps.UserauthConfig',
+    'Wrapped.apps.WrappedConfig'
 ]
 
 AUTH_USER_MODEL = 'UserAuth.User'

@@ -1,0 +1,48 @@
+<!-- Wrapped/templates/Wrapped/view_wraps.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Spotify Wraps</title>
+</head>
+<body>
+    <h1>Spotify Wraps</h1>
+    <ul>
+        {% for wrap in wraps %}
+        <li>
+            <h2>{{ wrap.title }}</h2>
+            <p>{{ wrap.description }}</p>
+            <p>Posted by: {{ wrap.user.username }}</p>
+            <form method="post" action="{% url 'like_wrap' wrap.id %}">
+                {% csrf_token %}
+                <button type="submit">Like</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Request failed.');
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    console.error(error);
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>
