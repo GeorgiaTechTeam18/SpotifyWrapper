@@ -1,0 +1,71 @@
+.album_scroll_container {
+  height:100px;
+  position:relative;
+  overflow:hidden;
+}
+
+.photobanner {
+  position:absolute;
+  top:0px;
+  left:0px;
+  overflow:hidden;
+  white-space: nowrap;
+  animation: bannermove 10s linear infinite;
+}
+
+.left .photobanner {
+  animation: bannermove_left 10s linear infinite;
+}
+
+.down .photobanner {
+  animation: bannermove_down 10s linear infinite;
+  display: flex;
+  flex-direction: column;
+}
+
+.up .photobanner {
+  animation: bannermove_up 10s linear infinite;
+  display: flex;
+  flex-direction: column;
+}
+
+.photobanner img {
+  margin: .5em 0;
+  border-right: .2em;
+}
+
+@keyframes bannermove {
+  0% {
+      transform: translate(-50%, 0);
+  }
+  100% {
+      transform: translate(0, 0);
+  }
+}
+
+@keyframes bannermove_left {
+  0% {
+      transform: translate(0, 0);
+  }
+  100% {
+      transform: translate(-50%, 0);
+  }
+}
+
+@keyframes bannermove_down {
+  0% {
+      transform: translate(0, -50%);
+  }
+  100% {
+      transform: translate(0, 0);
+  }
+}
+
+@keyframes bannermove_up {
+  0% {
+      transform: translate(0, 0);
+  }
+  100% {
+      transform: translate(0, -50%);
+  }
+}

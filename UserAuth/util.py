@@ -118,4 +118,4 @@ def get_top_song_album_covers():
         headers={"Authorization": f"Bearer {token}"}
     ).json()
 
-    return response
+    return [x["track"]["album"] for x in response["tracks"]["items"][0:10]]
