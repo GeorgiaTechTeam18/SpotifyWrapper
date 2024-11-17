@@ -1,62 +1,68 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
 {% block body %}
-    <div id="Index-main-text" class="promo-section">
-        <div class="promo-content">
-            <h1 class="promo-title">Unwrap at any time.</h1>
-            <p class="promo-description">
-                Tired of waiting for wrapped day to see your music stats? If so, then we are your solution.
-            </p>
-            {% if user.is_authenticated %}
-            <a href="" class="promo-button">Generate a wrap</a>
-            {% else %}
-            <a href="{% url 'signup' %}" class="promo-button">Sign up</a>
-            {% endif %}
+    <div class="flex-container">
+        {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="down" classNames="index-page-albums" id="" %}
+        <div>
+            <div id="Index-main-text" class="promo-section">
+                <div class="promo-content">
+                    <h1 class="promo-title">Unwrap at any time.</h1>
+                    <p class="promo-description">
+                        Tired of waiting for wrapped day to see your music stats? If so, then we are your solution.
+                    </p>
+                    {% if user.is_authenticated %}
+                        <a href="" class="promo-button">Generate a wrap</a>
+                    {% else %}
+                        <a href="{% url 'signup' %}" class="promo-button">Sign up</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="meet-the-team">
+                <h2 class="team-title">Meet the Team</h2>
+                <div class="team-container">
+                    <!-- Team Member 1 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Alex.jpg' %}" alt="Alex Hool" class="team-image">
+                        <h3 class="team-name">Alex Hool</h3>
+                        <p class="team-role">Backend Developer</p>
+                        <p class="team-description">Hi, I'm Alex :)</p>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Varindra.jpeg' %}" alt="Varindra Seegobin" class="team-image">
+                        <h3 class="team-name">Varindra Seegobin</h3>
+                        <p class="team-role">Frontend Developer</p>
+                        <p class="team-description">Hi, I'm Varindra, I designed this site's front end using HTML/CSS and
+                            JavaScript :)</p>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Stanley Wang" class="team-image">
+                        <h3 class="team-name">Stanley Wang</h3>
+                        <p class="team-role">Project Manager</p>
+                        <p class="team-description">Hi, I'm Stanley :)</p>
+                    </div>
+                    <!-- Team Member 4 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Theo.jpg' %}" alt="Theo Halphern" class="team-image">
+                        <h3 class="team-name">Theo Halphern</h3>
+                        <p class="team-role">Full Stack Wizard</p>
+                        <p class="team-description">I do a bit of everything. Check me out on theoh.dev!</p>
+                    </div>
+                    <!-- Team Member 5 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Aneesh Kanaram" class="team-image">
+                        <h3 class="team-name">Aneesh Kanaram</h3>
+                        <p class="team-role">Scrum</p>
+                        <p class="team-description">I scrum so hard</p>
+                    </div>
+    
+                </div>
+                <div class="promo-content">
+                    <a href="{% url 'contact' %}" class="promo-button">FAQ / Contact Us</a>
+                </div>
+            </div>
         </div>
+        {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="up" classNames="index-page-albums" id="" %}
     </div>
-    <div id="meet-the-team">
-    <h2 class="team-title">Meet the Team</h2>
-    <div class="team-container">
-        <!-- Team Member 1 -->
-        <div class="team-member">
-            <img src="{% static 'UserAuth/Alex.jpg' %}" alt="Alex Hool" class="team-image">
-            <h3 class="team-name">Alex Hool</h3>
-            <p class="team-role">Backend Developer</p>
-            <p class="team-description">Hi, I'm Alex :)</p>
-        </div>
-        <!-- Team Member 2 -->
-        <div class="team-member">
-            <img src="{% static 'UserAuth/Varindra.jpeg' %}" alt="Varindra Seegobin" class="team-image">
-            <h3 class="team-name">Varindra Seegobin</h3>
-            <p class="team-role">Frontend Developer</p>
-            <p class="team-description">Hi, I'm Varindra, I designed this site's front end using HTML/CSS and JavaScript :)</p>
-        </div>
-        <!-- Team Member 3 -->
-        <div class="team-member">
-            <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Stanley Wang" class="team-image">
-            <h3 class="team-name">Stanley Wang</h3>
-            <p class="team-role">Project Manager</p>
-            <p class="team-description">Hi, I'm Stanley :)</p>
-        </div>
-        <!-- Team Member 4 -->
-        <div class="team-member">
-            <img src="{% static 'UserAuth/Theo.jpg' %}" alt="Theo Halphern" class="team-image">
-            <h3 class="team-name">Theo Halphern</h3>
-            <p class="team-role">Full Stack Wizard</p>
-            <p class="team-description">I do a bit of everything. Check me out on theoh.dev!</p>
-        </div>
-        <!-- Team Member 5 -->
-        <div class="team-member">
-            <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Aneesh Kanaram" class="team-image">
-            <h3 class="team-name">Aneesh Kanaram</h3>
-            <p class="team-role">Scrum</p>
-            <p class="team-description">I scrum so hard</p>
-        </div>
-
-    </div>
-    <div class="promo-content">
-        <a href="{% url 'contact' %}" class="promo-button">FAQ / Contact Us</a>
-    </div>
-</div>
-
 {% endblock %}

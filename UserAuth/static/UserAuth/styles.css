@@ -17,7 +17,6 @@ body {
 .content-container {
     max-width: 950px;
     margin: auto;
-    padding-top: 1.5em;
     justify-content: left;
 }
 
@@ -103,6 +102,12 @@ main {
 }
 
 /*Index Page Styling*/
+.flex-container {
+    display: flex;
+    gap: 1em;
+}
+
+
 .promo-section {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
@@ -477,5 +482,9 @@ table.linked-tokens  {
 @media (min-width: 768px) {
     #hamburger {
         display: none !important;
+    }
+    .index-page-albums {
+        min-width: 100px;
+        height: unset !important;
     }
 }
