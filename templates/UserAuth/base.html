@@ -20,17 +20,22 @@
         {% if user.is_authenticated %}
             <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'myapp:deepcut' %}">
-                    🎮<span> Play</span> Deep Cut
+                    <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'myapp:view_wraps' %}">
-                    📦Generate Wrapped
+                    Generate Wrapped
+                </a>
+            </li>
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'contact' %}">
+                    Contact Us
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'logout' %}">
-                    🚪Log Out
+                    Log Out
                 </a>
             </li>
             <li class="icon-section ShownOnMobile">
@@ -41,12 +46,17 @@
         {% else %}
             <li>
                 <a href="{% url 'signup' %}">
-                    🔒 Sign up
+                    Sign up
                 </a>
             </li>
             <li>
                 <a href="{% url 'login' %}">
-                    🔒 Log in
+                    Log in
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'contact' %}">
+                    Contact Us
                 </a>
             </li>
         {% endif %}
@@ -57,17 +67,22 @@
         <ul class="icon-menu">
             <li class="icon-section">
                 <a href="{% url 'myapp:deepcut' %}">
-                    🎮<span> Play</span> Deep Cut
+                    <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section">
                 <a href="{% url 'myapp:generate_wraps' %}">
-                    📦Generate Wrapped
+                    Generate Wrapped
+                </a>
+            </li>
+            <li class="icon-section">
+                <a href="{% url 'contact' %}">
+                    Contact Us
                 </a>
             </li>
             <li class="icon-section">
                 <a href="{% url 'logout' %}">
-                    🚪Log Out
+                    Log Out
                 </a>
             </li>
         </ul>

@@ -1,58 +1,20 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
 {% block body %}
-        <div id="Index-main-text">
-        <h1>Unwrap any time with year round spotify wrapped.</h1>
-        </div>
-        <div>
-            <ul>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            Year Round Availability
-                        </h3>
-                        <p>
-                            No need to wait for annual updates - wrap and unwrap any time you like.
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                    <h3>
-                        Your Data Stays Private
-                    </h3>
-                    <p>
-                        We do not store your information with third party buyers, and we will never give out your information to any company or individual.
-                    </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                                        <h3>
-                        Getting Started is Simple
-                    </h3>
-                    <p>
-                        Just click the log in or sign up button to begin!
-                    </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-            </ul>
-            <div id="loginorsignup">
-            {% if not user.is_authenticated %}
-                <a href="{% url 'signup' %}">Sign up</a>
-                <p> or </p>
-                <a href="{% url 'login' %}">Log in</a>
-            {% else %}
-                <p>
-                    Click the links above to get started!
-                </p>
-            </div>
-        {% endif %}
-
-        </div>
+    <div id="Index-main-text">
+    <h1>Unwrap at any time.</h1>
+    </div>
+    <div>
+        <p>Tired of waiting for wrapped day to see your music stats? If so, then we are your solution.</p>
+        <a href="{% url "signup" %}"> Sign up</a>
+    </div>
+    <div>
+    <div>
+        <h2>
+            Have questions?
+        </h2>
+        <a href="{% url 'contact' %}"> FAQ / Contact Us</a>
+    </div>
+    </div>
 
 {% endblock %}

@@ -78,6 +78,11 @@ main {
 
 .icon-menu li:nth-child(4) a{
     border-left: none;
+    border-right: solid .14em #1DB954;
+}
+
+.icon-menu li:nth-child(5) a{
+    border-left: none;
     border-right: none;
 }
 
@@ -178,25 +183,64 @@ main {
     flex-direction: column;
 }
 
-/* Container styling */
-#loginorsignup {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* Space between elements */
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+/* General styling for the Contact Us section */
+.contact-us-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Anchor tag styling */
-#loginorsignup a {
-    color: #1DB954; /* Spotify green */
-    font-weight: bold;
-    text-decoration: none;
-    padding: 5px 10px;
-    border: 1px solid #1DB954;
-    border-radius: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.contact-us-container h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #4a4a4a;
+    margin-bottom: 15px;
+}
+
+.contact-us-form input,
+.contact-us-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-us-form textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+.contact-us-form .btn {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.contact-us-form .btn:hover {
+    background-color: #45a049;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.messages li {
+    color: #4caf50;
+    font-size: 1rem;
 }
 
 /* login form*/
@@ -312,12 +356,32 @@ main {
     }
     .content-container {
         padding-bottom: 4em;
-        padding-top: 25%;
+        padding-top: 2em;
     }
     .HiddenOnMobile {
         display: none;
     }
     .ShownOnMobile {
         display: block;
+    }
+
+    /*Contact Us Styling*/
+        .contact-us-container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .contact-us-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .contact-us-form input,
+    .contact-us-form textarea {
+        font-size: 0.9rem;
+    }
+
+    .contact-us-form .btn {
+        font-size: 1rem;
+        padding: 8px 15px;
     }
 }

@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('unlink/', views.delete_token, name='unlink_token'),
     path('deepcut/', include('myapp.urls'), name='deepcut'),
-    path('view_wraps/', include('myapp.urls'), name='view_wraps')
+    path('view_wraps/', include('myapp.urls'), name='view_wraps'),
+    path('contact/', views.contact, name='contact'),
 ]
