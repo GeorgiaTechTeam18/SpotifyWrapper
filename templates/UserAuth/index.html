@@ -7,7 +7,11 @@
             <p class="promo-description">
                 Tired of waiting for wrapped day to see your music stats? If so, then we are your solution.
             </p>
+            {% if user.is_authenticated %}
+            <a href="" class="promo-button">Generate a wrap</a>
+            {% else %}
             <a href="{% url 'signup' %}" class="promo-button">Sign up</a>
+            {% endif %}
         </div>
     </div>
     <div id="meet-the-team">
