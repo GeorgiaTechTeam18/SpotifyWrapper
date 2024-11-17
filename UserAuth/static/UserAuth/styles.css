@@ -240,7 +240,12 @@ main {
     padding-bottom: 1em;
     justify-content: center;
 }
-
+.index-page-albums {
+    display: none;
+}
+.index-page-albums-mobile {
+    display: block;
+}
 
 .text-container {
     display: flex;
@@ -457,6 +462,9 @@ table.linked-tokens  {
         width: 90%; /* Adjust size on smaller screens */
         margin: 0 auto;
     }
+    .promo-section{
+        padding-top: 0;
+    }
 
     /*Contact Us Styling*/
     .contact-us-container {
@@ -484,7 +492,11 @@ table.linked-tokens  {
         display: none !important;
     }
     .index-page-albums {
+        display: block;
         min-width: 100px;
         height: unset !important;
+    }
+    .index-page-albums-mobile {
+        display: none;
     }
 }
