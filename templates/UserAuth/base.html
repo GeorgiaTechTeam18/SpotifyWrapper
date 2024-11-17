@@ -20,23 +20,23 @@
         </li>
         {% if user.is_authenticated %}
             <li class="icon-section HiddenOnMobile">
-                <a>
-                    🎮<span> Play</span> Deep Cut
+                <a href="">
+                    <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'view_wraps' %}">
-                    📦Generate Wrapped
+                <a href="">
+                    Generate Wrapped
+                </a>
+            </li>
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'contact' %}">
+                    Contact Us
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'profile' %}">
-                    👤Profile
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'logout' %}">
-                    🚪Log Out
+                    Profile
                 </a>
             </li>
             <li class="icon-section ShownOnMobile">
@@ -44,15 +44,25 @@
                     <i class="fa fa-bars" id="hamburger-button"></i>
                 </a>
             </li>
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'logout' %}">
+                    Log Out
+                </a>
+            </li>
         {% else %}
             <li>
                 <a href="{% url 'signup' %}">
-                    🔒 Sign up
+                    Sign up
                 </a>
             </li>
             <li>
                 <a href="{% url 'login' %}">
-                    🔒 Log in
+                    Log in
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'contact' %}">
+                    Contact Us
                 </a>
             </li>
         {% endif %}
@@ -62,23 +72,28 @@
     {% if user.is_authenticated %}
         <ul class="icon-menu">
             <li class="icon-section">
-                <a>
-                    🎮<span> Play</span> Deep Cut
+                <a href="">
+                    <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section">
-                <a href="{% url 'view_wraps' %}">
-                    📦Generate Wrapped
+                <a href="">
+                    Generate Wrapped
+                </a>
+            </li>
+            <li class="icon-section">
+                <a href="{% url 'contact' %}">
+                    Contact Us
                 </a>
             </li>
             <li class="icon-section">
                 <a href="{% url 'profile' %}">
-                    👤Profile
+                    Profile
                 </a>
             </li>
             <li class="icon-section">
                 <a href="{% url 'logout' %}">
-                    🚪Log Out
+                    Log Out
                 </a>
             </li>
         </ul>
@@ -94,9 +109,6 @@
             </button>
         </div>
     {% endfor %}
-    <div class="side-image">
-        <img src="{% static 'UserAuth/base1-default.jpg' %}" alt="Abstract Art">
-    </div>
     <div class="content-container">
         {% block body %}{% endblock %}
     </div>

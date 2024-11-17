@@ -6,7 +6,8 @@ from .models import SpotifyToken
 import os
 from dotenv import load_dotenv
 from django.contrib.auth import login, logout, get_user_model, authenticate
-from .form import RegistrationForm
+from .form import RegistrationForm, ContactUsForm
+from django.contrib import messages
 import requests
 from django.contrib.auth.decorators import login_required
 load_dotenv()
@@ -19,6 +20,17 @@ User = get_user_model()
 
 def home(request):
     return render(request, 'UserAuth/index.html', {"album_covers": get_top_song_album_covers()})
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Thank you for your feedback! We'll get back to you soon.")
+            return redirect('contact')
+    else:
+        form = ContactUsForm()
+    return render(request, 'UserAuth/contactus.html', {'form': form})
 
 
 def generate_random_string(length):
@@ -159,3 +171,7 @@ def getSpotifyUserData(access_token):
         return response.json()
     else:
         raise Exception(f"Failed to retrieve user info. Status code: {response.status_code}")
+
+@login_required
+def deepcut(request):
+    return redirect(request,reverse('Wrapped:deepcut'))
