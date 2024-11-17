@@ -17,7 +17,6 @@ body {
 .content-container {
     max-width: 950px;
     margin: auto;
-    margin-left: 8em;
     padding-right: 1.5em;
     padding-top: 1.5em;
     justify-content: left;
@@ -26,7 +25,6 @@ body {
 
 main {
     position: relative;
-
     background: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
 }
 
@@ -61,49 +59,22 @@ main {
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 16px;
-
     color: #1DB954;
-    border-right: 1px solid #1DB954;
-}
-
-.icon-menu li:nth-child(1) a{
-    border-left: none;
-    border-right: none;
-}
-
-.icon-menu li:nth-child(2) a{
-    border-left: none;
-    border-right: solid .14em #1DB954;
-}
-
-.icon-menu li:nth-child(3) a{
-    border-left: none;
-    border-right: solid .14em #1DB954;
-}
-
-.icon-menu li:nth-child(4) a{
-    border-left: none;
-    border-right: solid .14em #1DB954;
-}
-
-.icon-menu li:nth-child(5) a{
-    border-left: none;
-    border-right: none;
+    border:  1px solid transparent;
+    border-right-color: #1DB954;
 }
 
 .icon-menu li:last-child a {
-    border-left: none;
-    border-right: none;
-
+    border-right-color: transparent;
 }
 
 .icon-menu li:hover a {
-    border-color: #1DB954; /* Spotify green border */
+    border: 1px solid #1DB954; /* Spotify green border */
     background: rgba(38, 255, 116, 0.17)
 }
 
 .icon-menu li:focus a, .icon-menu li:active a {
-    border-color: black;
+    border: 1px solid black;
     background: rgba(20, 236, 89, 0.33)
 }
 
@@ -474,9 +445,6 @@ table.linked-tokens  {
 }
 
 @media (max-width: 768px) {
-    #hamburger {
-        display: none !important;
-    }
     main {
         padding-right: unset;
         min-height: 100vh;
@@ -531,4 +499,8 @@ table.linked-tokens  {
     }
 }
 
-
+@media (min-width: 768px) {
+    #hamburger {
+        display: none !important;
+    }
+}

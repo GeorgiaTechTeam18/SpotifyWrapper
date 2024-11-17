@@ -20,12 +20,12 @@
         </li>
         {% if user.is_authenticated %}
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'Wrapped:deepcut' %}">
+                <a href="">
                     <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'Wrapped:view_wraps' %}">
+                <a href="">
                     Generate Wrapped
                 </a>
             </li>
@@ -36,17 +36,17 @@
             </li>
             <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'profile' %}">
-                    👤Profile
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'logout' %}">
-                    Log Out
+                    Profile
                 </a>
             </li>
             <li class="icon-section ShownOnMobile">
                 <a onclick="toggleHamburger()">
                     <i class="fa fa-bars" id="hamburger-button"></i>
+                </a>
+            </li>
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'logout' %}">
+                    Log Out
                 </a>
             </li>
         {% else %}
@@ -72,12 +72,12 @@
     {% if user.is_authenticated %}
         <ul class="icon-menu">
             <li class="icon-section">
-                <a href="{% url 'myapp:deepcut' %}">
+                <a href="">
                     <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section">
-                <a href="{% url 'myapp:generate_wraps' %}">
+                <a href="">
                     Generate Wrapped
                 </a>
             </li>
@@ -88,7 +88,7 @@
             </li>
             <li class="icon-section">
                 <a href="{% url 'profile' %}">
-                    👤Profile
+                    Profile
                 </a>
             </li>
             <li class="icon-section">
@@ -109,9 +109,6 @@
             </button>
         </div>
     {% endfor %}
-    <div class="side-image">
-        <img src="{% static 'UserAuth/base1-default.jpg' %}" alt="Abstract Art">
-    </div>
     <div class="content-container">
         {% block body %}{% endblock %}
     </div>
@@ -131,15 +128,6 @@
             button.classList.add("fa-close")
         }
     }
-
-    function adjustSideImageHeight() {
-    const sideImage = document.querySelector('.side-image');
-    const documentHeight = document.documentElement.scrollHeight;
-    sideImage.style.height = documentHeight + 'px';
-}
-
-window.addEventListener('load', adjustSideImageHeight);
-window.addEventListener('resize', adjustSideImageHeight);
 </script>
 </body>
 </html>
