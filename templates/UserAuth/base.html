@@ -120,6 +120,15 @@
             button.classList.add("fa-close")
         }
     }
+
+    function adjustSideImageHeight() {
+    const sideImage = document.querySelector('.side-image');
+    const documentHeight = document.documentElement.scrollHeight;
+    sideImage.style.height = documentHeight + 'px';
+}
+
+window.addEventListener('load', adjustSideImageHeight);
+window.addEventListener('resize', adjustSideImageHeight);
 </script>
 </body>
 </html>
