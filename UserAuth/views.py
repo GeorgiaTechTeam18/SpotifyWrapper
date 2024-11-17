@@ -1,13 +1,10 @@
 import secrets
-from audioop import reverse
-from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from requests import Request, post, exceptions
-from .util import update_or_create_user_tokens, is_spotify_authenticated
+from .util import update_or_create_user_tokens, get_top_song_album_covers
 from .models import SpotifyToken
 import os
 from dotenv import load_dotenv
-from django.http import JsonResponse
 from django.contrib.auth import login, logout, get_user_model, authenticate
 from .form import RegistrationForm, ContactUsForm
 from django.contrib import messages
@@ -21,9 +18,8 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 User = get_user_model()
 
-
 def home(request):
-    return render(request, 'UserAuth/index.html')
+    return render(request, 'UserAuth/index.html', {"album_covers": get_top_song_album_covers()})
 
 def contact(request):
     if request.method == 'POST':
@@ -96,7 +92,8 @@ def delete_token(request):
     if request.method == "POST":
         spotify_account_username = request.POST.get('spotify_account_username')
         SpotifyToken.objects.filter(spotify_account_username=spotify_account_username).delete()
-        return JsonResponse({"success":True})
+
+    return redirect('profile')
 
 
 def logout_view(request):
@@ -175,9 +172,6 @@ def getSpotifyUserData(access_token):
     else:
         raise Exception(f"Failed to retrieve user info. Status code: {response.status_code}")
 
-
 @login_required
 def deepcut(request):
-    return redirect(request,reverse('myapp:deepcut'))
-
-
+    return redirect(request,reverse('Wrapped:deepcut'))

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Spotify Wrap{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'UserAuth/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'UserAuth/albumScrollDisplay.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block head %}{% endblock %}
@@ -19,18 +20,23 @@
         </li>
         {% if user.is_authenticated %}
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'myapp:deepcut' %}">
+                <a href="{% url 'Wrapped:deepcut' %}">
                     <span> Play</span> Deep Cut
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'myapp:view_wraps' %}">
+                <a href="{% url 'Wrapped:view_wraps' %}">
                     Generate Wrapped
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'contact' %}">
                     Contact Us
+                </a>
+            </li>
+            <li class="icon-section HiddenOnMobile">
+                <a href="{% url 'profile' %}">
+                    👤Profile
                 </a>
             </li>
             <li class="icon-section HiddenOnMobile">
@@ -78,6 +84,11 @@
             <li class="icon-section">
                 <a href="{% url 'contact' %}">
                     Contact Us
+                </a>
+            </li>
+            <li class="icon-section">
+                <a href="{% url 'profile' %}">
+                    👤Profile
                 </a>
             </li>
             <li class="icon-section">
