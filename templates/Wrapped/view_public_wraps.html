@@ -1,12 +1,84 @@
-{% extends 'Wrapped/base.html' %}
+{% extends 'UserAuth/base.html' %}
 
 {% block title %}Public Wraps{% endblock %}
 
 {% block content %}
 <h1>Public Wraps</h1>
-<ul>
+<button id="filter-button">Show Liked Wraps</button>
+<ul id="wraps-list">
     {% for wrap in wraps %}
-    <li>{{ wrap.title }}</li>
+    <li>
+        <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
+        <form class="like-form" action="{% url 'like_wrap' wrap.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Like</button>
+        </form>
+    </li>
     {% endfor %}
 </ul>
+
+<div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border:1px solid black;">
+    <span id="popup-message"></span>
+    <button onclick="document.getElementById('popup').style.display='none'">Close</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('.like-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('popup-message').innerText = data.message;
+                document.getElementById('popup').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    });
+
+    const filterButton = document.getElementById('filter-button');
+    filterButton.addEventListener('click', function() {
+        const isFiltered = filterButton.getAttribute('data-filtered') === 'true';
+        fetch(`{% url 'view_public_wraps' %}?liked=${!isFiltered}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const wrapsList = document.getElementById('wraps-list');
+            wrapsList.innerHTML = '';
+            data.wraps.forEach(wrap => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="/view_wrap/${wrap.id}">${wrap.title}</a>
+                                <form class="like-form" action="/like_wrap/${wrap.id}" method="post" style="display:inline;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="${wrap.csrf_token}">
+                                    <button type="submit">Like</button>
+                                </form>`;
+                wrapsList.appendChild(li);
+            });
+            filterButton.innerText = isFiltered ? 'Show Liked Wraps' : 'Show All Wraps';
+            filterButton.setAttribute('data-filtered', !isFiltered);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+});
+</script>
 {% endblock %}

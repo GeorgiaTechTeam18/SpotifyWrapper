@@ -13,5 +13,4 @@ urlpatterns = [
     path('deepcut/', include('Wrapped.urls'), name='deepcut'),
     path('view_wraps/', include('Wrapped.urls'), name='view_wraps'),
     path('contact/', views.contact, name='contact'),
-
 ]

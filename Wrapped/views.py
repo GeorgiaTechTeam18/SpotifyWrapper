@@ -23,8 +23,19 @@ def make_wraps_public(request):
     wraps.update(is_public=True)
     return redirect('view_public_wraps')
 
+
 def view_public_wraps(request):
-    public_wraps = SpotifyWrap.objects.filter(is_public=True)
+    liked = request.GET.get('liked') == 'true'
+    if liked:
+        public_wraps = SpotifyWrap.objects.filter(is_public=True, liked_by=request.user)
+    else:
+        public_wraps = SpotifyWrap.objects.filter(is_public=True)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        wraps_data = [{'id': wrap.id, 'title': wrap.title, 'csrf_token': request.COOKIES['csrftoken']} for wrap in
+                      public_wraps]
+        return JsonResponse({'wraps': wraps_data})
+
     return render(request, 'Wrapped/view_public_wraps.html', {"wraps": public_wraps})
 
 def view_wraps(request):
@@ -47,8 +58,15 @@ def view_wrap(request, wrap_id):
 def like_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
-    # Check if wrap is already liked and if so unlike it (always toggle)
-    return JsonResponse({'message': 'not yet working'})
+    if request.user in wrap.liked_by.all():
+        wrap.liked_by.remove(request.user)
+        message = 'Unliked'
+    else:
+        wrap.liked_by.add(request.user)
+        message = 'Liked'
+    wrap.save()
+
+    return JsonResponse({'message': message})
 
 
 key_map = {
@@ -67,9 +85,12 @@ key_map = {
         -1: 'No key detected'
     }
 
-def create_wrap(request, time_range='medium_term'):
+def create_wrap(request, time_range='None'):
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
+
+    if time_range == 'None':
+        return render(request, "Wrapped/choose_time_range.html")
 
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
@@ -140,4 +161,4 @@ def create_wrap(request, time_range='medium_term'):
 
     wrap.set_audio_features(audio_features)
     wrap.save()
-    return view_wrap(request, wrap.id)
+    return redirect(view_wrap, wrap_id=wrap.uuid)
