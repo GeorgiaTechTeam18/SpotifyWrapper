@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from UserAuth.util import get_user_tokens
+from UserAuth.util import get_user_tokens, refresh_spotify_token
 from .models import SpotifyWrap
 
 
