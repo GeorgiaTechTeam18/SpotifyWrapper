@@ -12,6 +12,7 @@ class SpotifyWrap(models.Model):
     artists = models.TextField(default='[]')
     tracks = models.TextField(default='[]')
     is_public = models.BooleanField(default=True)
+    likes = models.IntegerField(default=0)
     def set_top_artists(self, artists_data):
         self.artists = json.dumps(artists_data)
     def set_top_tracks(self, tracks_data):
@@ -23,6 +24,6 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Follow(models.Model):
-    follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
-    following = models.ForeignKey(User, related_name='followers', on_delete=models.CASCADE)
+    follower = models.ForeignKey(User, related_name='followed', on_delete=models.CASCADE)
+    following = models.ForeignKey(User, related_name='follower', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

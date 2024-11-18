@@ -1,6 +1,6 @@
 # Wrapped/views.py
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseServerError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
@@ -15,37 +15,18 @@ def post_wrap(request):
 
 def view_wraps(request):
     wraps = SpotifyWrap.objects.filter(user=request.user)
-    print(wraps)
-    return render(request, 'Wrapped/view_wraps.html')
+    return render(request, 'Wrapped/view_wraps.html', {"wraps": wraps})
 
-def view_wrap(request, view_id):
-    return render(request, 'Wrapped/view_wrap.html')
+def view_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, pk=wrap_id)
+    return render(request, 'Wrapped/view_wrap.html', {"wrap": wrap})
 
-
-def like_wrap(request):
-    access_token = get_user_tokens(request.user).access_token
-    wrap_id = request.POST.get('wrap_id')
+# TODO
+def like_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
 
-    # Check if wrap is already liked
-    if request.user in wrap.likes.all():
-        return JsonResponse({'message': 'already liked'})
-    else:
-        wrap.likes.add(request.user)
-        return JsonResponse({'message': 'success'})
-
-
-def unlike_wrap(request):
-    access_token = get_user_tokens(request.user).access_token
-    wrap_id = request.POST.get('wrap_id')
-    wrap = SpotifyWrap.objects.get(id=wrap_id)
-
-    # Check if unliked wrap is already liked
-    if request.user in wrap.likes.all():
-        wrap.likes.remove(request.user)
-        return JsonResponse({'message': 'success'})
-    else:
-        return JsonResponse({'message': 'not liked'})
+    # Check if wrap is already liked and if so unlike it (always toggle)
+    return JsonResponse({'message': 'not yet working'})
 
 
 def create_wrap(request, time_range='medium_term'):
@@ -70,7 +51,7 @@ def create_wrap(request, time_range='medium_term'):
                 'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
-        return render(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists.'})
+        return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
 
     # Fetch top tracks from Spotify API
     track_endpoint = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}&{limit}'
@@ -91,7 +72,7 @@ def create_wrap(request, time_range='medium_term'):
                 'preview_url': item.get('preview_url')
             })
     else:
-        return render(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top tracks.'})
+        return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
 
     wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
     wrap.set_top_artists(artist_data)

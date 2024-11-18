@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>View Spotify Wraps</title>
-</head>
-<body>
+{% extends 'UserAuth/base.html' %}
+
+{% block body %}
     <h1>Spotify Wraps</h1>
     <ul>
         {% for wrap in wraps %}
         <li>
             <h2>{{ wrap.title }}</h2>
-            <p>{{ wrap.description }}</p>
+            <a href="{% url 'view_wrap' wrap.id %}">View this wrap</a>
             <p>Posted by: {{ wrap.user.username }}</p>
             <form method="post" action="{% url 'like_wrap' wrap.id %}">
                 {% csrf_token %}
@@ -43,5 +40,4 @@
         });
     });
 </script>
-</body>
-</html>
+{% endblock %}
