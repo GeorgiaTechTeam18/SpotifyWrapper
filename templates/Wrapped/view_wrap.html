@@ -1,0 +1,91 @@
+{% extends 'UserAuth/base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'Wrapped/view_wrap.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div id="wrap-container">
+        <div class="wrap-slide" id="wrap-slide-0">
+            <h1>#1 Song</h1>
+            <ul class="wrap-item-list">
+                {% with top_track as track %}
+                    <li class="track">
+                        <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
+                        <div>
+                            <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
+                            <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
+                            <p><strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a></p>
+                            <p><strong>Duration:</strong> {{ track.duration_ms }} ms</p>
+                        </div>
+                    </li>
+                {% endwith %}
+            </ul>
+        </div>
+        <div class="wrap-slide" id="wrap-slide-1">
+        <h1>Top Tracks</h1>
+            <ul class="wrap-item-list">
+                {% for track in tracks %}
+                <ol start="2" class="track">
+                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
+                    <div>
+                        <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
+                        <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
+                        <p><strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a></p>
+                        <p><strong>Duration:</strong> {{ track.duration_ms }} ms</p>
+                    </div>
+                </ol>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="wrap-slide" id="wrap-slide-2">
+            <h1>Top Artists</h1>
+            <ul class="wrap-item-list">
+                {% for artist in artists %}
+                    <li class="artist">
+                        <img src="{{ artist.image_url }}" alt="{{ artist.name }}" width="50" height="50"/>
+                        <div>
+                            <p><strong>Name:</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a></p>
+                            <p><strong>Genres:</strong> {{ artist.genres|join:", " }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="wrap-slide" id="wrap-slide-3">
+            <h1>Top Genres</h1>
+            {{ genres }}
+            <p>still deciding how to display</p>
+{#                  {% for genre in genres %}#}
+{#                      {{ genre.0 }}#}
+{#                      <tr>#}
+{#                        <th scope="row"> {{ genre.0 }} </th>#}
+{#                        <td style="--size: {{ genre.1 }}"> </td>#}
+{#                      </tr>#}
+{#                  {% endfor %}#}
+        </div>
+        <div class="wrap-slide" id="wrap-slide-4">
+            <h1>Overall Vibe</h1>
+            {{ audio_features }}
+            <br>
+            <br>
+            <p>still deciding how to display</p>
+            <h2>valance means happiness</h2>
+        </div>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
+      <div class="pagination">
+          <button id="slide-back-button">&lt;</button>
+          <button id="slide-button-0">#1 Song</button>
+          <button id="slide-button-1">Top Tracks</button>
+          <button id="slide-button-2">Top Artists</button>
+          <button id="slide-button-3">Top Genres</button>
+          <button id="slide-button-4">Overall Vibes</button>
+          <button id="slide-forward-button">&gt;</button>
+      </div>
+    <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'UserAuth/base.html' %}
+{% load static %}
+{% block body %}
+        <div id="Index-main-text">
+            <h3>
+                Your trust is important to us, and so we would like to answer your FAQs or contact us.
+            </h3><br>
+        </div>
+        <div>
+            <ul>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            Year-Round Insights
+                        </h3>
+                        <p>
+                            Get personalized listening stats anytime, not just at the end of the year.
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            Your Data is Safe
+                        </h3>
+                        <p>
+                            We prioritize your privacy and never share your data with third parties.
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            Cross-Platform Support
+                        </h3>
+                        <p>
+                            Use our service on any device—optimized for both iOS and Android.
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            Custom Insights
+                        </h3>
+                        <p>
+                            Discover your top songs, artists, and genres, or analyze listening trends by time.
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            Revoke Permissions Anytime
+                        </h3>
+                        <p>
+                            You’re in control—revoke our app’s permissions anytime from Spotify settings.
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+            </ul>
+            <div id="contact-us" class="contact-us-container">
+                <h2>Contact Us</h2>
+                <form method="POST" class="contact-us-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+
+{% endblock %}

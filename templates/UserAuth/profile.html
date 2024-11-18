@@ -2,12 +2,26 @@
 
 {% block body %}
 <h1>Hi {{ user.get_username }}</h1>
+    <h2>Your Tokens:</h2>
+    <table class="linked-tokens">
+      <tr>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Unlink</th>
+      </tr>
     {% for token in associated_spotify_tokens %}
-      <li>
-        {{ token.spotify_account_email }}
-        {{ token.spotify_account_username }}
-        {{ token.user.username }}
-      </li>
+      <tr>
+        <th>{{ token.spotify_account_email }}</th>
+        <th>{{ token.spotify_account_username }}</th>
+        <th>
+            <form method="post" action="{% url 'unlink_token' %}">
+                {% csrf_token %}
+                <input type="hidden" name="spotify_account_username" value="{{ token.spotify_account_username }}" >
+                <button type="submit"><i class="fa fa-close"></i></button>
+            </form>
+        </th>
+      </tr>
     {% endfor %}
+    </table>
     <a href="{% url 'authWithSpotify' %}">Link another spotify account with your account</a>
 {% endblock %}

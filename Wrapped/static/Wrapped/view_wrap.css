@@ -1,0 +1,103 @@
+#wrap-container {
+    height: calc(100vh - 11em);
+    overflow-y: unset;
+    width: calc(100% - 4em);
+    max-width: 900px;
+    margin: auto;
+    border-radius: 1em 1em 0em 0em;
+    border: .5em solid purple;
+    border-bottom: none;
+    padding: 1em;
+    position: relative;
+}
+
+.wrap-slide {
+    display: none;
+}
+
+.wrap-slide h1 {
+    color: #1DB954; /* Spotify green */
+}
+
+.wrap-item-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.artist, .track {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.wrap-item-list img {
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.artist img {
+    border-radius: 50%;
+}
+
+.artist a, .track a {
+    text-decoration: none;
+    color: #1DB954;
+}
+
+.artist a:hover, .track a:hover {
+    text-decoration: underline;
+}
+
+/* pagination element */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+    margin-top: .5em;
+}
+
+.pagination button {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination button.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination button:hover:not(.active) {background-color: #ddd;}
+
+
+#progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#progress-bar {
+    width: 100%;
+    background: purple;
+    height: .5em;
+    margin-left: -1em;
+}
+
+#progress-bar.active {
+    animation-name: progress-bar_active;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+}
+
+@keyframes progress-bar_active {
+  from {width: 0;}
+  to {width: 100%;}
+}

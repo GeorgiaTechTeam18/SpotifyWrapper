@@ -1,10 +1,11 @@
 # Wrapped/views.py
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseServerError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from UserAuth.util import get_user_tokens
+from django.views.decorators.http import require_POST
+from UserAuth.util import get_user_tokens, refresh_spotify_token
 from .models import SpotifyWrap
 
 
@@ -12,40 +13,84 @@ from .models import SpotifyWrap
 def post_wrap(request):
     return render(request, 'Wrapped/post_wrap.html')
 
+def select_wraps_to_post(request):
+    wraps = SpotifyWrap.objects.filter(user=request.user)
+    return render(request, 'Wrapped/select_wraps_to_post.html', {"wraps": wraps})
+
+def make_wraps_public(request):
+    wrap_ids = request.POST.getlist('wrap_ids')
+    wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
+    wraps.update(is_public=True)
+    return redirect('view_public_wraps')
+
+
+def view_public_wraps(request):
+    liked = request.GET.get('liked') == 'true'
+    if liked:
+        public_wraps = SpotifyWrap.objects.filter(is_public=True, liked_by=request.user)
+    else:
+        public_wraps = SpotifyWrap.objects.filter(is_public=True)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        wraps_data = [{'id': wrap.id, 'title': wrap.title, 'csrf_token': request.COOKIES['csrftoken']} for wrap in
+                      public_wraps]
+        return JsonResponse({'wraps': wraps_data})
+
+    return render(request, 'Wrapped/view_public_wraps.html', {"wraps": public_wraps})
 
 def view_wraps(request):
-    return render(request, 'Wrapped/view_wraps.html')
+    wraps = SpotifyWrap.objects.filter(user=request.user)
+    return render(request, 'Wrapped/view_wraps.html', {"wraps": wraps})
 
+def view_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
+    tracks = wrap.get_top_tracks()
+    return render(request,'Wrapped/view_wrap.html',
+                  {
+                      "top_track":tracks[0],
+                      "tracks":tracks[1:6],
+                      "artists": wrap.get_top_artists()[:5],
+                      "genres": wrap.get_top_genres()[:10],
+                      "audio_features": wrap.get_audio_features(),
+                  })
 
-def like_wrap(request):
-    access_token = get_user_tokens(request.user).access_token
-    wrap_id = request.POST.get('wrap_id')
-    wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
+# TODO
+def like_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
-    # Check if wrap is already liked
-    if request.user in wrap.likes.all():
-        return JsonResponse({'message': 'already liked'})
+    if request.user in wrap.liked_by.all():
+        wrap.liked_by.remove(request.user)
+        message = 'Unliked'
     else:
-        wrap.likes.add(request.user)
-        return JsonResponse({'message': 'success'})
+        wrap.liked_by.add(request.user)
+        message = 'Liked'
+    wrap.save()
+
+    return JsonResponse({'message': message})
 
 
-def unlike_wrap(request):
-    access_token = get_user_tokens(request.user).access_token
-    wrap_id = request.POST.get('wrap_id')
-    wrap = SpotifyWrap.objects.get(id=wrap_id)
+key_map = {
+        0: 'C',
+        1: 'C♯/D♭',
+        2: 'D',
+        3: 'D♯/E♭',
+        4: 'E',
+        5: 'F',
+        6: 'F♯/G♭',
+        7: 'G',
+        8: 'G♯/A♭',
+        9: 'A',
+        10: 'A♯/B♭',
+        11: 'B',
+        -1: 'No key detected'
+    }
 
-    # Check if unliked wrap is already liked
-    if request.user in wrap.likes.all():
-        wrap.likes.remove(request.user)
-        return JsonResponse({'message': 'success'})
-    else:
-        return JsonResponse({'message': 'not liked'})
-
-
-def get_top(request, time_range='medium_term'):
+def create_wrap(request, time_range='None'):
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
+
+    if time_range == 'None':
+        return render(request, "Wrapped/choose_time_range.html")
 
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
@@ -65,7 +110,7 @@ def get_top(request, time_range='medium_term'):
                 'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
-        return render(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists.'})
+        return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
 
     # Fetch top tracks from Spotify API
     track_endpoint = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}&{limit}'
@@ -83,14 +128,37 @@ def get_top(request, time_range='medium_term'):
                 'duration_ms': item.get('duration_ms'),
                 'song_url': item.get('external_urls', {}).get('spotify', ''),
                 'song_name': item.get('name'),
-                'preview_url': item.get('preview_url')
+                'preview_url': item.get('preview_url'),
+                'id': item.get('id'),
             })
     else:
-        return render(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top tracks.'})
+        return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
 
     wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
     wrap.set_top_artists(artist_data)
     wrap.set_top_tracks(track_data)
-    wrap.save()
 
-    return render(request, 'Wrapped/get_top.html', {'artist_data': artist_data, 'track_data': track_data})
+    # Generate the Overall Mood by averaging the Audio Features of the top tracks
+    # Fetch top tracks from Spotify API
+    audio_features_endpoint = f'https://api.spotify.com/v1/audio-features?ids={",".join([track["id"] for track in track_data])}'
+    audio_features_response = requests.get(audio_features_endpoint, headers=headers)
+    audio_features = dict()
+    audio_features_counted = dict()
+    keys = [0] * 12
+    if audio_features_response.status_code == 200:
+        audio_features_data = audio_features_response.json()
+        for item in audio_features_data.get('audio_features', []):
+            for attr in ["danceability", "valence", "speechiness", "energy", "instrumentalness", "liveness", "loudness", "mode", "tempo", "popularity"]:
+                if (item.get(attr) != None):
+                    audio_features[attr] = audio_features.get(attr, 0) + item.get(attr)
+                    audio_features_counted[attr] = audio_features_counted.get(attr, 0) + 1
+            if (item.get("key") != None and item.get("key") != -1):
+                keys[item.get("key")] += 1
+    for key, value in audio_features.items():
+        audio_features[key] = value / audio_features_counted.get(key, 1)
+
+    audio_features["most_common_key"] = key_map[keys.index(min(keys))]
+
+    wrap.set_audio_features(audio_features)
+    wrap.save()
+    return redirect(view_wrap, wrap_id=wrap.uuid)

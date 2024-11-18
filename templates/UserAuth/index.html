@@ -1,58 +1,70 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
 {% block body %}
-        <div id="Index-main-text">
-        <h1>Unwrap any time with year round spotify wrapped.</h1>
-        </div>
+    <div class="flex-container">
+        {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="down" classNames="index-page-albums" id="" %}
         <div>
-            <ul>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            Year Round Availability
-                        </h3>
-                        <p>
-                            No need to wait for annual updates - wrap and unwrap any time you like.
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                    <h3>
-                        Your Data Stays Private
-                    </h3>
-                    <p>
-                        We do not store your information with third party buyers, and we will never give out your information to any company or individual.
+            <div id="Index-main-text" class="promo-section">
+                <div class="promo-content">
+                    <h1 class="promo-title">Unwrap at any time.</h1>
+                    <p class="promo-description">
+                        Tired of waiting for wrapped day to see your music stats? If so, then we are your solution.
                     </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                                        <h3>
-                        Getting Started is Simple
-                    </h3>
-                    <p>
-                        Just click the log in or sign up button to begin!
-                    </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-            </ul>
-            <div id="loginorsignup">
-            {% if not user.is_authenticated %}
-                <a href="{% url 'signup' %}">Sign up</a>
-                <p> or </p>
-                <a href="{% url 'login' %}">Log in</a>
-            {% else %}
-                <p>
-                    Click the links above to get started!
-                </p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'create_wrap' %}" class="promo-button">Generate a wrap</a>
+                    {% else %}
+                        <a href="{% url 'signup' %}" class="promo-button">Sign up</a>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
+            {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="left" classNames="index-page-albums-mobile" %}
 
+            <div id="meet-the-team">
+                <h2 class="team-title">Meet the Team</h2>
+                <div class="team-container">
+                    <!-- Team Member 1 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Alex.jpg' %}" alt="Alex Hool" class="team-image">
+                        <h3 class="team-name">Alex Hool</h3>
+                        <p class="team-role">Backend Developer</p>
+                        <p class="team-description">Hi, I'm Alex :)</p>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Varindra.jpeg' %}" alt="Varindra Seegobin" class="team-image">
+                        <h3 class="team-name">Varindra Seegobin</h3>
+                        <p class="team-role">Frontend Developer</p>
+                        <p class="team-description">Hi, I'm Varindra, I designed this site's front end using HTML/CSS and
+                            JavaScript :)</p>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Stanley Wang" class="team-image">
+                        <h3 class="team-name">Stanley Wang</h3>
+                        <p class="team-role">Project Manager</p>
+                        <p class="team-description">Hi, I'm Stanley :)</p>
+                    </div>
+                    <!-- Team Member 4 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Theo.jpg' %}" alt="Theo Halphern" class="team-image">
+                        <h3 class="team-name">Theo Halphern</h3>
+                        <p class="team-role">Full Stack Wizard</p>
+                        <p class="team-description">I do a bit of everything. Check me out on theoh.dev!</p>
+                    </div>
+                    <!-- Team Member 5 -->
+                    <div class="team-member">
+                        <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Aneesh Kanaram" class="team-image">
+                        <h3 class="team-name">Aneesh Kanaram</h3>
+                        <p class="team-role">Scrum</p>
+                        <p class="team-description">I scrum so hard</p>
+                    </div>
+    
+                </div>
+                <div class="promo-content">
+                    <a href="{% url 'contact' %}" class="promo-button">FAQ / Contact Us</a>
+                </div>
+            </div>
         </div>
-
+        {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="up" classNames="index-page-albums" id="" %}
+    </div>
 {% endblock %}

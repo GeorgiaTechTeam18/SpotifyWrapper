@@ -1,24 +1,21 @@
-<!-- Wrapped/templates/Wrapped/view_wraps.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>View Spotify Wraps</title>
-</head>
-<body>
+{% extends 'UserAuth/base.html' %}
+
+{% block body %}
     <h1>Spotify Wraps</h1>
     <ul>
         {% for wrap in wraps %}
         <li>
             <h2>{{ wrap.title }}</h2>
-            <p>{{ wrap.description }}</p>
+            <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
             <p>Posted by: {{ wrap.user.username }}</p>
-            <form method="post" action="{% url 'like_wrap' wrap.id %}">
+            <form method="post" action="{% url 'like_wrap' wrap.uuid %}">
                 {% csrf_token %}
                 <button type="submit">Like</button>
             </form>
         </li>
         {% endfor %}
     </ul>
+    <a href="{% url 'select_wraps_to_post' %}"><button>Post</button></a>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -44,5 +41,4 @@
         });
     });
 </script>
-</body>
-</html>
+{% endblock %}
