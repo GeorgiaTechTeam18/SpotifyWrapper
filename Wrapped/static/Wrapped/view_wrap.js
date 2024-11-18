@@ -9,14 +9,17 @@ const startProgressAnimation = (nextSlideIndex) => {
     progressBar.offsetHeight
     progressBar.classList.add("active");
     progressTimeout = setTimeout(() => {
-        selectSlide(nextSlideIndex);
-        if (nextSlideIndex < numberOfSlides - 1) {
-            startProgressAnimation(nextSlideIndex + 1);
-        }
+        selectSlide(nextSlideIndex, true);
     }, 10 * 1000)
 }
 
-const selectSlide = (slideIndex) => {
+const selectSlide = (slideIndex, animate) => {
+    if(animate){
+        startProgressAnimation(slideIndex+1)
+    } else if (progressBar.classList.contains("active")) {
+        progressBar.classList.remove("active");
+        progressBar.offsetHeight
+    }
     for (let slide of document.getElementsByClassName("wrap-slide")){
         slide.style.display = "none";
     }
@@ -30,26 +33,25 @@ const selectSlide = (slideIndex) => {
     currentSlide = slideIndex;
 }
 
-selectSlide(0);
-startProgressAnimation(1);
+selectSlide(0, true);
 
 for (let i = 0; i < numberOfSlides; i++) {
     document.getElementById(`slide-button-${i}`).addEventListener("click", () => {
         clearTimeout(progressTimeout)
         progressBar.classList.remove("active");
         progressBar.offsetHeight;
-        selectSlide(i);
+        selectSlide(i, false);
     })
 }
 
 document.getElementById("slide-back-button").addEventListener("click", () => {
     if (currentSlide > 0) {
-        selectSlide(currentSlide - 1)
+        selectSlide(currentSlide - 1, false)
     }
 })
 
 document.getElementById("slide-forward-button").addEventListener("click", () => {
     if (currentSlide < numberOfSlides - 1) {
-        selectSlide(currentSlide + 1)
+        selectSlide(currentSlide + 1, false)
     }
 })
