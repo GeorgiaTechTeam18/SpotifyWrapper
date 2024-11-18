@@ -19,7 +19,14 @@ def view_wraps(request):
 
 def view_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, pk=wrap_id)
-    return render(request, 'Wrapped/view_wrap.html', {"wrap": wrap})
+    tracks = wrap.get_top_tracks()
+    return render(request,'Wrapped/view_wrap.html',
+                  {
+                      "top_track":tracks[0],
+                      "tracks":tracks[1:6],
+                      "artists": wrap.get_top_artists()[:5],
+                      "genres": wrap.get_top_genres()[:10]
+                  })
 
 # TODO
 def like_wrap(request, wrap_id):

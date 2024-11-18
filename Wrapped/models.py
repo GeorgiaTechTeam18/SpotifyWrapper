@@ -17,6 +17,22 @@ class SpotifyWrap(models.Model):
         self.artists = json.dumps(artists_data)
     def set_top_tracks(self, tracks_data):
         self.tracks = json.dumps(tracks_data)
+    def get_top_artists(self):
+        return json.loads(self.artists)
+    def get_top_tracks(self):
+        return json.loads(self.tracks)
+    def get_top_genres(self, num_artists=50):
+        artists = json.loads(self.artists)
+        genres = dict()
+        for artist in artists[:num_artists]:
+            for genre in artist['genres']:
+                genres[genre] = genres.get(genre, 0) + 1
+                # some genres get missed by spotify being too specific
+                if not genre in ["rap", "rock", "hip hop", "pop", "jazz", "punk", "country", "classical"]:
+                    for large_genre in ["rap", "rock", "hip hop", "pop", "jazz", "punk", "country", "classical"]:
+                        if large_genre in genre:
+                            genres[large_genre] = genres.get(large_genre, 0) + 1
+        return sorted(genres.items(), key=lambda kv: kv[1], reverse=True)
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,0 +1,69 @@
+#wrap-container {
+    height: calc(100vh - 9em);
+    overflow-y: unset;
+}
+
+.wrap-slide {
+    display: none;
+}
+
+.wrap-slide h1 {
+    color: #1DB954; /* Spotify green */
+}
+
+.wrap-item-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.artist, .track {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.wrap-item-list img {
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.artist img {
+    border-radius: 50%;
+}
+
+.artist a, .track a {
+    text-decoration: none;
+    color: #1DB954;
+}
+
+.artist a:hover, .track a:hover {
+    text-decoration: underline;
+}
+
+/* pagination element */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+}
+
+.pagination button {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination button.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination button:hover:not(.active) {background-color: #ddd;}
