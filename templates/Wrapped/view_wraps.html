@@ -6,9 +6,9 @@
         {% for wrap in wraps %}
         <li>
             <h2>{{ wrap.title }}</h2>
-            <a href="{% url 'view_wrap' wrap.id %}">View this wrap</a>
+            <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
             <p>Posted by: {{ wrap.user.username }}</p>
-            <form method="post" action="{% url 'like_wrap' wrap.id %}">
+            <form method="post" action="{% url 'like_wrap' wrap.uuid %}">
                 {% csrf_token %}
                 <button type="submit">Like</button>
             </form>
