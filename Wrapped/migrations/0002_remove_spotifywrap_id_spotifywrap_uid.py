@@ -16,10 +16,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(gen_uuid, reverse_code=migrations.RunPython.noop),
         migrations.AlterField(
             model_name='spotifywrap',
             name='id',
             field=models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False),
         ),
+        migrations.RunPython(gen_uuid, reverse_code=migrations.RunPython.noop),
     ]
