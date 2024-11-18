@@ -85,9 +85,12 @@ key_map = {
         -1: 'No key detected'
     }
 
-def create_wrap(request, time_range='medium_term'):
+def create_wrap(request, time_range='None'):
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
+
+    if time_range == 'None':
+        return render(request, "Wrapped/choose_time_range.html")
 
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
@@ -158,4 +161,4 @@ def create_wrap(request, time_range='medium_term'):
 
     wrap.set_audio_features(audio_features)
     wrap.save()
-    return view_wrap(request, wrap.uuid)
+    return redirect(view_wrap, wrap_id=wrap.uuid)

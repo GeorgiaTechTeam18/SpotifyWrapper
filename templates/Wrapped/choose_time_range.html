@@ -1,0 +1,7 @@
+{% extends 'UserAuth/base.html' %}
+
+{% block body %}
+    <a href="{% url 'create_wrap' 'short_term' %}">Short term</a>
+    <a href="{% url 'create_wrap' 'medium_term' %}">Medium term</a>
+    <a href="{% url 'create_wrap' 'long_term' %}">Long term</a>
+{% endblock %}
