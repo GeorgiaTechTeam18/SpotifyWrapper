@@ -3,16 +3,16 @@
 import uuid
 from django.db import migrations, models
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Wrapped', '0001_initial'),
+        ('Wrapped', '0005_make_primary_key'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.RemoveField(
             model_name='spotifywrap',
-            name='uuid',
-            field=models.UUIDField(default=uuid.uuid4, null=True),
+            name='id',
         ),
     ]
