@@ -24,6 +24,24 @@
     padding: 0;
 }
 
+.like-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em /* ADJUST! */
+}
+
+.like-button {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+
 .artist, .track {
     margin-bottom: 20px;
     border: 1px solid #ddd;
