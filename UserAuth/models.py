@@ -6,6 +6,14 @@ class User(AbstractUser, PermissionsMixin):
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.email}"
 
+class ContactUs(models.Model):
+    email = models.EmailField(max_length=254, verbose_name="User Email")
+    message = models.TextField(verbose_name="Issue Description")
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.email} at {self.submitted_at}"
+
 class SpotifyToken(models.Model):
     user = models.ForeignKey(User,
                              models.SET_NULL,
