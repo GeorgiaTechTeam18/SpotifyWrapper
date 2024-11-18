@@ -1,0 +1,12 @@
+{% extends 'Wrapped/base.html' %}
+
+{% block title %}Public Wraps{% endblock %}
+
+{% block content %}
+<h1>Public Wraps</h1>
+<ul>
+    {% for wrap in wraps %}
+    <li>{{ wrap.title }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

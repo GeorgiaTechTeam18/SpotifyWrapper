@@ -15,6 +15,9 @@ def get_user_tokens(user: User):
     user_tokens = user.default_spotify_token
     print(f"user token {user_tokens}")
     if user_tokens:
+        expiry = user_tokens.expires_in
+        if expiry <= timezone.now():
+            return refresh_spotify_token(user)
         return user_tokens
     else:
         return None
@@ -59,7 +62,8 @@ def is_spotify_authenticated(user: User):
 
 
 def refresh_spotify_token(user: User):
-    refresh_token = get_user_tokens(user).refresh_token
+    token = user.default_spotify_token
+    refresh_token = token.refresh_token
 
     response = post('https://accounts.spotify.com/api/token', data={
         'grant_type': 'refresh_token',
@@ -68,12 +72,20 @@ def refresh_spotify_token(user: User):
         'client_secret': os.getenv('CLIENT_SECRET')
     }).json()
 
+    print(response)
+
     access_token = response.get('access_token')
     token_type = response.get('token_type')
     expires_in = response.get('expires_in')
-    refresh_token = response.get('refresh_token')
 
-    update_or_create_user_tokens(user, access_token, token_type, expires_in, refresh_token)
+    expires_in = timezone.now() + datetime.timedelta(seconds=expires_in)
+
+    token.access_token = access_token
+    token.expires_in = expires_in
+    token.token_type = token_type
+    token.save(update_fields=['access_token', 'expires_in', 'token_type'])
+
+    return token
 
 
 saved_sever_token = {
