@@ -158,4 +158,4 @@ def create_wrap(request, time_range='medium_term'):
 
     wrap.set_audio_features(audio_features)
     wrap.save()
-    return view_wrap(request, wrap.id)
+    return view_wrap(request, wrap.uuid)
