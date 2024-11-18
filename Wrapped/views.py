@@ -43,7 +43,7 @@ def view_wraps(request):
     return render(request, 'Wrapped/view_wraps.html', {"wraps": wraps})
 
 def view_wrap(request, wrap_id):
-    wrap = get_object_or_404(SpotifyWrap, pk=wrap_id)
+    wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
     tracks = wrap.get_top_tracks()
     return render(request,'Wrapped/view_wrap.html',
                   {
@@ -56,7 +56,7 @@ def view_wrap(request, wrap_id):
 
 # TODO
 def like_wrap(request, wrap_id):
-    wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
+    wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
     if request.user in wrap.liked_by.all():
         wrap.liked_by.remove(request.user)
