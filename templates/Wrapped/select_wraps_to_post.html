@@ -1,4 +1,4 @@
-{% extends 'Wrapped/base.html' %}
+{% extends 'UserAuth/base.html' %}
 
 {% block title %}Select Wraps to Post{% endblock %}
 
@@ -6,7 +6,7 @@
 <h1>Select Wraps to Post</h1>
 <form method="post" action="{% url 'make_wraps_public' %}">
     {% csrf_token %}
-    <ul>
+    <ul style="list-style-type: none;">
         {% for wrap in wraps %}
         <li>
             <input type="checkbox" name="wrap_ids" value="{{ wrap.id }}">
