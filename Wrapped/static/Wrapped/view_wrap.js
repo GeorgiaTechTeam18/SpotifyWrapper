@@ -1,6 +1,21 @@
 const numberOfSlides = 5;
 let currentSlide = 0;
 
+let progressTimeout = null;
+const progressBar = document.getElementById("progress-bar")
+
+const startProgressAnimation = (nextSlideIndex) => {
+    progressBar.classList.remove("active");
+    progressBar.offsetHeight
+    progressBar.classList.add("active");
+    progressTimeout = setTimeout(() => {
+        selectSlide(nextSlideIndex);
+        if (nextSlideIndex < numberOfSlides - 1) {
+            startProgressAnimation(nextSlideIndex + 1);
+        }
+    }, 10 * 1000)
+}
+
 const selectSlide = (slideIndex) => {
     for (let slide of document.getElementsByClassName("wrap-slide")){
         slide.style.display = "none";
@@ -16,9 +31,13 @@ const selectSlide = (slideIndex) => {
 }
 
 selectSlide(0);
+startProgressAnimation(1);
 
 for (let i = 0; i < numberOfSlides; i++) {
     document.getElementById(`slide-button-${i}`).addEventListener("click", () => {
+        clearTimeout(progressTimeout)
+        progressBar.classList.remove("active");
+        progressBar.offsetHeight;
         selectSlide(i);
     })
 }
