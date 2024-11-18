@@ -14,7 +14,12 @@ def post_wrap(request):
 
 
 def view_wraps(request):
+    wraps = SpotifyWrap.objects.filter(user=request.user)
+    print(wraps)
     return render(request, 'Wrapped/view_wraps.html')
+
+def view_wrap(request, view_id):
+    return render(request, 'Wrapped/view_wrap.html')
 
 
 def like_wrap(request):
@@ -43,7 +48,7 @@ def unlike_wrap(request):
         return JsonResponse({'message': 'not liked'})
 
 
-def get_top(request, time_range='medium_term'):
+def create_wrap(request, time_range='medium_term'):
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
 
@@ -93,4 +98,4 @@ def get_top(request, time_range='medium_term'):
     wrap.set_top_tracks(track_data)
     wrap.save()
 
-    return render(request, 'Wrapped/get_top.html', {'artist_data': artist_data, 'track_data': track_data})
+    return view_wrap(request, wrap.id)
