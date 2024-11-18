@@ -1,4 +1,4 @@
-const numberOfSlides = 4;
+const numberOfSlides = 5;
 let currentSlide = 0;
 
 const selectSlide = (slideIndex) => {

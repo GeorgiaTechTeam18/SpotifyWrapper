@@ -39,7 +39,8 @@ def view_wrap(request, wrap_id):
                       "top_track":tracks[0],
                       "tracks":tracks[1:6],
                       "artists": wrap.get_top_artists()[:5],
-                      "genres": wrap.get_top_genres()[:10]
+                      "genres": wrap.get_top_genres()[:10],
+                      "audio_features": wrap.get_audio_features(),
                   })
 
 # TODO
@@ -49,6 +50,22 @@ def like_wrap(request, wrap_id):
     # Check if wrap is already liked and if so unlike it (always toggle)
     return JsonResponse({'message': 'not yet working'})
 
+
+key_map = {
+        0: 'C',
+        1: 'C♯/D♭',
+        2: 'D',
+        3: 'D♯/E♭',
+        4: 'E',
+        5: 'F',
+        6: 'F♯/G♭',
+        7: 'G',
+        8: 'G♯/A♭',
+        9: 'A',
+        10: 'A♯/B♭',
+        11: 'B',
+        -1: 'No key detected'
+    }
 
 def create_wrap(request, time_range='medium_term'):
     if isinstance(request.user, AnonymousUser):
@@ -90,7 +107,8 @@ def create_wrap(request, time_range='medium_term'):
                 'duration_ms': item.get('duration_ms'),
                 'song_url': item.get('external_urls', {}).get('spotify', ''),
                 'song_name': item.get('name'),
-                'preview_url': item.get('preview_url')
+                'preview_url': item.get('preview_url'),
+                'id': item.get('id'),
             })
     else:
         return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
@@ -98,6 +116,28 @@ def create_wrap(request, time_range='medium_term'):
     wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
     wrap.set_top_artists(artist_data)
     wrap.set_top_tracks(track_data)
-    wrap.save()
 
+    # Generate the Overall Mood by averaging the Audio Features of the top tracks
+    # Fetch top tracks from Spotify API
+    audio_features_endpoint = f'https://api.spotify.com/v1/audio-features?ids={",".join([track["id"] for track in track_data])}'
+    audio_features_response = requests.get(audio_features_endpoint, headers=headers)
+    audio_features = dict()
+    audio_features_counted = dict()
+    keys = [0] * 12
+    if audio_features_response.status_code == 200:
+        audio_features_data = audio_features_response.json()
+        for item in audio_features_data.get('audio_features', []):
+            for attr in ["danceability", "valence", "speechiness", "energy", "instrumentalness", "liveness", "loudness", "mode", "tempo", "popularity"]:
+                if (item.get(attr) != None):
+                    audio_features[attr] = audio_features.get(attr, 0) + item.get(attr)
+                    audio_features_counted[attr] = audio_features_counted.get(attr, 0) + 1
+            if (item.get("key") != None and item.get("key") != -1):
+                keys[item.get("key")] += 1
+    for key, value in audio_features.items():
+        audio_features[key] = value / audio_features_counted.get(key, 1)
+
+    audio_features["most_common_key"] = key_map[keys.index(min(keys))]
+
+    wrap.set_audio_features(audio_features)
+    wrap.save()
     return view_wrap(request, wrap.id)

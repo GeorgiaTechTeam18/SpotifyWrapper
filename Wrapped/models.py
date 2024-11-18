@@ -11,12 +11,15 @@ class SpotifyWrap(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     artists = models.TextField(default='[]')
     tracks = models.TextField(default='[]')
+    audio_features = models.TextField(default='{}')
     is_public = models.BooleanField(default=True)
     likes = models.IntegerField(default=0)
     def set_top_artists(self, artists_data):
         self.artists = json.dumps(artists_data)
     def set_top_tracks(self, tracks_data):
         self.tracks = json.dumps(tracks_data)
+    def set_audio_features(self, tracks_data):
+        self.audio_features = json.dumps(tracks_data, ensure_ascii=False)
     def get_top_artists(self):
         return json.loads(self.artists)
     def get_top_tracks(self):
@@ -33,6 +36,8 @@ class SpotifyWrap(models.Model):
                         if large_genre in genre:
                             genres[large_genre] = genres.get(large_genre, 0) + 1
         return sorted(genres.items(), key=lambda kv: kv[1], reverse=True)
+    def get_audio_features(self):
+        return json.loads(self.audio_features)
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
