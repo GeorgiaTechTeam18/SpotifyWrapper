@@ -4,6 +4,7 @@ from django.http import JsonResponse, HttpResponseServerError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
+from django.views.decorators.http import require_POST
 from UserAuth.util import get_user_tokens, refresh_spotify_token
 from .models import SpotifyWrap
 
@@ -12,6 +13,19 @@ from .models import SpotifyWrap
 def post_wrap(request):
     return render(request, 'Wrapped/post_wrap.html')
 
+def select_wraps_to_post(request):
+    wraps = SpotifyWrap.objects.filter(user=request.user)
+    return render(request, 'Wrapped/select_wraps_to_post.html', {"wraps": wraps})
+
+def make_wraps_public(request):
+    wrap_ids = request.POST.getlist('wrap_ids')
+    wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
+    wraps.update(is_public=True)
+    return redirect('view_public_wraps')
+
+def view_public_wraps(request):
+    public_wraps = SpotifyWrap.objects.filter(is_public=True)
+    return render(request, 'Wrapped/view_public_wraps.html', {"wraps": public_wraps})
 
 def view_wraps(request):
     wraps = SpotifyWrap.objects.filter(user=request.user)
