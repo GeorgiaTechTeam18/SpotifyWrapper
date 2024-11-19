@@ -11,6 +11,15 @@
     position: relative;
 }
 
+.vert-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+}
+
 .wrap-slide {
     display: none;
 }
@@ -100,4 +109,70 @@
 @keyframes progress-bar_active {
   from {width: 0;}
   to {width: 100%;}
+}
+
+
+
+/*View wrap styling*/
+/* Styling the label and input field */
+#wrap-name-selection h1 {
+    font-size: 2rem;
+    color: #1DB954; /* Spotify green */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+#wrap-name-selection label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#wrap-name-selection input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid #1DB954;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+#wrap-name-selection input[type="text"]:focus {
+    border-color: #55d982; /* A lighter shade of green */
+    outline: none;
+}
+
+/* Styling for the buttons */
+.button-group button {
+    display: inline-block;
+    margin: 10px 15px 0 0;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: white;
+    background-color: #1DB954; /* Spotify green */
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+    background-color: #55d982; /* A lighter shade of green */
+}
+
+/* Optional: Adjust button spacing */
+.button-group {
+    margin-top: 15px;
+}
+
+/* Styling for the duration selection label */
+#wrap-duration-selection label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    display: block;
+    margin-bottom: 10px;
 }
