@@ -101,3 +101,19 @@
   from {width: 0;}
   to {width: 100%;}
 }
+
+.emojiForAnimation {
+    transform: translate(-50%, -50%);
+    display: none;
+    animation-name: emojiAnimation;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes emojiAnimation {
+    0% {width: .2em;}
+    30% {width: 10em;}
+    99% {width: .2em;}
+    100% {display: none;}
+}

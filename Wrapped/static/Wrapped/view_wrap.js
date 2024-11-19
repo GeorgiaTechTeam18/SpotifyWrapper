@@ -15,7 +15,12 @@ const startProgressAnimation = (nextSlideIndex) => {
 
 const selectSlide = (slideIndex, animate) => {
     if(animate){
-        startProgressAnimation(slideIndex+1)
+        if (slideIndex < numberOfSlides - 1) {
+            startProgressAnimation(slideIndex+1)
+        }
+        if (slideIndex === 4) {
+            emojiAnimation()
+        }
     } else if (progressBar.classList.contains("active")) {
         progressBar.classList.remove("active");
         progressBar.offsetHeight
@@ -55,3 +60,20 @@ document.getElementById("slide-forward-button").addEventListener("click", () => 
         selectSlide(currentSlide + 1, false)
     }
 })
+
+const emojis = ["https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png", "https://em-content.zobj.net/source/apple/391/guitar_1f3b8.png", "https://em-content.zobj.net/source/apple/391/woman-dancing_1f483.png"];
+
+let temp = document.getElementById("emojiTemplate").content.querySelector("img");
+for (let i = 0; i < 100; i++) {
+    let clone = temp.cloneNode(true);
+    clone.src = emojis[Math.floor(Math.random() * emojis.length)]
+    clone.style.top = Math.floor(Math.random() * 80) + 10 + "%"
+    clone.style.left = Math.floor(Math.random() * 80) + 10 + "%"
+    document.body.appendChild(clone);
+}
+
+const emojiAnimation = () => {
+    for (let emoji of document.getElementsByClassName("emojiForAnimation")) {
+        emoji.style.display = "block";
+    }
+}
