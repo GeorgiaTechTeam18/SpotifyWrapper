@@ -1,4 +1,6 @@
 import secrets
+
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from requests import Request, post, exceptions
 from .util import update_or_create_user_tokens, get_top_song_album_covers
@@ -139,7 +141,7 @@ def callback(request):
             else:
                 redirect("/login?error=an account with this email already exists")
     elif matching_existing_tokens.exists() and matching_existing_tokens[0].user.email != request.user.email:
-        raise Exception(f"This spotify account has already been linked with another Wrapped account")
+        HttpResponseBadRequest(f"This spotify account has already been linked with another Wrapped account")
     print(spotify_user_data)
     update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
                                  spotify_account_email=spotify_user_data["email"],
