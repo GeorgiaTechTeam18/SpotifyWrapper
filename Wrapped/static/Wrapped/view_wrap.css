@@ -1,6 +1,9 @@
 #wrap-container {
     height: calc(100vh - 11em);
-    overflow-y: unset;
+    overflow-y: auto;
+}
+
+#outer-wrap-container {
     width: calc(100% - 4em);
     max-width: 900px;
     margin: auto;
@@ -55,7 +58,7 @@
 .pagination {
     display: flex;
     justify-content: center;
-    gap: .5em;
+    gap: .2em;
     margin-top: .5em;
 }
 
@@ -82,13 +85,13 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+    margin-left: -1em;
 }
 
 #progress-bar {
     width: 100%;
     background: purple;
     height: .5em;
-    margin-left: -1em;
 }
 
 #progress-bar.active {
@@ -116,4 +119,17 @@
     30% {width: 10em;}
     99% {width: .2em;}
     100% {display: none;}
+}
+
+.slide-button-label {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .slide-button-label {
+        display: inline;
+    }
+    .pagination {
+        gap: .5em;
+    }
 }
