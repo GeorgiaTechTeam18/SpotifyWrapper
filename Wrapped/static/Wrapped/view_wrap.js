@@ -8,6 +8,7 @@ const startProgressAnimation = (nextSlideIndex) => {
     progressBar.classList.remove("active");
     progressBar.offsetHeight
     progressBar.classList.add("active");
+    clearTimeout(progressTimeout)
     progressTimeout = setTimeout(() => {
         selectSlide(nextSlideIndex, true);
     }, 10 * 1000)
@@ -51,13 +52,13 @@ for (let i = 0; i < numberOfSlides; i++) {
 
 document.getElementById("slide-back-button").addEventListener("click", () => {
     if (currentSlide > 0) {
-        selectSlide(currentSlide - 1, false)
+        selectSlide(currentSlide - 1, true)
     }
 })
 
 document.getElementById("slide-forward-button").addEventListener("click", () => {
     if (currentSlide < numberOfSlides - 1) {
-        selectSlide(currentSlide + 1, false)
+        selectSlide(currentSlide + 1, true)
     }
 })
 
