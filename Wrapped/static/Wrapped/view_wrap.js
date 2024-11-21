@@ -66,16 +66,11 @@ const emojis = ["https://em-content.zobj.net/source/apple/391/grinning-face-with
 
 const temp = document.getElementById("emojiTemplate").content.querySelector("img");
 const emojiContainer = document.getElementById("emojiContainer");
-for (let i = 0; i < 100; i++) {
+
+for (let i = 0; i < 150; i++) {
     let clone = temp.cloneNode(true);
     clone.src = emojis[Math.floor(Math.random() * emojis.length)]
-    clone.style.top = Math.floor(Math.random() * 80) + 10 + "%"
-    clone.style.left = Math.floor(Math.random() * 80) + 10 + "%"
+    clone.style.top = Math.floor(Math.random() * 90) + 5 + "%"
+    clone.style.left = Math.floor(Math.random() * 90) + 5 + "%"
     emojiContainer.appendChild(clone);
-}
-
-const emojiAnimation = () => {
-    for (let emoji of document.getElementsByClassName("emojiForAnimation")) {
-        emoji.style.display = "block";
-    }
 }

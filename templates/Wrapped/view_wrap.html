@@ -35,13 +35,13 @@
             <div class="transition-slide left">
                 <div>
                     <h2>Your next 6 most repeated tracks are:</h2>
-                    <img src="https://media2.giphy.com/media/6FxJBpNTBgWdJCXKD4/200w.gif?cid=6c09b952oa05x0wyabredfz5jol9t73q3e7tsxslylzcaeor&ep=v1_gifs_search&rid=200w.gif&ct=g">
+                    <img src="https://media2.giphy.com/media/6FxJBpNTBgWdJCXKD4/200w.gif?cid=6c09b952oa05x0wyabredfz5jol9t73q3e7tsxslylzcaeor&ep=v1_gifs_search&rid=200w.gif&ct=g" loading="lazy">
                 </div>
             </div>
             <ul class="wrap-item-list">
                 {% for track in tracks %}
                 <ol start="2" class="track">
-                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
+                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50" loading="lazy"/>
                     <div>
                         <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
                         <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
@@ -89,6 +89,7 @@
 {#                  {% endfor %}#}
         </div>
         <div class="wrap-slide" id="wrap-slide-4">
+            <div id="emojiContainer"></div>
             <h1>Overall Vibe</h1>
             {{ audio_features }}
             <br>
@@ -112,8 +113,7 @@
           <button id="slide-forward-button">&gt;</button>
       </div>
     <template id="emojiTemplate">
-      <img class="emojiForAnimation" style="position: absolute" src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
+      <img class="emojiForAnimation" style="position: absolute" loading="lazy" src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
     </template>
-    <span id="emojiContainer"></span>
     <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
 {% endblock %}

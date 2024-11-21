@@ -17,6 +17,15 @@
     position: relative;
 }
 
+#emojiContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
 .vert-center {
     display: flex;
     justify-content: center;
@@ -139,7 +148,6 @@
 
 .emojiForAnimation {
     transform: translate(-50%, -50%);
-    display: none;
     animation-name: emojiAnimation;
     animation-duration: var(--transition-time);
     animation-timing-function: linear;
@@ -147,10 +155,10 @@
 }
 
 @keyframes emojiAnimation {
-    0% {width: .2em;}
-    30% {width: 10em;}
+    0% {width: 4em;}
+    10% {width: 12em;}
     99% {width: .2em;}
-    100% {display: none;}
+    100% {width: 0}
 }
 
 .slide-button-label {
@@ -227,6 +235,11 @@
     0% {clip-path: polygon(50% -50%, 150% 50%, 50% 150%, -50% 50%);}
     70% {clip-path: polygon(50% -50%, 150% 50%, 50% 150%, -50% 50%);}
     100% {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
+}
+
+.transition-slide.none {
+    max-height: unset;
+    animation-name: unset;
 }
 
 /*View wrap styling*/
