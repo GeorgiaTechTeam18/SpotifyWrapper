@@ -6,8 +6,15 @@
 {% endblock %}
 
 {% block body %}
+    <div id="outer-wrap-container">
     <div id="wrap-container">
         <div class="wrap-slide" id="wrap-slide-0">
+            <div class="transition-slide">
+                <div>
+                    <h2>You couldn't stop listening to:</h2>
+                    <img src="https://media.tenor.com/YwZ12sFYzfUAAAAM/drumroll-sesame-street.gif" loading="eager">
+                </div>
+            </div>
             <h1>#1 Song</h1>
             <ul class="wrap-item-list">
                 {% with top_track as track %}
@@ -25,10 +32,16 @@
         </div>
         <div class="wrap-slide" id="wrap-slide-1">
         <h1>Top Tracks</h1>
+            <div class="transition-slide left">
+                <div>
+                    <h2>Your next 6 most repeated tracks are:</h2>
+                    <img src="https://media2.giphy.com/media/6FxJBpNTBgWdJCXKD4/200w.gif?cid=6c09b952oa05x0wyabredfz5jol9t73q3e7tsxslylzcaeor&ep=v1_gifs_search&rid=200w.gif&ct=g" loading="lazy">
+                </div>
+            </div>
             <ul class="wrap-item-list">
                 {% for track in tracks %}
                 <ol start="2" class="track">
-                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
+                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50" loading="lazy"/>
                     <div>
                         <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
                         <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
@@ -40,6 +53,11 @@
             </ul>
         </div>
         <div class="wrap-slide" id="wrap-slide-2">
+            <div class="transition-slide shrink">
+                <div>
+                    <h2>Your Top artists are:</h2>
+                </div>
+            </div>
             <h1>Top Artists</h1>
             <ul class="wrap-item-list">
                 {% for artist in artists %}
@@ -54,6 +72,11 @@
             </ul>
         </div>
         <div class="wrap-slide" id="wrap-slide-3">
+            <div class="transition-slide dimond">
+                <div>
+                    <h2>Your Top Genres are:</h2>
+                </div>
+            </div>
             <h1>Top Genres</h1>
             {{ genres }}
             <p>still deciding how to display</p>
@@ -66,6 +89,7 @@
 {#                  {% endfor %}#}
         </div>
         <div class="wrap-slide" id="wrap-slide-4">
+            <div id="emojiContainer"></div>
             <h1>Overall Vibe</h1>
             {{ audio_features }}
             <br>
@@ -73,6 +97,7 @@
             <p>still deciding how to display</p>
             <h2>valance means happiness</h2>
         </div>
+    </div>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
@@ -80,12 +105,15 @@
 
       <div class="pagination">
           <button id="slide-back-button">&lt;</button>
-          <button id="slide-button-0">#1 Song</button>
-          <button id="slide-button-1">Top Tracks</button>
-          <button id="slide-button-2">Top Artists</button>
-          <button id="slide-button-3">Top Genres</button>
-          <button id="slide-button-4">Overall Vibes</button>
+          <button id="slide-button-0"><span class="slide-button-label">#1 Song</span></button>
+          <button id="slide-button-1"><span class="slide-button-label">Top Tracks</span></button>
+          <button id="slide-button-2"><span class="slide-button-label">Top Artists</span></button>
+          <button id="slide-button-3"><span class="slide-button-label">Top Genres</span></button>
+          <button id="slide-button-4"><span class="slide-button-label">Overall Vibes</span></button>
           <button id="slide-forward-button">&gt;</button>
       </div>
+    <template id="emojiTemplate">
+      <img class="emojiForAnimation" style="position: absolute" loading="lazy" src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
+    </template>
     <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
 {% endblock %}

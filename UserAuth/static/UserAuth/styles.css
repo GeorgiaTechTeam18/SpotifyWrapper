@@ -438,20 +438,13 @@ table.linked-tokens  {
 @media (max-width: 768px) {
     main {
         padding-right: unset;
-        min-height: 100vh;
-        min-height: calc(100dvh - 20px);
     }
-
     .side-image {
         width: 100%;
         height: 4em;
         margin-top: 1em;
         bottom: 0;
         top: unset;
-    }
-    .content-container {
-        padding-bottom: 4em;
-        padding-top: 2em;
     }
     .HiddenOnMobile {
         display: none;
