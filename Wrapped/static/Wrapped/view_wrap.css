@@ -26,15 +26,6 @@
     z-index: 100;
 }
 
-.vert-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-    text-align: center;
-}
-
 .wrap-slide {
     display: none;
     margin: 1em;
