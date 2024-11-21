@@ -64,13 +64,14 @@ document.getElementById("slide-forward-button").addEventListener("click", () => 
 
 const emojis = ["https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png", "https://em-content.zobj.net/source/apple/391/guitar_1f3b8.png", "https://em-content.zobj.net/source/apple/391/woman-dancing_1f483.png"];
 
-let temp = document.getElementById("emojiTemplate").content.querySelector("img");
+const temp = document.getElementById("emojiTemplate").content.querySelector("img");
+const emojiContainer = document.getElementById("emojiContainer");
 for (let i = 0; i < 100; i++) {
     let clone = temp.cloneNode(true);
     clone.src = emojis[Math.floor(Math.random() * emojis.length)]
     clone.style.top = Math.floor(Math.random() * 80) + 10 + "%"
     clone.style.left = Math.floor(Math.random() * 80) + 10 + "%"
-    document.body.appendChild(clone);
+    emojiContainer.appendChild(clone);
 }
 
 const emojiAnimation = () => {

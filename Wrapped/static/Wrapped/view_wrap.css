@@ -1,3 +1,7 @@
+:root {
+    --transition-time: 3s;
+}
+
 #wrap-container {
     height: calc(100vh - 11em);
     overflow-y: auto;
@@ -10,13 +14,15 @@
     border-radius: 1em 1em 0em 0em;
     border: .5em solid purple;
     border-bottom: none;
-    padding: 1em;
     position: relative;
 }
 
 .wrap-slide {
     display: none;
+    margin: 1em;
 }
+
+
 
 .wrap-slide h1 {
     color: #1DB954; /* Spotify green */
@@ -85,7 +91,6 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-left: -1em;
 }
 
 #progress-bar {
@@ -109,7 +114,7 @@
     transform: translate(-50%, -50%);
     display: none;
     animation-name: emojiAnimation;
-    animation-duration: 2s;
+    animation-duration: var(--transition-time);
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
@@ -132,4 +137,68 @@
     .pagination {
         gap: .5em;
     }
+}
+
+.transition-slide {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: .4em .4em 0 0;
+    background: #f3a7f3;
+    animation-name: transition-slide-leaves;
+    animation-duration: var(--transition-time);
+    animation-timing-function: linear;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.transition-slide div {
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+}
+
+@keyframes transition-slide-leaves {
+  0% {max-height: 100vh;}
+  70%  {max-height: 100vh; }
+  100% {max-height: 0;}
+}
+
+.transition-slide.left {
+    max-height: unset;
+    max-width: 0;
+    animation-name: transition-slide-leaves-left;
+}
+
+@keyframes transition-slide-leaves-left  {
+  0% {max-width: 100vw;}
+  70%  {max-width: 100vw; }
+  100% {max-width: 0;}
+}
+
+.transition-slide.shrink {
+    top: 50vh; bottom: 50vh; left: 50vw; right: 50vw;
+    max-height: unset;
+    animation-name: transition-slide-leaves-shrink;
+}
+
+@keyframes transition-slide-leaves-shrink  {
+  0% {top: 0; bottom: 0; left: 0; right: 0;}
+  70%  {top: 0; bottom: 0; left: 0; right: 0;}
+  100% {top: 50vh; bottom: 50vh; left: 50vw; right: 50vw;}
+}
+
+.transition-slide.dimond {
+    max-height: unset;
+    animation-name: transition-slide-leaves-dimond;
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+}
+
+@keyframes transition-slide-leaves-dimond {
+    0% {clip-path: polygon(50% -50%, 150% 50%, 50% 150%, -50% 50%);}
+    70% {clip-path: polygon(50% -50%, 150% 50%, 50% 150%, -50% 50%);}
+    100% {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
 }
