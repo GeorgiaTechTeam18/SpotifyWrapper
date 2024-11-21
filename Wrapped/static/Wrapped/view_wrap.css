@@ -24,6 +24,7 @@
     left: 0;
     right: 0;
     z-index: 100;
+    pointer-events: none;
 }
 
 .wrap-slide {
@@ -85,6 +86,44 @@
 
 .artist a:hover, .track a:hover {
     text-decoration: underline;
+}
+
+.genre_container {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    font-size: large;
+    margin-top: 1em;
+}
+
+.genre_list {
+    font-size: large;
+    display: flex;
+}
+
+.genre_container progress {
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+}
+
+.genre_container progress[value]::-webkit-progress-bar {
+    background: transparent;
+}
+
+.genre_container progress[value]::-webkit-progress-value {
+    background: blue;
+}
+
+
+.genre {
+    text-transform: capitalize;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
+.genre_number {
+    margin-left: 1em;
 }
 
 /* pagination element */
@@ -178,6 +217,7 @@
     animation-timing-function: linear;
     overflow: hidden;
     max-height: 0;
+    pointer-events: none;
 }
 
 .transition-slide div {

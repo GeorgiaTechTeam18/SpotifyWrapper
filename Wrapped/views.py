@@ -1,4 +1,6 @@
 # Wrapped/views.py
+import functools
+
 import requests
 from datetime import datetime
 from django.http import JsonResponse, HttpResponseServerError, HttpResponseNotFound
@@ -46,17 +48,43 @@ def view_wraps(request):
     wraps = SpotifyWrap.objects.filter(user=request.user)
     return render(request, 'Wrapped/view_wraps.html', {"wraps": wraps})
 
+def norm_audio_features(audio_features: dict) -> (dict, dict):
+    audio_features_graphs = {}
+    audio_features_list = {}
+    for key, value in audio_features.items():
+        if (key in ["most_common_key", "tempo"]):
+            audio_features_list[key] = value
+        elif (key == "mode"):
+            audio_features_graphs["minor vs major"] = int(value * 100)
+        elif (key == "loudness"):
+            audio_features_graphs["loudness"] = int((value + 60) / .6)
+        elif (key == "valence"):
+            audio_features_graphs["sad vs happy"] = int(value * 100)
+        else:
+            audio_features_graphs[key] = int(value*100)
+    return audio_features_graphs, audio_features_list
+
 def view_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
     tracks = wrap.get_top_tracks()
+    genres = wrap.get_top_genres()[:10]
+    max_genre = 0
+    for genre in genres:
+        max_genre = max(max_genre, genre[1])
+
+    audio_features_graphs, audio_features_list = norm_audio_features(wrap.get_audio_features())
     return render(request,'Wrapped/view_wrap.html',
                   {
                       "top_track":tracks[0],
                       "tracks":tracks[1:6],
                       "artists": wrap.get_top_artists()[:5],
-                      "genres": wrap.get_top_genres()[:10],
-                      "audio_features": wrap.get_audio_features(),
+                      "genres": genres,
+                      "max_genre": max_genre,
+                      "audio_features_graphs": audio_features_graphs,
+                      "audio_features_list": audio_features_list,
                   })
+
+
 
 # TODO
 def like_wrap(request, wrap_id):
