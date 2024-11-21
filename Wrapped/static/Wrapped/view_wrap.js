@@ -19,9 +19,6 @@ const selectSlide = (slideIndex, animate) => {
         if (slideIndex < numberOfSlides - 1) {
             startProgressAnimation(slideIndex+1)
         }
-        if (slideIndex === 4) {
-            emojiAnimation()
-        }
     } else if (progressBar.classList.contains("active")) {
         progressBar.classList.remove("active");
         progressBar.offsetHeight
