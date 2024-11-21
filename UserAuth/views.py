@@ -86,8 +86,9 @@ def signup_view(request):
 
 @login_required()
 def profile_view(request):
+    error_message = [] if request.GET.get("error") == None else [request.GET.get("error")]
     associated_spotify_tokens = SpotifyToken.objects.filter(user__username=request.user.username)
-    return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens})
+    return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens, "messages": error_message})
 
 
 def delete_token(request):
