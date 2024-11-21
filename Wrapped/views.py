@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.views.decorators.http import require_POST
+
+from UserAuth.models import SpotifyToken
 from UserAuth.util import get_user_tokens, refresh_spotify_token
 from .models import SpotifyWrap
 
@@ -88,13 +90,25 @@ key_map = {
     }
 
 def create_wrap(request, time_range = None):
+    if isinstance(request.user, AnonymousUser):
+        return redirect('/login?error=not_logged_in')
+
+
     if request.method == 'GET' or time_range == None:
+        if (request.user.default_spotify_token == None):
+            associated_spotify_tokens = SpotifyToken.objects.filter(user__username=request.user.username)
+            first_token = associated_spotify_tokens.first()
+            if (first_token != None):
+                request.user.default_spotify_token = first_token
+                request.user.save()
+            else:
+                #when there is a user but there is not spotify token redirect to the profile page with a message
+                return redirect('/profile?error=you are seeing this page because you need to link a spotify account with your account')
         return render(request, "Wrapped/choose_time_range.html")
 
     #time_range = request.POST.get('time_range')
     print(time_range)
-    if isinstance(request.user, AnonymousUser):
-        return redirect('/login?error=not_logged_in')
+
 
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
