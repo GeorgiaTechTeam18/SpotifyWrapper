@@ -107,6 +107,12 @@ main {
     gap: 1em;
 }
 
+.vert-center {
+    height: calc(100vh - 12em);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
 .promo-section {
     display: flex;
@@ -319,7 +325,7 @@ main {
     border: 2px solid #B488F2;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin: auto;
+    margin: 0 auto;
     background-color: #FFFFFF;
 }
 

@@ -1,12 +1,14 @@
 # Wrapped/views.py
 import requests
-from django.http import JsonResponse, HttpResponseServerError
+from datetime import datetime
+from django.http import JsonResponse, HttpResponseServerError, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.views.decorators.http import require_POST
 from UserAuth.util import get_user_tokens, refresh_spotify_token
 from .models import SpotifyWrap
+
 
 
 @login_required
@@ -85,16 +87,30 @@ key_map = {
         -1: 'No key detected'
     }
 
-def create_wrap(request, time_range='None'):
+def create_wrap(request, time_range = None):
+    if request.method == 'GET' or time_range == None:
+        return render(request, "Wrapped/choose_time_range.html")
+
+    #time_range = request.POST.get('time_range')
+    print(time_range)
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
-
-    if time_range == 'None':
-        return render(request, "Wrapped/choose_time_range.html")
 
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
     limit = 'limit=10'
+    wrap_name = request.POST.get('name')
+    if wrap_name == '' or wrap_name is None:
+        user_profile_url = 'https://api.spotify.com/v1/me'
+        user_profile_response = requests.get(user_profile_url, headers=headers)
+        if user_profile_response.status_code == 200:
+            profile = user_profile_response.json()
+            username = profile.get('display_name', "Anonymous")
+            time_range = request.POST.get('time_range')
+            date = datetime.today()
+            wrap_name = f"{username}'s wrapped over the last {time_range} months - {date}"
+
+    print(wrap_name)
 
     # Fetch top artists from Spotify API
     artist_endpoint = f'https://api.spotify.com/v1/me/top/artists?time_range={time_range}&{limit}'
@@ -110,7 +126,8 @@ def create_wrap(request, time_range='None'):
                 'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
-        return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
+        print(artist_response.json())
+        return HttpResponseNotFound('Failed to retrieve top artists. Try re-linking your spotify in the profile page')
 
     # Fetch top tracks from Spotify API
     track_endpoint = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}&{limit}'
@@ -132,9 +149,9 @@ def create_wrap(request, time_range='None'):
                 'id': item.get('id'),
             })
     else:
-        return HttpResponseServerError(request, 'Wrapped/get_top.html', {'error': 'Failed to retrieve top artists. Try re-linking your spotify in the profile page'})
+        return HttpResponseNotFound('Failed to retrieve top tracks. Try re-linking your spotify in the profile page')
 
-    wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title="Spotify Wrapped")
+    wrap, create = SpotifyWrap.objects.get_or_create(user=request.user, title= wrap_name)
     wrap.set_top_artists(artist_data)
     wrap.set_top_tracks(track_data)
 
