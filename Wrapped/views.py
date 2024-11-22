@@ -7,7 +7,6 @@ from django.http import JsonResponse, HttpResponseServerError, HttpResponseNotFo
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.views.decorators.http import require_POST
 
 from UserAuth.models import SpotifyToken
 from UserAuth.util import get_user_tokens, refresh_spotify_token
@@ -75,6 +74,7 @@ def view_wrap(request, wrap_id):
     audio_features_graphs, audio_features_list = norm_audio_features(wrap.get_audio_features())
     return render(request,'Wrapped/view_wrap.html',
                   {
+                      "wrap_title": wrap.title,
                       "top_track":tracks[0],
                       "tracks":tracks[1:6],
                       "artists": wrap.get_top_artists()[:5],
@@ -117,6 +117,8 @@ key_map = {
         -1: 'No key detected'
     }
 
+time_range_lookup = {"short_term": "month", "medium_term": "6 months", "long_term": "year"}
+
 def create_wrap(request, time_range = None):
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
@@ -144,11 +146,11 @@ def create_wrap(request, time_range = None):
         if user_profile_response.status_code == 200:
             profile = user_profile_response.json()
             username = profile.get('display_name', "Anonymous")
-            time_range = request.POST.get('time_range')
-            date = datetime.today()
-            wrap_name = f"{username}'s wrapped over the last {time_range} months - {date}"
+            date = f'{datetime.today():%B %d, %Y}'
+            wrap_name = f"{username}'s wrapped over the last {time_range_lookup[time_range]} - {date}"
 
     print(wrap_name)
+    print("time_range " + time_range)
 
     # Fetch top artists from Spotify API
     artist_endpoint = f'https://api.spotify.com/v1/me/top/artists?time_range={time_range}&{limit}'
@@ -164,7 +166,7 @@ def create_wrap(request, time_range = None):
                 'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
-        print(artist_response.json())
+        print(artist_response.text)
         return HttpResponseNotFound('Failed to retrieve top artists. Try re-linking your spotify in the profile page')
 
     # Fetch top tracks from Spotify API
