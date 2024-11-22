@@ -134,10 +134,6 @@ def create_wrap(request, time_range = None):
                 return redirect('/profile?error=you are seeing this page because you need to link a spotify account with your account')
         return render(request, "Wrapped/choose_time_range.html")
 
-    #time_range = request.POST.get('time_range')
-    print(time_range)
-
-
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
     limit = 'limit=10'

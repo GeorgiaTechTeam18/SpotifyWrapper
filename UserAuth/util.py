@@ -13,7 +13,6 @@ BASE_URL = "https://api.spotify.com/v1/me/"
 
 def get_user_tokens(user: User):
     user_tokens = user.default_spotify_token
-    print(f"user token {user_tokens}")
     if user_tokens:
         expiry = user_tokens.expires_in
         if expiry <= timezone.now():
@@ -71,8 +70,6 @@ def refresh_spotify_token(user: User):
         'client_id': os.getenv('CLIENT_ID'),
         'client_secret': os.getenv('CLIENT_SECRET')
     }).json()
-
-    print(response)
 
     access_token = response.get('access_token')
     token_type = response.get('token_type')

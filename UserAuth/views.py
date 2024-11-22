@@ -53,7 +53,6 @@ def authWithSpotify(request):
 def login_view(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        print(form)
         if form.is_valid():
             user_data = form.cleaned_data
             user = authenticate(request, username=user_data.get('email'), password=user_data.get('password'))
@@ -143,7 +142,6 @@ def callback(request):
                 redirect("/login?error=an account with this email already exists")
     elif matching_existing_tokens.exists() and matching_existing_tokens[0].user.email != request.user.email:
         HttpResponseBadRequest(f"This spotify account has already been linked with another Wrapped account")
-    print(spotify_user_data)
     update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
                                  spotify_account_email=spotify_user_data["email"],
                                  spotify_account_username=spotify_user_data["id"])
