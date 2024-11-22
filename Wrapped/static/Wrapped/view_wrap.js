@@ -4,8 +4,9 @@ let currentSlide = 0;
 let progressTimeout = null;
 const progressBar = document.getElementById("progress-bar")
 
-let fadeInterval = null;
 const animationTime = 10 * 1000;
+let fadeOutTimeout = null;
+let activeFadeIntervals = [];
 
 const startProgressAnimation = (nextSlideIndex) => {
     progressBar.classList.remove("active");
@@ -17,26 +18,38 @@ const startProgressAnimation = (nextSlideIndex) => {
     }, animationTime)
 }
 
+const resetFades = () => {
+    activeFadeIntervals.forEach(interval => clearInterval(interval));
+    activeFadeIntervals = [];
+    if (fadeOutTimeout) {
+        clearTimeout(fadeOutTimeout);
+        fadeOutTimeout = null;
+    }
+};
+
 const fadeVolume = (audioElement, startVolume, endVolume, duration) => {
-    console.log("Fading start");
     let startTime = Date.now();
-    if (fadeInterval) clearInterval(fadeInterval);
-    fadeInterval = setInterval(() => {
+    resetFades();
+    let fadeInterval = setInterval(() => {
         let elapsedTime = Date.now() - startTime;
         let progress = Math.min(elapsedTime / duration, 1);
         audioElement.volume = startVolume + (Math.log10(progress + 1) / Math.log10(2)) * (endVolume - startVolume);
-
         if (progress === 1) {
             clearInterval(fadeInterval);
-            console.log("Fading end");
+            const index = activeFadeIntervals.indexOf(fadeInterval);
+            if (index > -1) {
+                activeFadeIntervals.splice(index, 1);
+            }
         }
     }, 50);
+    activeFadeIntervals.push(fadeInterval);
 };
 
 const selectSlide = (slideIndex, animate) => {
     const audioPlayer = document.getElementById("audio-player");
-    let fadeOutDuration = 2500;
+    let fadeOutDuration = 3000;
     let playDuration = 30000 - fadeOutDuration;
+    resetFades();
     audioPlayer.pause();
     audioPlayer.volume = 0;
     audioPlayer.src = "";
@@ -64,7 +77,7 @@ const selectSlide = (slideIndex, animate) => {
     audioPlayer.src = slideElement.dataset.previewUrl;
     audioPlayer.play()
     fadeVolume(audioPlayer, 0, 0.125, 3000);
-    setTimeout(() => {
+    fadeOutTimeout = setTimeout(() => {
         fadeVolume(audioPlayer, audioPlayer.volume, 0, fadeOutDuration);
     }, playDuration - 100);
 
