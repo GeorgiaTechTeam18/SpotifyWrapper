@@ -90,7 +90,7 @@
 }
 
 .number-1-track.track {
-    width: 40%;
+    max-width: 370px;
     margin: auto;
     flex-direction: column;
 }
