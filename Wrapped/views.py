@@ -51,16 +51,19 @@ def norm_audio_features(audio_features: dict) -> (dict, dict):
     audio_features_graphs = {}
     audio_features_list = {}
     for key, value in audio_features.items():
-        if (key in ["most_common_key", "tempo"]):
-            audio_features_list[key] = value
-        elif (key == "mode"):
-            audio_features_graphs["minor vs major"] = int(value * 100)
-        elif (key == "loudness"):
-            audio_features_graphs["loudness"] = int((value + 60) / .6)
-        elif (key == "valence"):
-            audio_features_graphs["sad vs happy"] = int(value * 100)
-        else:
-            audio_features_graphs[key] = int(value*100)
+        match key:
+            case "most_common_key":
+                audio_features_list["most common key"] = value
+            case "tempo":
+                audio_features_list["average tempo"] = f'{int(value)} bpm'
+            case "mode":
+                audio_features_graphs["minor vs major"] = int(value * 100)
+            case "loudness":
+                audio_features_graphs["loudness"] = int((value + 60) / .6)
+            case "valence":
+                audio_features_graphs["sad vs happy"] = int(value * 100)
+            case _:
+                audio_features_graphs[key] = int(value*100)
     return audio_features_graphs, audio_features_list
 
 def view_wrap(request, wrap_id):
