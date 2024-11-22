@@ -1,11 +1,12 @@
 # Wrapped/views.py
+import functools
+
 import requests
 from datetime import datetime
 from django.http import JsonResponse, HttpResponseServerError, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.views.decorators.http import require_POST
 
 from UserAuth.models import SpotifyToken
 from UserAuth.util import get_user_tokens, refresh_spotify_token
@@ -46,17 +47,47 @@ def view_wraps(request):
     wraps = SpotifyWrap.objects.filter(user=request.user)
     return render(request, 'Wrapped/view_wraps.html', {"wraps": wraps})
 
+def norm_audio_features(audio_features: dict) -> (dict, dict):
+    audio_features_graphs = {}
+    audio_features_list = {}
+    for key, value in audio_features.items():
+        match key:
+            case "most_common_key":
+                audio_features_list["most common key"] = value
+            case "tempo":
+                audio_features_list["average tempo"] = f'{int(value)} bpm'
+            case "mode":
+                audio_features_graphs["minor vs major"] = int(value * 100)
+            case "loudness":
+                audio_features_graphs["loudness"] = int((value + 60) / .6)
+            case "valence":
+                audio_features_graphs["sad vs happy"] = int(value * 100)
+            case _:
+                audio_features_graphs[key] = int(value*100)
+    return audio_features_graphs, audio_features_list
+
 def view_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
     tracks = wrap.get_top_tracks()
+    genres = wrap.get_top_genres()[:10]
+    max_genre = 0
+    for genre in genres:
+        max_genre = max(max_genre, genre[1])
+
+    audio_features_graphs, audio_features_list = norm_audio_features(wrap.get_audio_features())
     return render(request,'Wrapped/view_wrap.html',
                   {
+                      "wrap_title": wrap.title,
                       "top_track":tracks[0],
                       "tracks":tracks[1:6],
                       "artists": wrap.get_top_artists()[:5],
-                      "genres": wrap.get_top_genres()[:10],
-                      "audio_features": wrap.get_audio_features(),
+                      "genres": genres,
+                      "max_genre": max_genre,
+                      "audio_features_graphs": audio_features_graphs,
+                      "audio_features_list": audio_features_list,
                   })
+
+
 
 # TODO
 def like_wrap(request, wrap_id):
@@ -89,6 +120,8 @@ key_map = {
         -1: 'No key detected'
     }
 
+time_range_lookup = {"short_term": "month", "medium_term": "6 months", "long_term": "year"}
+
 def create_wrap(request, time_range = None):
     if isinstance(request.user, AnonymousUser):
         return redirect('/login?error=not_logged_in')
@@ -106,10 +139,6 @@ def create_wrap(request, time_range = None):
                 return redirect('/profile?error=you are seeing this page because you need to link a spotify account with your account')
         return render(request, "Wrapped/choose_time_range.html")
 
-    #time_range = request.POST.get('time_range')
-    print(time_range)
-
-
     access_token = get_user_tokens(request.user).access_token
     headers = {'Authorization': f'Bearer {access_token}'}
     limit = 'limit=10'
@@ -120,11 +149,11 @@ def create_wrap(request, time_range = None):
         if user_profile_response.status_code == 200:
             profile = user_profile_response.json()
             username = profile.get('display_name', "Anonymous")
-            time_range = request.POST.get('time_range')
-            date = datetime.today()
-            wrap_name = f"{username}'s wrapped over the last {time_range} months - {date}"
+            date = f'{datetime.today():%B %d, %Y}'
+            wrap_name = f"{username}'s wrapped over the last {time_range_lookup[time_range]} - {date}"
 
     print(wrap_name)
+    print("time_range " + time_range)
 
     # Fetch top artists from Spotify API
     artist_endpoint = f'https://api.spotify.com/v1/me/top/artists?time_range={time_range}&{limit}'
@@ -140,7 +169,7 @@ def create_wrap(request, time_range = None):
                 'artist_url': item.get('external_urls', {}).get('spotify', '')
             })
     else:
-        print(artist_response.json())
+        print(artist_response.text)
         return HttpResponseNotFound('Failed to retrieve top artists. Try re-linking your spotify in the profile page')
 
     # Fetch top tracks from Spotify API

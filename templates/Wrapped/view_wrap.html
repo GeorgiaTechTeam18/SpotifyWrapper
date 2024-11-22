@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body %}
+    <h1 class="view-wrap-title">{{ wrap_title }}</h1>
     <div id="outer-wrap-container">
     <div id="wrap-container">
         <div class="wrap-slide" id="wrap-slide-0">
@@ -17,17 +18,15 @@
             </div>
             <h1>#1 Song</h1>
             <ul class="wrap-item-list">
-                {% with top_track as track %}
-                    <li class="track">
-                        <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
-                        <div>
-                            <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
-                            <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
-                            <p><strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a></p>
-                            <p><strong>Duration:</strong> {{ track.duration_ms }} ms</p>
-                        </div>
-                    </li>
-                {% endwith %}
+                <li class="track number-1-track">
+                    <img src="{{ top_track.album_image_url }}" alt="{{ top_track.album_name }}" width="50" height="50"/>
+                    <div>
+                        <p><strong>Song:</strong> <a href="{{ top_track.song_url }}">{{ top_track.song_name }}</a></p>
+                        <p><strong>Artist:</strong> <a href="{{ top_track.artist_url }}">{{ top_track.artist_name }}</a></p>
+                        <p><strong>Album:</strong> <a href="{{ top_track.album_url }}">{{ top_track.album_name }}</a></p>
+                        <p><strong>Duration:</strong> {{ top_track.duration_ms }} ms</p>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="wrap-slide" id="wrap-slide-1">
@@ -35,13 +34,13 @@
             <div class="transition-slide left">
                 <div>
                     <h2>Your next 5 most repeated tracks are:</h2>
-                    <img src="https://media2.giphy.com/media/6FxJBpNTBgWdJCXKD4/200w.gif?cid=6c09b952oa05x0wyabredfz5jol9t73q3e7tsxslylzcaeor&ep=v1_gifs_search&rid=200w.gif&ct=g" loading="lazy">
+                    <img src="https://media2.giphy.com/media/6FxJBpNTBgWdJCXKD4/200w.gif?cid=6c09b952oa05x0wyabredfz5jol9t73q3e7tsxslylzcaeor&ep=v1_gifs_search&rid=200w.gif&ct=g">
                 </div>
             </div>
             <ul class="wrap-item-list">
                 {% for track in tracks %}
                 <ol start="2" class="track">
-                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50" loading="lazy"/>
+                    <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
                     <div>
                         <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
                         <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
@@ -78,24 +77,35 @@
                 </div>
             </div>
             <h1>Top Genres</h1>
-            {{ genres }}
-            <p>still deciding how to display</p>
-{#                  {% for genre in genres %}#}
-{#                      {{ genre.0 }}#}
-{#                      <tr>#}
-{#                        <th scope="row"> {{ genre.0 }} </th>#}
-{#                        <td style="--size: {{ genre.1 }}"> </td>#}
-{#                      </tr>#}
-{#                  {% endfor %}#}
+            <div class="genre_container">
+            {% for genre in genres %}
+                <div class="genre">
+                    {{ genre.0 }}
+                </div>
+                <progress max="{{ max_genre }}" value="{{ genre.1 }}"></progress>
+                <span class="genre_number">{{ genre.1 }}%</span>
+            {% endfor %}
+            </div>
         </div>
         <div class="wrap-slide" id="wrap-slide-4">
             <div id="emojiContainer"></div>
             <h1>Overall Vibe</h1>
-            {{ audio_features }}
-            <br>
-            <br>
-            <p>still deciding how to display</p>
-            <h2>valance means happiness</h2>
+            <div class="genre_container">
+            {% for key, values in audio_features_graphs.items %}
+                <div class="genre">
+                    {{ key }}
+                </div>
+                <progress max="100" value="{{ values }}"></progress>
+                <span class="genre_number">{{ values }}%</span>
+            {% endfor %}
+            </div>
+            <div class="genre_list">
+                {% for key, values in audio_features_list.items %}
+                    <div class="genre">
+                        {{ key }}: {{ values }}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
         <div id="progress-bar-container">
@@ -113,7 +123,7 @@
           <button id="slide-forward-button">&gt;</button>
       </div>
     <template id="emojiTemplate">
-      <img class="emojiForAnimation" style="position: absolute" loading="lazy" src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
+      <img class="emojiForAnimation" style="position: absolute" src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
     </template>
     <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
 {% endblock %}
