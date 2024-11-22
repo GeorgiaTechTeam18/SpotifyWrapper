@@ -4,6 +4,9 @@ let currentSlide = 0;
 let progressTimeout = null;
 const progressBar = document.getElementById("progress-bar")
 
+let fadeInterval = null;
+const animationTime = 10 * 1000;
+
 const startProgressAnimation = (nextSlideIndex) => {
     progressBar.classList.remove("active");
     progressBar.offsetHeight
@@ -11,16 +14,35 @@ const startProgressAnimation = (nextSlideIndex) => {
     clearTimeout(progressTimeout)
     progressTimeout = setTimeout(() => {
         selectSlide(nextSlideIndex, true);
-    }, 10 * 1000)
+    }, animationTime)
 }
+
+const fadeVolume = (audioElement, startVolume, endVolume, duration) => {
+    console.log("Fading start");
+    let startTime = Date.now();
+    if (fadeInterval) clearInterval(fadeInterval);
+    fadeInterval = setInterval(() => {
+        let elapsedTime = Date.now() - startTime;
+        let progress = Math.min(elapsedTime / duration, 1);
+        audioElement.volume = startVolume + (Math.log10(progress + 1) / Math.log10(2)) * (endVolume - startVolume);
+
+        if (progress === 1) {
+            clearInterval(fadeInterval);
+            console.log("Fading end");
+        }
+    }, 50);
+};
 
 const selectSlide = (slideIndex, animate) => {
     const audioPlayer = document.getElementById("audio-player");
+    let fadeOutDuration = 2500;
+    let playDuration = 30000 - fadeOutDuration;
     audioPlayer.pause();
     audioPlayer.volume = 0;
     audioPlayer.src = "";
 
     if(animate){
+        playDuration = animationTime - fadeOutDuration;
         if (slideIndex < numberOfSlides - 1) {
             startProgressAnimation(slideIndex+1)
         }
@@ -40,8 +62,11 @@ const selectSlide = (slideIndex, animate) => {
     activeButtonElement.classList.add("active");
 
     audioPlayer.src = slideElement.dataset.previewUrl;
-    audioPlayer.volume = 0.15;
     audioPlayer.play()
+    fadeVolume(audioPlayer, 0, 0.125, 3000);
+    setTimeout(() => {
+        fadeVolume(audioPlayer, audioPlayer.volume, 0, fadeOutDuration);
+    }, playDuration - 100);
 
     currentSlide = slideIndex;
 }
