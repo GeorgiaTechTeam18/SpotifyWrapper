@@ -18,17 +18,15 @@
             </div>
             <h1>#1 Song</h1>
             <ul class="wrap-item-list">
-                {% with top_track as track %}
-                    <li class="track">
-                        <img src="{{ track.album_image_url }}" alt="{{ track.album_name }}" width="50" height="50"/>
-                        <div>
-                            <p><strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a></p>
-                            <p><strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a></p>
-                            <p><strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a></p>
-                            <p><strong>Duration:</strong> {{ track.duration_ms }} ms</p>
-                        </div>
-                    </li>
-                {% endwith %}
+                <li class="track number-1-track">
+                    <img src="{{ top_track.album_image_url }}" alt="{{ top_track.album_name }}" width="50" height="50"/>
+                    <div>
+                        <p><strong>Song:</strong> <a href="{{ top_track.song_url }}">{{ top_track.song_name }}</a></p>
+                        <p><strong>Artist:</strong> <a href="{{ top_track.artist_url }}">{{ top_track.artist_name }}</a></p>
+                        <p><strong>Album:</strong> <a href="{{ top_track.album_url }}">{{ top_track.album_name }}</a></p>
+                        <p><strong>Duration:</strong> {{ top_track.duration_ms }} ms</p>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="wrap-slide" id="wrap-slide-1">

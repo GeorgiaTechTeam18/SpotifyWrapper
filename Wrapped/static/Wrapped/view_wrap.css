@@ -62,7 +62,6 @@
     font-size: 1em;
 }
 
-
 .artist, .track {
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -88,6 +87,26 @@
 
 .artist a:hover, .track a:hover {
     text-decoration: underline;
+}
+
+.number-1-track.track {
+    width: 40%;
+    margin: auto;
+    flex-direction: column;
+}
+
+.number-1-track img {
+    width: 100%;
+    height: unset;
+    margin: 0;
+}
+
+.number-1-track p {
+    font-size: large;
+}
+
+.number-1-track div {
+    margin-top: 1em;
 }
 
 .genre_container {
