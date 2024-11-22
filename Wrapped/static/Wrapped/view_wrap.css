@@ -32,7 +32,9 @@
     margin: 1em;
 }
 
-
+.view-wrap-title {
+    font-size: medium;
+}
 
 .wrap-slide h1 {
     color: #1DB954; /* Spotify green */
@@ -195,15 +197,6 @@
     display: none;
 }
 
-@media screen and (min-width: 768px) {
-    .slide-button-label {
-        display: inline;
-    }
-    .pagination {
-        gap: .5em;
-    }
-}
-
 .transition-slide {
     position: absolute;
     top: 0;
@@ -335,4 +328,16 @@
     color: black;
     display: block;
     margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .slide-button-label {
+        display: inline;
+    }
+    .pagination {
+        gap: .5em;
+    }
+    .view-wrap-title {
+        font-size: x-large;
+    }
 }
