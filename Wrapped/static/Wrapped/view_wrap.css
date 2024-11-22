@@ -119,6 +119,7 @@
 .genre_list {
     font-size: large;
     display: flex;
+    align-items: baseline;
 }
 
 .genre_container progress {
