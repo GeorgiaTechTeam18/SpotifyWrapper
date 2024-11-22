@@ -9,7 +9,7 @@
     <h1 class="view-wrap-title">{{ wrap_title }}</h1>
     <div id="outer-wrap-container">
     <div id="wrap-container">
-        <div class="wrap-slide" id="wrap-slide-0">
+        <div class="wrap-slide" id="wrap-slide-0" data-preview-url="{{ selected_tracks.0.preview_url }}">
             <div class="transition-slide">
                 <div>
                     <h2>You couldn't stop listening to:</h2>
@@ -29,7 +29,7 @@
                 </li>
             </ul>
         </div>
-        <div class="wrap-slide" id="wrap-slide-1">
+        <div class="wrap-slide" id="wrap-slide-1" data-preview-url="{{ selected_tracks.1.preview_url }}">
         <h1>Top Tracks</h1>
             <div class="transition-slide left">
                 <div>
@@ -51,7 +51,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="wrap-slide" id="wrap-slide-2">
+        <div class="wrap-slide" id="wrap-slide-2" data-preview-url="{{ selected_tracks.2.preview_url }}">
             <div class="transition-slide shrink">
                 <div>
                     <h2>Your Top artists are:</h2>
@@ -70,7 +70,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="wrap-slide" id="wrap-slide-3">
+        <div class="wrap-slide" id="wrap-slide-3" data-preview-url="{{ selected_tracks.3.preview_url }}">
             <div class="transition-slide dimond">
                 <div>
                     <h2>Your Top Genres are:</h2>
@@ -87,7 +87,7 @@
             {% endfor %}
             </div>
         </div>
-        <div class="wrap-slide" id="wrap-slide-4">
+        <div class="wrap-slide" id="wrap-slide-4" data-preview-url="{{ selected_tracks.4.preview_url }}">
             <div id="emojiContainer"></div>
             <h1>Overall Vibe</h1>
             <div class="genre_container">
@@ -125,5 +125,6 @@
     <template id="emojiTemplate">
       <img class="emojiForAnimation" style="position: absolute" src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
     </template>
+    <audio id="audio-player" controls style="display:none;"></audio>
     <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
 {% endblock %}

@@ -15,6 +15,11 @@ const startProgressAnimation = (nextSlideIndex) => {
 }
 
 const selectSlide = (slideIndex, animate) => {
+    const audioPlayer = document.getElementById("audio-player");
+    audioPlayer.pause();
+    audioPlayer.volume = 0;
+    audioPlayer.src = "";
+
     if(animate){
         if (slideIndex < numberOfSlides - 1) {
             startProgressAnimation(slideIndex+1)
@@ -33,6 +38,11 @@ const selectSlide = (slideIndex, animate) => {
     }
     let activeButtonElement = document.getElementById(`slide-button-${slideIndex}`);
     activeButtonElement.classList.add("active");
+
+    audioPlayer.src = slideElement.dataset.previewUrl;
+    audioPlayer.volume = 0.15;
+    audioPlayer.play()
+
     currentSlide = slideIndex;
 }
 
