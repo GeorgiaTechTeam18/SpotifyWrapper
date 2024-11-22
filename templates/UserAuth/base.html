@@ -20,11 +20,6 @@
         </li>
         {% if user.is_authenticated %}
             <li class="icon-section HiddenOnMobile">
-                <a href="">
-                    <span> Play</span> Deep Cut
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
                 <a href="{% url 'create_wrap' %}">
                     Generate Wrapped
                 </a>
@@ -71,11 +66,6 @@
 <div id="hamburger">
     {% if user.is_authenticated %}
         <ul class="icon-menu">
-            <li class="icon-section">
-                <a href="">
-                    <span> Play</span> Deep Cut
-                </a>
-            </li>
             <li class="icon-section">
                 <a href="{% url 'create_wrap' %}">
                     Generate Wrapped
