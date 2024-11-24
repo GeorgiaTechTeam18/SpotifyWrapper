@@ -8,24 +8,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Wrapped', '0002_remove_spotifywrap_id_spotifywrap_uid'),
+        ("Wrapped", "0002_remove_spotifywrap_id_spotifywrap_uid"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='spotifywrap',
-            name='likes',
+            model_name="spotifywrap",
+            name="likes",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='follow',
-            name='follower',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='followed', to=settings.AUTH_USER_MODEL),
+            model_name="follow",
+            name="follower",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="followed",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='follow',
-            name='following',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='follower', to=settings.AUTH_USER_MODEL),
+            model_name="follow",
+            name="following",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="follower",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]
