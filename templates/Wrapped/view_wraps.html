@@ -1,21 +1,22 @@
 {% extends 'UserAuth/base.html' %}
+{% load i18n %}
 
 {% block body %}
-    <h1>Spotify Wraps</h1>
+    <h1>{% trans "Spotify Wraps" %}</h1>
     <ul>
         {% for wrap in wraps %}
         <li>
             <h2>{{ wrap.title }}</h2>
-            <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
-            <p>Posted by: {{ wrap.user.username }}</p>
+            <a href="{% url 'view_wrap' wrap.uuid %}">{% trans "View this wrap" %}</a>
+            <p>{% trans "Posted by:" %} {{ wrap.user.username }}</p>
             <form method="post" action="{% url 'like_wrap' wrap.uuid %}">
                 {% csrf_token %}
-                <button type="submit">Like</button>
+                <button type="submit">{% trans "Like" %}</button>
             </form>
         </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'select_wraps_to_post' %}"><button>Post</button></a>
+    <a href="{% url 'select_wraps_to_post' %}"><button>{% trans "Post" %}</button></a>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

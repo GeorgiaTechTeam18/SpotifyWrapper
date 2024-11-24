@@ -1,133 +1,84 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Spotify Wrap{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'UserAuth/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'UserAuth/albumScrollDisplay.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    {% block head %}{% endblock %}
-</head>
-<body>
-<div class="banner">
-    <ul class="icon-menu">
-        <li class="icon-section icon-section-left">
-            <a href="{% url 'home' %}">
-                Spotify Wrapper
-            </a>
-        </li>
-        {% if user.is_authenticated %}
-            <li class="icon-section HiddenOnMobile">
-                <a href="">
-                    <span> Play</span> Deep Cut
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'create_wrap' %}">
-                    Generate Wrapped
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'contact' %}">
-                    Contact Us
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'profile' %}">
-                    Profile
-                </a>
-            </li>
-            <li class="icon-section ShownOnMobile">
-                <a onclick="toggleHamburger()">
-                    <i class="fa fa-bars" id="hamburger-button"></i>
-                </a>
-            </li>
-            <li class="icon-section HiddenOnMobile">
-                <a href="{% url 'logout' %}">
-                    Log Out
-                </a>
-            </li>
-        {% else %}
-            <li>
-                <a href="{% url 'signup' %}">
-                    Sign up
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'login' %}">
-                    Log in
-                </a>
-            </li>
-            <li>
-                <a class="HiddenOnMobile" href="{% url 'contact' %}">
-                    Contact Us
-                </a>
-            </li>
-        {% endif %}
-    </ul>
-</div>
-<div id="hamburger">
-    {% if user.is_authenticated %}
-        <ul class="icon-menu">
-            <li class="icon-section">
-                <a href="">
-                    <span> Play</span> Deep Cut
-                </a>
-            </li>
-            <li class="icon-section">
-                <a href="{% url 'create_wrap' %}">
-                    Generate Wrapped
-                </a>
-            </li>
-            <li class="icon-section">
-                <a href="{% url 'contact' %}">
-                    Contact Us
-                </a>
-            </li>
-            <li class="icon-section">
-                <a href="{% url 'profile' %}">
-                    Profile
-                </a>
-            </li>
-            <li class="icon-section">
-                <a href="{% url 'logout' %}">
-                    Log Out
-                </a>
-            </li>
-        </ul>
-    {% endif %}
-</div>
-<main>
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                X
-                <span aria-hidden="true"></span>
-            </button>
+{% extends 'UserAuth/base.html' %}
+{% load static i18n %}
+{% block body %}
+        <div id="Index-main-text">
+            <h3>
+                {% trans "Your trust is important to us, and so we would like to answer your FAQs or contact us." %}
+            </h3><br>
         </div>
-    {% endfor %}
-    <div class="content-container">
-        {% block body %}{% endblock %}
-    </div>
-</main>
-<script>
-    function toggleHamburger() {
-        const x = document.getElementById("hamburger");
-        const button = document.getElementById("hamburger-button")
-        if (x.style.display === "block") {
-            x.style.display = "none";
-            button.classList.add("fa-bars")
-            button.classList.remove("fa-close")
+        <div>
+            <ul>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            {% trans "Year-Round Insights" %}
+                        </h3>
+                        <p>
+                            {% trans "Get personalized listening stats anytime, not just at the end of the year." %}
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            {% trans "Your Data is Safe" %}
+                        </h3>
+                        <p>
+                            {% trans "We prioritize your privacy and never share your data with third parties." %}
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            {% trans "Cross-Platform Support" %}
+                        </h3>
+                        <p>
+                            {% trans "Use our service on any device—optimized for both iOS and Android." %}
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            {% trans "Custom Insights" %}
+                        </h3>
+                        <p>
+                            {% trans "Discover your top songs, artists, and genres, or analyze listening trends by time." %}
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+                <li class="IndexAboutInfo">
+                    <div class="text-container">
+                        <h3>
+                            {% trans "Revoke Permissions Anytime" %}
+                        </h3>
+                        <p>
+                            {% trans "You’re in control—revoke our app’s permissions anytime from Spotify settings." %}
+                        </p>
+                    </div>
+                    <img src="{% static 'UserAuth/checkmark.png' %}">
+                </li>
+            </ul>
+            <div id="contact-us" class="contact-us-container">
+                <h2>{% trans "Contact Us" %}</h2>
+                <form method="POST" class="contact-us-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+                </form>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
 
-        } else {
-            x.style.display = "block";
-            button.classList.remove("fa-bars")
-            button.classList.add("fa-close")
-        }
-    }
-</script>
-</body>
-</html>
+{% endblock %}

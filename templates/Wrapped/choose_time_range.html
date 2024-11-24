@@ -1,7 +1,8 @@
 {% extends 'UserAuth/base.html' %}
+{% load i18n %}
 
 {% block body %}
-    <a href="{% url 'create_wrap' 'short_term' %}">Short term</a>
-    <a href="{% url 'create_wrap' 'medium_term' %}">Medium term</a>
-    <a href="{% url 'create_wrap' 'long_term' %}">Long term</a>
+    <a href="{% url 'create_wrap' 'short_term' %}">{% trans "Short term" %}</a>
+    <a href="{% url 'create_wrap' 'medium_term' %}">{% trans "Medium term" %}</a>
+    <a href="{% url 'create_wrap' 'long_term' %}">{% trans "Long term" %}</a>
 {% endblock %}
