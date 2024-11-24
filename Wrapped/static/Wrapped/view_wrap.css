@@ -4,6 +4,7 @@
 
 #wrap-container {
     height: calc(100vh - 11em);
+    height: calc(100svh - 9em); /* smallest view height to ensure no overflow on mobile */
     overflow-y: auto;
 }
 
@@ -34,6 +35,7 @@
 
 .view-wrap-title {
     font-size: medium;
+    text-align: center;
 }
 
 .wrap-slide h1 {
