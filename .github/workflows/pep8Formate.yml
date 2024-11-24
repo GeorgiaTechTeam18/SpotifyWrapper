@@ -22,8 +22,10 @@ jobs:
         run: |
           black .
           autopep8 --recursive --in-place --aggressive --aggressive .
-          djlint . --reformat --format-css --format-js
           isort .
+      - name: HTML Formatter
+        continue-on-error: true
+        run: djlint . --reformat --format-css --format-js --profile=django
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
