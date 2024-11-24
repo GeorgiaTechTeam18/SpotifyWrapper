@@ -1,0 +1,13 @@
+{% extends 'UserAuth/base.html' %}
+{% block body %}
+<body>
+    <h1>Are you sure you want to delete your profile?</h1>
+    <p>This action is irreversible, and all your data will be deleted.</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" style="color: red;">Yes, Delete My Profile</button>
+        <a href="{% url 'profile' %}"><button type="button">Go Back</button></a>
+    </form>
+</body>
+{% endblock %}

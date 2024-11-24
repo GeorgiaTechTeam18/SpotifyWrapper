@@ -16,7 +16,7 @@ class ContactUs(models.Model):
 
 class SpotifyToken(models.Model):
     user = models.ForeignKey(User,
-                             models.SET_NULL,
+                             models.CASCADE,
                              blank=True,
                              null=True,)
     spotify_account_email = models.CharField(max_length=255, null=True, blank=True)

@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from requests import Request, post, exceptions
 from .util import update_or_create_user_tokens, get_top_song_album_covers
 from .models import SpotifyToken
+from Wrapped.models import SpotifyWrap, Like, Follow
+from Wrapped import views
 import os
 from dotenv import load_dotenv
 from django.contrib.auth import login, logout, get_user_model, authenticate
@@ -59,7 +61,9 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect("home")
-            return redirect('login')
+            else:
+                messages.error(request, "Invalid email or password. Please try again.")
+                return redirect('login')
     else:
         form = RegistrationForm()
 
@@ -89,6 +93,19 @@ def profile_view(request):
     associated_spotify_tokens = SpotifyToken.objects.filter(user__username=request.user.username)
     return render(request, 'UserAuth/profile.html', {"associated_spotify_tokens": associated_spotify_tokens, "messages": error_message})
 
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+
+        # Log the user out
+        logout(request)
+
+        return redirect('home')
+
+    return render(request, 'UserAuth/delete_account.html')
 
 def delete_token(request):
     if request.method == "POST":
@@ -140,7 +157,7 @@ def callback(request):
                 login(request, user)
             else:
                 redirect("/login?error=an account with this email already exists")
-    elif matching_existing_tokens.exists() and matching_existing_tokens[0].user.email != request.user.email:
+    elif matching_existing_tokens.exists() and matching_existing_tokens[0].user.username != request.user.username:
         HttpResponseBadRequest(f"This spotify account has already been linked with another Wrapped account")
     update_or_create_user_tokens(request.user, access_token, token_type, expires_in, refresh_token,
                                  spotify_account_email=spotify_user_data["email"],

@@ -1,5 +1,7 @@
 # Wrapped/urls.py
 from django.urls import path
+
+from UserAuth.views import delete_account
 from .views import post_wrap, view_wraps, create_wrap, like_wrap, view_wrap, select_wraps_to_post, make_wraps_public, \
     view_public_wraps
 
@@ -12,5 +14,7 @@ urlpatterns = [
     path('like_wrap/<uuid:wrap_id>/', like_wrap, name='like_wrap'),
     path('select_wraps_to_post/', select_wraps_to_post, name='select_wraps_to_post'),
     path('make_wraps_public/', make_wraps_public, name='make_wraps_public'),
-    path('view_public_wraps/', view_public_wraps, name='view_public_wraps')
+    path('view_public_wraps/', view_public_wraps, name='view_public_wraps'),
+    path('delete_account/', delete_account, name='delete_account')
+
 ]
