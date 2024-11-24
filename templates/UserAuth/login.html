@@ -2,9 +2,10 @@
 {% load static %}
 {% block body %}
     <div class="vert-center">
-            <form class="authForm" action='{% url 'login' %}' method="post">
+        <form class="authForm" action='{% url 'login' %}' method="post">
             {% csrf_token %}
-            <h3>Sign in</h3><br>
+            <h3>Sign in</h3>
+            <br>
             <div>
                 <label for="id_email">Email</label>
                 {{ form.email.errors }}
@@ -15,7 +16,6 @@
                 {{ form.password.errors }}
                 {{ form.password }}
             </div>
-    
             <span class="clearfix">
                 <button type="submit">Login with email</button>
             </span>
@@ -23,7 +23,9 @@
         <div class="login-alternate">
             <p>or</p>
             <a href="{% url 'authWithSpotify' %}" class="spotify-login">
-                <img src="{% static 'UserAuth/spotify-icon.webp' %}" alt="Spotify Logo" class="spotify-icon">
+                <img src="{% static 'UserAuth/spotify-icon.webp' %}"
+                     alt="Spotify Logo"
+                     class="spotify-icon">
                 Connect with Spotify
             </a>
         </div>
