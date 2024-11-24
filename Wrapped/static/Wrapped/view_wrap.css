@@ -114,10 +114,11 @@
     width: 100%;
     justify-content: center;
     gap: .3em;
-    align-items: baseline;
+    align-items: center;
+    flex-direction: column;
 }
 .genre_transition_debate img {
-    width: 40%;
+    width: 70%;
 }
 
 .genre_container {
@@ -370,5 +371,12 @@
     }
     .view-wrap-title {
         font-size: x-large;
+    }
+    .genre_transition_debate {
+        flex-direction: row;
+        align-items: baseline;
+    }
+    .genre_transition_debate img {
+        width: 40%;
     }
 }
