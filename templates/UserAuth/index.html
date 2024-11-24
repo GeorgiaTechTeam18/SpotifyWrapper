@@ -18,47 +18,61 @@
                 </div>
             </div>
             {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="left" classNames="index-page-albums-mobile" %}
-
             <div id="meet-the-team">
                 <h2 class="team-title">Meet the Team</h2>
                 <div class="team-container">
                     <!-- Team Member 1 -->
                     <div class="team-member">
-                        <img src="{% static 'UserAuth/Alex.jpg' %}" alt="Alex Hool" class="team-image">
+                        <img src="{% static 'UserAuth/Alex.jpg' %}"
+                             alt="Alex Hool"
+                             class="team-image">
                         <h3 class="team-name">Alex Hool</h3>
                         <p class="team-role">Backend Developer</p>
                         <p class="team-description">Hi, I'm Alex! I set up our site's integration with spotify to retrieve your top hits!</p>
                     </div>
                     <!-- Team Member 2 -->
                     <div class="team-member">
-                        <img src="{% static 'UserAuth/Varindra.jpeg' %}" alt="Varindra Seegobin" class="team-image">
+                        <img src="{% static 'UserAuth/Varindra.jpeg' %}"
+                             alt="Varindra Seegobin"
+                             class="team-image">
                         <h3 class="team-name">Varindra Seegobin</h3>
                         <p class="team-role">Frontend Developer</p>
-                        <p class="team-description">Hi, I'm Varindra, I designed this site's front end using HTML/CSS and
-                            JavaScript :)</p>
+                        <p class="team-description">
+                            Hi, I'm Varindra, I designed this site's front end using HTML/CSS and
+                            JavaScript :)
+                        </p>
                     </div>
                     <!-- Team Member 3 -->
                     <div class="team-member">
-                        <img src="{% static 'UserAuth/Stanley.jpg' %}" alt="Stanley Wang" class="team-image">
+                        <img src="{% static 'UserAuth/Stanley.jpg' %}"
+                             alt="Stanley Wang"
+                             class="team-image">
                         <h3 class="team-name">Stanley Wang</h3>
                         <p class="team-role">Project Manager</p>
                         <p class="team-description">Hi, I'm Stanley! I worked on the wraps functions from creating to sharing.</p>
                     </div>
                     <!-- Team Member 4 -->
                     <div class="team-member">
-                        <img src="{% static 'UserAuth/Theo.jpg' %}" alt="Theo Halphern" class="team-image">
+                        <img src="{% static 'UserAuth/Theo.jpg' %}"
+                             alt="Theo Halphern"
+                             class="team-image">
                         <h3 class="team-name">Theo Halpern</h3>
                         <p class="team-role">Logistical Lead</p>
-                        <p class="team-description">I did some of the auth and some of the css/js. Check me out at <a href="https://theoh.dev">theoh.dev</a></p>
+                        <p class="team-description">
+                            I did some of the auth and some of the css/js. Check me out at <a href="https://theoh.dev">theoh.dev</a>
+                        </p>
                     </div>
                     <!-- Team Member 5 -->
                     <div class="team-member">
-                        <img src="{% static 'UserAuth/Aneesh.jpg' %}" alt="Aneesh Kanaram" class="team-image">
+                        <img src="{% static 'UserAuth/Aneesh.jpg' %}"
+                             alt="Aneesh Kanaram"
+                             class="team-image">
                         <h3 class="team-name">Aneesh Kanaram</h3>
                         <p class="team-role">Scrum Master</p>
-                        <p class="team-description">Hi, I'm Aneesh! I helped design our site's ability to post your wrap and see what others have done! </p>
+                        <p class="team-description">
+                            Hi, I'm Aneesh! I helped design our site's ability to post your wrap and see what others have done!
+                        </p>
                     </div>
-    
                 </div>
                 <div class="promo-content">
                     <a href="{% url 'contact' %}" class="promo-button">FAQ / Contact Us</a>

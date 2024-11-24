@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('UserAuth', '0001_initial'),
+        ("UserAuth", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='spotifytoken',
-            name='spotify_account_email',
+            model_name="spotifytoken",
+            name="spotify_account_email",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
         migrations.AddField(
-            model_name='spotifytoken',
-            name='spotify_account_username',
+            model_name="spotifytoken",
+            name="spotify_account_username",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
     ]

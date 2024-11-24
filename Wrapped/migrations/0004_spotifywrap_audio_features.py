@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Wrapped', '0003_spotifywrap_likes_alter_follow_follower_and_more'),
+        ("Wrapped", "0003_spotifywrap_likes_alter_follow_follower_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='spotifywrap',
-            name='audio_features',
-            field=models.TextField(default='{}'),
+            model_name="spotifywrap",
+            name="audio_features",
+            field=models.TextField(default="{}"),
         ),
     ]
