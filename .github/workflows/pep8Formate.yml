@@ -17,11 +17,12 @@ jobs:
       - name: Display Python version
         run: python --version
       - name: Install packages
-        run: pip install black autopep8 isort
+        run: pip install black autopep8 isort djlint
       - name: Formatter
         run: |
           black .
           autopep8 --recursive --in-place --aggressive --aggressive .
+          djlint . --reformat --format-css --format-js
           isort .
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
