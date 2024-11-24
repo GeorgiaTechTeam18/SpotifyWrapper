@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class WrappedConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Wrapped'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "Wrapped"
