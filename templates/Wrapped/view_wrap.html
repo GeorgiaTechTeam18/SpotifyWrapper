@@ -1,5 +1,6 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
+{% load django_template_filters %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'Wrapped/view_wrap.css' %}">
 {% endblock %}
@@ -35,7 +36,7 @@
                                 <strong>Album:</strong> <a href="{{ top_track.album_url }}">{{ top_track.album_name }}</a>
                             </p>
                             <p>
-                                <strong>Duration:</strong> {{ top_track.duration_ms }} ms
+                                <strong>Duration:</strong> {{ top_track.duration_ms|ms_to_minutes_and_seconds }}
                             </p>
                         </div>
                     </li>
@@ -69,7 +70,7 @@
                                     <strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a>
                                 </p>
                                 <p>
-                                    <strong>Duration:</strong> {{ track.duration_ms }} ms
+                                    <strong>Duration:</strong> {{ track.duration_ms|ms_to_minutes_and_seconds }}
                                 </p>
                             </div>
                         </ol>
