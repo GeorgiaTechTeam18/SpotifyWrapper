@@ -9,10 +9,6 @@
             <h2>{{ wrap.title }}</h2>
             <a href="{% url 'view_wrap' wrap.uuid %}">{% trans "View this wrap" %}</a>
             <p>{% trans "Posted by:" %} {{ wrap.user.username }}</p>
-            <form method="post" action="{% url 'like_wrap' wrap.uuid %}">
-                {% csrf_token %}
-                <button type="submit">{% trans "Like" %}</button>
-            </form>
             <form class="delete" method="post" action="{% url 'delete_wrap' wrap.uuid %}">
                 {% csrf_token %}
                 <button type="submit">{% trans "Delete" %}</button>
