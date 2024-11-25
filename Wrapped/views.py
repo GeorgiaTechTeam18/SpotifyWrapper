@@ -23,6 +23,13 @@ def make_wraps_public(request):
     wraps.update(is_public=True)
     return redirect('view_public_wraps')
 
+def delete_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
+    if request.user == wrap.user:
+        wrap.delete()
+        return JsonResponse({'message': 'Wrap deleted successfully'})
+    else:
+        return JsonResponse({'message': 'You do not have permission to delete this wrap'}, status=403)
 
 def view_public_wraps(request):
     liked = request.GET.get('liked') == 'true'

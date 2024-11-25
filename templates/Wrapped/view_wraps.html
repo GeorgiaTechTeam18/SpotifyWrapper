@@ -13,6 +13,10 @@
                 {% csrf_token %}
                 <button type="submit">{% trans "Like" %}</button>
             </form>
+            <form class="delete" method="post" action="{% url 'delete_wrap' wrap.uuid %}">
+                {% csrf_token %}
+                <button type="submit">{% trans "Delete" %}</button>
+            </form>
         </li>
         {% endfor %}
     </ul>
