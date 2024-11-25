@@ -10,9 +10,6 @@ from django.shortcuts import redirect, render
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
 
-from Wrapped import views
-from Wrapped.models import Follow, Like, SpotifyWrap
-
 from .form import ContactUsForm, RegistrationForm
 from .models import SpotifyToken
 from .util import get_top_song_album_covers, update_or_create_user_tokens
@@ -125,7 +122,6 @@ def profile_view(request):
             "messages": error_message,
         },
     )
-
 
 @login_required
 def delete_account(request):

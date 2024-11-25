@@ -4,6 +4,7 @@
 
 #wrap-container {
     height: calc(100vh - 11em);
+    height: calc(100svh - 9em); /* smallest view height to ensure no overflow on mobile */
     overflow-y: auto;
 }
 
@@ -34,6 +35,7 @@
 
 .view-wrap-title {
     font-size: medium;
+    text-align: center;
 }
 
 .wrap-slide h1 {
@@ -107,6 +109,18 @@
 
 .number-1-track div {
     margin-top: 1em;
+}
+
+.genre_transition_debate {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: .3em;
+    align-items: center;
+    flex-direction: column;
+}
+.genre_transition_debate img {
+    width: 70%;
 }
 
 .genre_container {
@@ -359,5 +373,12 @@
     }
     .view-wrap-title {
         font-size: x-large;
+    }
+    .genre_transition_debate {
+        flex-direction: row;
+        align-items: baseline;
+    }
+    .genre_transition_debate img {
+        width: 40%;
     }
 }
