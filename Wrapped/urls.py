@@ -1,10 +1,9 @@
 # Wrapped/urls.py
 from django.urls import path
-from .views import post_wrap, view_wraps, create_wrap, like_wrap, view_wrap, make_wraps_public, \
+from .views import view_wraps, create_wrap, like_wrap, view_wrap, make_wraps_public, \
     view_public_wraps, delete_wrap
 
 urlpatterns = [
-    path('post_wrap/', post_wrap, name='post_wrap'),
     path('view_wraps/', view_wraps, name='view_wraps'),
     path('create_wrap/', create_wrap, name='create_wrap'),
     path('view_wrap/wrap_id_<uuid:wrap_id>/', view_wrap, name='view_wrap'),

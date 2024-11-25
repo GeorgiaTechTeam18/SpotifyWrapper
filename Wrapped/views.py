@@ -8,11 +8,6 @@ from django.views.decorators.http import require_POST
 from UserAuth.util import get_user_tokens, refresh_spotify_token
 from .models import SpotifyWrap
 
-
-@login_required
-def post_wrap(request):
-    return render(request, 'Wrapped/post_wrap.html')
-
 def make_wraps_public(request):
     wrap_ids = request.POST.getlist('wrap_ids')
     wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
