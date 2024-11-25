@@ -77,7 +77,10 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect("home")
-            return redirect("login")
+            else:
+                messages.error(
+                    request, "Invalid email or password. Please try again.")
+                return redirect("login")
     else:
         form = RegistrationForm()
 
@@ -119,6 +122,20 @@ def profile_view(request):
             "messages": error_message,
         },
     )
+
+
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()
+
+        # Log the user out
+        logout(request)
+
+        return redirect("home")
+
+    return render(request, "UserAuth/delete_account.html")
 
 
 def delete_token(request):
@@ -184,7 +201,7 @@ def callback(request):
                 redirect("/login?error=an account with this email already exists")
     elif (
         matching_existing_tokens.exists()
-        and matching_existing_tokens[0].user.email != request.user.email
+        and matching_existing_tokens[0].user.username != request.user.username
     ):
         HttpResponseBadRequest(
             f"This spotify account has already been linked with another Wrapped account"

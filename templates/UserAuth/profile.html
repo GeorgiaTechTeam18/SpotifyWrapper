@@ -1,7 +1,9 @@
 {% extends 'UserAuth/base.html' %}
+{% load static %}
 {% block body %}
     <h1>Hi {{ user.get_username }}</h1>
     <h2>Your Tokens:</h2>
+    <a href="{% url 'delete_account' %}">Delete Account</a>
     <table class="linked-tokens">
         <tr>
             <th>Email</th>
