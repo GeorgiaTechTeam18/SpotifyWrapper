@@ -13,14 +13,18 @@
                 {% csrf_token %}
                 <button type="submit">{% trans "Delete" %}</button>
             </form>
+            <form class="post" method="post" action="{% url 'make_wraps_public' %}">
+                {% csrf_token %}
+                <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
+                <button type="submit">{% trans "Post" %}</button>
+            </form>
         </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'select_wraps_to_post' %}"><button>{% trans "Post" %}</button></a>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('form').forEach(form => {
+        document.querySelectorAll('form.delete').forEach(form => {
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
                 fetch(this.action, {
@@ -35,6 +39,27 @@
                     throw new Error('Request failed.');
                 }).then(data => {
                     console.log(data);
+                }).catch(error => {
+                    console.error(error);
+                });
+            });
+        });
+        
+        document.querySelectorAll('form.post').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.href = "{% url 'view_public_wraps' %}";
+                    } else {
+                        throw new Error('Request failed.');
+                    }
                 }).catch(error => {
                     console.error(error);
                 });

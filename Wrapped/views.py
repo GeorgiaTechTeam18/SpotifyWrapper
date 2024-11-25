@@ -13,10 +13,6 @@ from .models import SpotifyWrap
 def post_wrap(request):
     return render(request, 'Wrapped/post_wrap.html')
 
-def select_wraps_to_post(request):
-    wraps = SpotifyWrap.objects.filter(user=request.user)
-    return render(request, 'Wrapped/select_wraps_to_post.html', {"wraps": wraps})
-
 def make_wraps_public(request):
     wrap_ids = request.POST.getlist('wrap_ids')
     wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
