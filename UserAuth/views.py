@@ -123,6 +123,7 @@ def profile_view(request):
         },
     )
 
+
 @login_required
 def delete_account(request):
     if request.method == "POST":
