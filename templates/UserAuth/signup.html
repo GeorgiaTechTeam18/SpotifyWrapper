@@ -2,8 +2,9 @@
 {% load static %}
 {% block body %}
     <div class="vert-center">
-         <form class="authForm" action='{% url 'signup' %}' method="post">
-            <h3>Create an Account</h3><br>
+        <form class="authForm" action='{% url 'signup' %}' method="post">
+            <h3>Create an Account</h3>
+            <br>
             {% csrf_token %}
             <div>
                 <label for="id_email">Email</label>
@@ -15,17 +16,18 @@
                 {{ form.password.errors }}
                 {{ form.password }}
             </div>
-    
             <span class="clearfix">
                 <button type="submit">Create Account</button>
             </span>
         </form>
-            <div class="login-alternate">
+        <div class="login-alternate">
             <p>or</p>
             <a href="{% url 'authWithSpotify' %}" class="spotify-login">
-                <img src="{% static 'UserAuth/spotify-icon.webp' %}" alt="Spotify Logo" class="spotify-icon">
+                <img src="{% static 'UserAuth/spotify-icon.webp' %}"
+                     alt="Spotify Logo"
+                     class="spotify-icon">
                 Connect with Spotify
             </a>
-            </div>
+        </div>
     </div>
 {% endblock %}
