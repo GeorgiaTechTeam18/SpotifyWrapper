@@ -10,8 +10,14 @@ from .models import SpotifyWrap
 
 def make_wraps_public(request):
     wrap_ids = request.POST.getlist('wrap_ids')
+    action = request.POST.get('action')
     wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
-    wraps.update(is_public=True)
+
+    if action == 'post':
+        wraps.update(is_public=True)
+    else:
+        wraps.update(is_public=False)
+
     return redirect('view_public_wraps')
 
 def delete_wrap(request, wrap_id):
