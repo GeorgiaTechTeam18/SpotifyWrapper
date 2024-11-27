@@ -3,7 +3,6 @@
 {% block body %}
     <h1>Hi {{ user.get_username }}</h1>
     <h2>Your Tokens:</h2>
-    <a href="{% url 'delete_account' %}">Delete Account</a>
     <table class="linked-tokens">
         <tr>
             <th>Email</th>
@@ -28,5 +27,8 @@
             </tr>
         {% endfor %}
     </table>
-    <a href="{% url 'authWithSpotify' %}">Link another spotify account with your account</a>
+    <a class="LinkSpotify" href="{% url 'authWithSpotify' %}">+</a>
+    <div class="button-container">
+        <a class="DeleteAccount" href="{% url 'delete_account' %}">Delete Account</a>
+    </div>
 {% endblock %}
