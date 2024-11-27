@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
 
@@ -139,6 +139,13 @@ def delete_account(request):
         return redirect("home")
 
     return render(request, "UserAuth/delete_account.html")
+
+@login_required
+def delete_wrap(request, wrap_uuid):
+    wrap = get_object_or_404(Wrapped.models.SpotifyWrap, uuid=wrap_uuid, user=request.user)
+    if request.method == "POST":
+        wrap.delete()
+        return redirect('profile')
 
 
 def delete_token(request):

@@ -48,6 +48,10 @@
                         {% csrf_token %}
                         <button type="submit">Like</button>
                     </form>
+                    <form method="post" action="{% url 'delete_wrap' wrap.uuid %}" class="delete-form">
+                        {% csrf_token %}
+                        <button type="button" class="delete-button">Delete</button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
@@ -82,6 +86,14 @@
                 });
             });
         });
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            const form = this.closest('form');
+            if (confirm("Are you sure you want to delete this wrap?")) {
+                form.submit();
+            }
+        });
+    });
     </script>
     <div class="button-container">
         <a class="DeleteAccount" href="{% url 'delete_account' %}">Delete Account</a>
