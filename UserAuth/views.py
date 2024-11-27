@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
 
+import Wrapped.models
 from .form import ContactUsForm, RegistrationForm
 from .models import SpotifyToken
 from .util import get_top_song_album_covers, update_or_create_user_tokens
@@ -114,12 +115,14 @@ def profile_view(request):
     associated_spotify_tokens = SpotifyToken.objects.filter(
         user__username=request.user.username
     )
+    wraps = Wrapped.models.SpotifyWrap.objects.filter(user=request.user)
     return render(
         request,
         "UserAuth/profile.html",
         {
             "associated_spotify_tokens": associated_spotify_tokens,
             "messages": error_message,
+            "wraps": wraps,
         },
     )
 

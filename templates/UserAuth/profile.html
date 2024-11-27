@@ -1,13 +1,15 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
 {% block body %}
-    <h1>Hi {{ user.get_username }}</h1>
-    <h2>Your Tokens:</h2>
+    <h1>Hi {{ user.get_username }}</h1><br>
+    <div class="no-wraps">
+        <h2>Spotify Accounts</h2>
+    </div>
     <table class="linked-tokens">
         <tr>
             <th>Email</th>
             <th>Username</th>
-            <th>Unlink</th>
+            <th>Remove</th>
         </tr>
         {% for token in associated_spotify_tokens %}
             <tr>
@@ -26,8 +28,61 @@
                 </th>
             </tr>
         {% endfor %}
+    <br><br>
     </table>
-    <a class="LinkSpotify" href="{% url 'authWithSpotify' %}">+</a>
+    <div class="no-wraps">
+        <a class="LinkSpotify" href="{% url 'authWithSpotify' %}">Add Spotify</a>
+    </div>
+    {% if wraps is not none %}
+        <br><br>
+        <div class="no-wraps">
+            <h1>Spotify Wraps</h1>
+        </div><br>
+        <ul>
+            {% for wrap in wraps %}
+                <li class="wrap">
+                    <h2>{{ wrap.title }}</h2>
+                    <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
+                    <p>Posted by: {{ wrap.user.username }}</p>
+                    <form method="post" action="{% url 'like_wrap' wrap.uuid %}">
+                        {% csrf_token %}
+                        <button type="submit">Like</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'select_wraps_to_post' %}">
+            <button>Post</button>
+        </a>
+    {% else %}
+        <div class="no-wraps">
+            <p>Your wraps will show up here when you create them.</p>
+        </div>
+    {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Request failed.');
+                    }).then(data => {
+                        console.log(data);
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                });
+            });
+        });
+    </script>
     <div class="button-container">
         <a class="DeleteAccount" href="{% url 'delete_account' %}">Delete Account</a>
     </div>
