@@ -4,10 +4,6 @@ let currentSlide = 0;
 let progressTimeout = null;
 const progressBar = document.getElementById("progress-bar")
 
-const animationTime = 10 * 1000;
-let fadeOutTimeout = null;
-let activeFadeIntervals = [];
-
 const startProgressAnimation = (nextSlideIndex) => {
     progressBar.classList.remove("active");
     progressBar.offsetHeight
@@ -15,47 +11,11 @@ const startProgressAnimation = (nextSlideIndex) => {
     clearTimeout(progressTimeout)
     progressTimeout = setTimeout(() => {
         selectSlide(nextSlideIndex, true);
-    }, animationTime)
+    }, 10 * 1000)
 }
 
-const resetFades = () => {
-    activeFadeIntervals.forEach(interval => clearInterval(interval));
-    activeFadeIntervals = [];
-    if (fadeOutTimeout) {
-        clearTimeout(fadeOutTimeout);
-        fadeOutTimeout = null;
-    }
-};
-
-const fadeVolume = (audioElement, startVolume, endVolume, duration) => {
-    let startTime = Date.now();
-    resetFades();
-    let fadeInterval = setInterval(() => {
-        let elapsedTime = Date.now() - startTime;
-        let progress = Math.min(elapsedTime / duration, 1);
-        audioElement.volume = startVolume + (Math.log10(progress + 1) / Math.log10(2)) * (endVolume - startVolume);
-        if (progress === 1) {
-            clearInterval(fadeInterval);
-            const index = activeFadeIntervals.indexOf(fadeInterval);
-            if (index > -1) {
-                activeFadeIntervals.splice(index, 1);
-            }
-        }
-    }, 50);
-    activeFadeIntervals.push(fadeInterval);
-};
-
 const selectSlide = (slideIndex, animate) => {
-    const audioPlayer = document.getElementById("audio-player");
-    let fadeOutDuration = 3000;
-    let playDuration = 30000 - fadeOutDuration;
-    resetFades();
-    audioPlayer.pause();
-    audioPlayer.volume = 0;
-    audioPlayer.src = "";
-
     if(animate){
-        playDuration = animationTime - fadeOutDuration;
         if (slideIndex < numberOfSlides - 1) {
             startProgressAnimation(slideIndex+1)
         }
@@ -74,12 +34,7 @@ const selectSlide = (slideIndex, animate) => {
     let activeButtonElement = document.getElementById(`slide-button-${slideIndex}`);
     activeButtonElement.classList.add("active");
 
-    audioPlayer.src = slideElement.dataset.previewUrl;
-    audioPlayer.play()
-    fadeVolume(audioPlayer, 0, 0.125, 3000);
-    fadeOutTimeout = setTimeout(() => {
-        fadeVolume(audioPlayer, audioPlayer.volume, 0, fadeOutDuration);
-    }, playDuration - 100);
+    play(slideElement.dataset.trackUri);
 
     currentSlide = slideIndex;
 }
