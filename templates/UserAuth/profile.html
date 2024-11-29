@@ -51,12 +51,15 @@
                         {% csrf_token %}
                         <button type="button" class="delete-button">Delete</button>
                     </form>
+                    <form class="post" method="post" action="{% url 'make_wraps_public' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
+                        <input type="hidden" name="action" value="post">
+                        <button type="submit">{% trans "Post" %}</button>
+                    </form>
                 </li>
             {% endfor %}
         </ul>
-        <a href="{% url 'select_wraps_to_post' %}">
-            <button>Post</button>
-        </a>
     {% else %}
         <div class="no-wraps">
             <p>Your wraps will show up here when you create them.</p>

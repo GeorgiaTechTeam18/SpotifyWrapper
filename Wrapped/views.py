@@ -19,7 +19,10 @@ from .models import SpotifyWrap
 def make_wraps_public(request):
     wrap_ids = request.POST.getlist("wrap_ids")
     action = request.POST.get("action")
+    print(wrap_ids)
     wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
+
+    print(wraps.first())
 
     if action == "post":
         wraps.update(is_public=True)
@@ -36,6 +39,8 @@ def view_public_wraps(request):
             is_public=True, liked_by=request.user)
     else:
         public_wraps = SpotifyWrap.objects.filter(is_public=True)
+
+    print(public_wraps)
 
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         wraps_data = [

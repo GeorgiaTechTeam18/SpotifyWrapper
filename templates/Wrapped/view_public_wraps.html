@@ -1,18 +1,21 @@
 {% extends 'UserAuth/base.html' %}
-{% block title %}Public Wraps{% endblock %}
 {% load i18n %}
 {% block title %}
     {% trans "Public Wraps" %}
 {% endblock %}
-{% block content %}
+{% block body %}
     <h1>{% trans "Public Wraps" %}</h1>
     <button id="filter-button">{% trans "Show Liked Wraps" %}</button>
+    {{ wraps }}
+    {% for wrap in wraps %}
+        {{ wrap }}
+    {% endfor %}
     <ul id="wraps-list">
         {% for wrap in wraps %}
             <li>
-                <a href="{% url 'view_wrap' wrap.id %}">{{ wrap.title }}</a>
+                <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
                 <form class="like-form"
-                      action="{% url 'like_wrap' wrap.id %}"
+                      action="{% url 'like_wrap' wrap.uuid %}"
                       method="post"
                       style="display:inline">
                     {% csrf_token %}
