@@ -1,3 +1,10 @@
+import secrets
+
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render, redirect
+from requests import Request, post, exceptions
+from .util import update_or_create_user_tokens, get_top_song_album_covers
+from .models import SpotifyToken
 import os
 import secrets
 
@@ -5,9 +12,11 @@ import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
+
+import Wrapped.models
 
 from .form import ContactUsForm, RegistrationForm
 from .models import SpotifyToken
@@ -50,7 +59,7 @@ def authWithSpotify(request):
             "GET",
             "https://accounts.spotify.com/authorize",
             params={
-                "scope": "user-read-email user-top-read",
+                "scope": "user-read-email user-read-private user-top-read streaming",
                 "response_type": "code",
                 "redirect_uri": REDIRECT_URI,
                 "client_id": CLIENT_ID,
@@ -77,7 +86,10 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect("home")
-            return redirect("login")
+            else:
+                messages.error(
+                    request, "Invalid email or password. Please try again.")
+                return redirect("login")
     else:
         form = RegistrationForm()
 
@@ -105,14 +117,46 @@ def signup_view(request):
 
 @login_required()
 def profile_view(request):
+    error_message = (
+        [] if request.GET.get("error") is None else [request.GET.get("error")]
+    )
     associated_spotify_tokens = SpotifyToken.objects.filter(
         user__username=request.user.username
     )
+    wraps = Wrapped.models.SpotifyWrap.objects.filter(user=request.user)
     return render(
         request,
         "UserAuth/profile.html",
-        {"associated_spotify_tokens": associated_spotify_tokens},
+        {
+            "associated_spotify_tokens": associated_spotify_tokens,
+            "messages": error_message,
+            "wraps": wraps,
+        },
     )
+
+
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()
+
+        # Log the user out
+        logout(request)
+
+        return redirect("home")
+
+    return render(request, "UserAuth/delete_account.html")
+
+
+@login_required
+def delete_wrap(request, wrap_uuid):
+    wrap = get_object_or_404(
+        Wrapped.models.SpotifyWrap, uuid=wrap_uuid, user=request.user
+    )
+    if request.method == "POST":
+        wrap.delete()
+        return redirect("profile")
 
 
 def delete_token(request):
@@ -178,12 +222,11 @@ def callback(request):
                 redirect("/login?error=an account with this email already exists")
     elif (
         matching_existing_tokens.exists()
-        and matching_existing_tokens[0].user.email != request.user.email
+        and matching_existing_tokens[0].user.username != request.user.username
     ):
-        raise Exception(
+        HttpResponseBadRequest(
             f"This spotify account has already been linked with another Wrapped account"
         )
-    print(spotify_user_data)
     update_or_create_user_tokens(
         request.user,
         access_token,
@@ -222,6 +265,3 @@ def getSpotifyUserData(access_token):
         )
 
 
-@login_required
-def deepcut(request):
-    return redirect(request, reverse("Wrapped:deepcut"))

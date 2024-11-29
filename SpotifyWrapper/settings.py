@@ -57,7 +57,6 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, "UserAuth/locale"),
     os.path.join(BASE_DIR, "Wrapped/locale"),
 ]
-
 # Application definition
 
 INSTALLED_APPS = [

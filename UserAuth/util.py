@@ -1,5 +1,9 @@
+from .models import User, SpotifyToken
+from django.utils import timezone
 import datetime
+from requests import post, get
 import os
+from dotenv import load_dotenv
 from functools import cache
 
 from django.utils import timezone
@@ -102,8 +106,6 @@ def refresh_spotify_token(user: User):
         },
     ).json()
 
-    print(response)
-
     access_token = response.get("access_token")
     token_type = response.get("token_type")
     expires_in = response.get("expires_in")
@@ -158,7 +160,7 @@ def get_top_song_album_covers():
     token = get_server_spotify_token()
 
     response = get(
-        "https://api.spotify.com/v1/playlists/37i9dQZEVXbLRQDuF5jeBp?fields=tracks.items(track(album(name,id,images)))",
+        "https://api.spotify.com/v1/playlists/4vSTV61efRmetmaoz95Vet?fields=tracks.items(track(album(name,id,images)))",
         headers={
             "Authorization": f"Bearer {token}"},
     ).json()

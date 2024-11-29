@@ -1,7 +1,32 @@
 {% extends 'UserAuth/base.html' %}
 {% load i18n %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'Wrapped/view_wrap.css' %}">
+{% endblock %}
 {% block body %}
-    <a href="{% url 'create_wrap' 'short_term' %}">{% trans "Short term" %}</a>
-    <a href="{% url 'create_wrap' 'medium_term' %}">{% trans "Medium term" %}</a>
-    <a href="{% url 'create_wrap' 'long_term' %}">{% trans "Long term" %}</a>
+    <form method="POST">
+        <div class="vert-center">
+            {% csrf_token %}
+            <h1 id="name">Generate your Wrapped</h1>
+            <br>
+            <div id="wrap-name-selection">
+                <label for="name">Give your wrap a name!</label>
+                <input type="text" id="name" name="name" placeholder="Optional">
+                <br>
+                <br>
+            </div>
+            <div id="wrap-duration-selection">
+                <label>Pick a time period to wrap!</label>
+                <div class="button-group">
+                    <button onclick='this.form.action="{% url 'create_wrap' 'short_term' %}";'
+                            type="submit">Last 4 Weeks</button>
+                    <button onclick='this.form.action="{% url 'create_wrap' 'medium_term' %}";'
+                            type="submit">Last 6 Months</button>
+                    <button onclick='this.form.action="{% url 'create_wrap' 'long_term' %}";'
+                            type="submit">Last Year</button>
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}

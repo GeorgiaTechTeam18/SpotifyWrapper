@@ -1,31 +1,100 @@
 {% extends 'UserAuth/base.html' %}
 {% load i18n %}
 {% block body %}
-    <h1>{% trans "Hi" %} {{ user.get_username }}</h1>
-    <h2>{% trans "Your Tokens:" %}</h2>
-    <table class="linked-tokens">
-        <tr>
-            <th>{% trans "Email" %}</th>
-            <th>{% trans "Username" %}</th>
-            <th>{% trans "Unlink" %}</th>
-        </tr>
-        {% for token in associated_spotify_tokens %}
+    <h1 class="pf-page-heading">{{ user.get_username }}'s Profile Page</h1>
+    <br>
+    <div class="spotify-account-box">
+        <h2 class="pf-page-heading">Your Spotify Accounts</h2>
+        <a class="LinkSpotify" href="{% url 'authWithSpotify' %}">Link a Spotify account</a>
+    </div>
+    <div class="table-overflow-container">
+        <table class="linked-tokens">
             <tr>
-                <th>{{ token.spotify_account_email }}</th>
-                <th>{{ token.spotify_account_username }}</th>
-                <th>
-                    <form method="post" action="{% url 'unlink_token' %}">
-                        {% csrf_token %}
-                        <input type="hidden"
-                               name="spotify_account_username"
-                               value="{{ token.spotify_account_username }}">
-                        <button type="submit">
-                            <i class="fa fa-close"></i>
-                        </button>
-                    </form>
-                </th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Unlink</th>
             </tr>
-        {% endfor %}
-    </table>
-    <a href="{% url 'authWithSpotify' %}">{% trans "Link another spotify account with your account" %}</a>
+            {% for token in associated_spotify_tokens %}
+                <tr>
+                    <th>{{ token.spotify_account_email }}</th>
+                    <th>{{ token.spotify_account_username }}</th>
+                    <th>
+                        <form method="post" action="{% url 'unlink_token' %}">
+                            {% csrf_token %}
+                            <input type="hidden"
+                                   name="spotify_account_username"
+                                   value="{{ token.spotify_account_username }}">
+                            <button type="submit">
+                                <i class="fa fa-close"></i>
+                            </button>
+                        </form>
+                    </th>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% if wraps is not none %}
+        <h2 class="pf-page-heading">Spotify Wraps</h2>
+        <ul>
+            {% for wrap in wraps %}
+                <li class="wrap">
+                    <h3>{{ wrap.title }}</h3>
+                    <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
+                    <p>Posted by: {{ wrap.user.username }}</p>
+                    <form method="post" action="{% url 'like_wrap' wrap.uuid %}">
+                        {% csrf_token %}
+                        <button type="submit">Like</button>
+                    </form>
+                    <form method="post"
+                          action="{% url 'delete_wrap' wrap.uuid %}"
+                          class="delete-form">
+                        {% csrf_token %}
+                        <button type="button" class="delete-button">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'select_wraps_to_post' %}">
+            <button>Post</button>
+        </a>
+    {% else %}
+        <div class="no-wraps">
+            <p>Your wraps will show up here when you create them.</p>
+        </div>
+    {% endif %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('form.delete-from').forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Request failed.');
+                    }).then(data => {
+                        console.log(data);
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                });
+            });
+        });
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                const form = this.closest('form');
+                if (confirm("Are you sure you want to delete this wrap?")) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+    <div class="button-container">
+        <a class="DeleteAccount" href="{% url 'delete_account' %}">Delete Account</a>
+    </div>
 {% endblock %}
