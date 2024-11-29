@@ -1,33 +1,31 @@
 {% extends 'UserAuth/base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block body %}
-    <div class="vert-center">
-        <form class="authForm" action='{% url 'login' %}' method="post">
-            {% csrf_token %}
-            <h3>Sign in</h3>
-            <br>
-            <div>
-                <label for="id_email">Email</label>
-                {{ form.email.errors }}
-                {{ form.email }}
-            </div>
-            <div>
-                <label for="id_password">Password</label>
-                {{ form.password.errors }}
-                {{ form.password }}
-            </div>
-            <span class="clearfix">
-                <button type="submit">Login with email</button>
-            </span>
-        </form>
-        <div class="login-alternate">
-            <p>or</p>
-            <a href="{% url 'authWithSpotify' %}" class="spotify-login">
-                <img src="{% static 'UserAuth/spotify-icon.webp' %}"
-                     alt="Spotify Logo"
-                     class="spotify-icon">
-                Connect with Spotify
-            </a>
+    <form class="authForm" action='{% url 'login' %}' method="post">
+        {% csrf_token %}
+        <h3>{% trans "Sign in" %}</h3>
+        <br>
+        <div>
+            <label for="id_email">{% trans "Email" %}</label>
+            {{ form.email.errors }}
+            {{ form.email }}
         </div>
+        <div>
+            <label for="id_password">{% trans "Password" %}</label>
+            {{ form.password.errors }}
+            {{ form.password }}
+        </div>
+        <span class="clearfix">
+            <button type="submit">{% trans "Login with email" %}</button>
+        </span>
+    </form>
+    <div class="login-alternate">
+        <p>{% trans "or" %}</p>
+        <a href="{% url 'authWithSpotify' %}" class="spotify-login">
+            <img src="{% static 'UserAuth/spotify-icon.webp' %}"
+                 alt="{% trans "Spotify Logo" %}"
+                 class="spotify-icon">
+            {% trans "Connect with Spotify" %}
+        </a>
     </div>
 {% endblock %}

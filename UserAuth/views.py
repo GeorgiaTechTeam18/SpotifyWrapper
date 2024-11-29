@@ -1,3 +1,10 @@
+import secrets
+
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render, redirect
+from requests import Request, post, exceptions
+from .util import update_or_create_user_tokens, get_top_song_album_covers
+from .models import SpotifyToken
 import os
 import secrets
 
@@ -5,7 +12,6 @@ import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
@@ -58,7 +64,10 @@ def authWithSpotify(request):
                 "redirect_uri": REDIRECT_URI,
                 "client_id": CLIENT_ID,
             },
-        ) .prepare() .url)
+        )
+        .prepare()
+        .url
+    )
 
     return redirect(url)
 
@@ -66,6 +75,7 @@ def authWithSpotify(request):
 def login_view(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
+        print(form)
         if form.is_valid():
             user_data = form.cleaned_data
             user = authenticate(
@@ -255,6 +265,3 @@ def getSpotifyUserData(access_token):
         )
 
 
-@login_required
-def deepcut(request):
-    return redirect(request, reverse("Wrapped:deepcut"))

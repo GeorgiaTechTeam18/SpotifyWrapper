@@ -1,9 +1,10 @@
 {% extends 'UserAuth/base.html' %}
-{% load static %}
+{% load static i18n %}
 {% load django_template_filters %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'Wrapped/view_wrap.css' %}">
 {% endblock %}
+
 {% block body %}
     <h1 class="view-wrap-title">{{ wrap_title }}</h1>
     <div id="outer-wrap-container">

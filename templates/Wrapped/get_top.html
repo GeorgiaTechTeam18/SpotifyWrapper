@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Top Tracks and Artists</title>
+        <title>{% trans "Top Tracks and Artists" %}</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -49,7 +49,7 @@
         </style>
     </head>
     <body>
-        <h1>Top Tracks</h1>
+        <h1>{% trans "Top Tracks" %}</h1>
         {% if error %}
             <p style="color: red;">{{ error }}</p>
         {% else %}
@@ -62,23 +62,23 @@
                              height="50" />
                         <div>
                             <p>
-                                <strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a>
+                                <strong>{% trans "Song:" %}</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a>
                             </p>
                             <p>
-                                <strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a>
+                                <strong>{% trans "Artist:" %}</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a>
                             </p>
                             <p>
-                                <strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a>
+                                <strong>{% trans "Album:" %}</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a>
                             </p>
                             <p>
-                                <strong>Duration:</strong> {{ track.duration_ms }} ms
+                                <strong>{% trans "Duration:" %}</strong> {{ track.duration_ms }} ms
                             </p>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
         {% endif %}
-        <h1>Top Artists</h1>
+        <h1>{% trans "Top Artists" %}</h1>
         {% if error %}
             <p style="color: red;">{{ error }}</p>
         {% else %}
@@ -91,10 +91,10 @@
                              height="50" />
                         <div>
                             <p>
-                                <strong>Name:</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a>
+                                <strong>{% trans "Name:" %}</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a>
                             </p>
                             <p>
-                                <strong>Genres:</strong> {{ artist.genres|join:", " }}
+                                <strong>{% trans "Genres:" %}</strong> {{ artist.genres|join:", " }}
                             </p>
                         </div>
                     </li>

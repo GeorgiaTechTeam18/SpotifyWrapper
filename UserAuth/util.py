@@ -1,5 +1,9 @@
+from .models import User, SpotifyToken
+from django.utils import timezone
 import datetime
+from requests import post, get
 import os
+from dotenv import load_dotenv
 from functools import cache
 
 from django.utils import timezone
@@ -15,6 +19,7 @@ BASE_URL = "https://api.spotify.com/v1/me/"
 
 def get_user_tokens(user: User):
     user_tokens = user.default_spotify_token
+    print(f"user token {user_tokens}")
     if user_tokens:
         expiry = user_tokens.expires_in
         if expiry <= timezone.now():

@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="album_scroll_container {{ direction }} {{ classNames }}"
      id="{{ id }}">
     <div class="photobanner">
@@ -6,14 +7,14 @@
                  src="{{ album.images.0.url }}"
                  width="100"
                  height="100"
-                 alt="{{ album.name }}">
+                 alt="{% trans album.name %}">
         {% endfor %}
         {% for album in album_covers %}
             <img class="album_scroll_item"
                  src="{{ album.images.0.url }}"
                  width="100"
                  height="100"
-                 alt="{{ album.name }}">
+                 alt="{% trans album.name %}">
         {% endfor %}
     </div>
 </div>

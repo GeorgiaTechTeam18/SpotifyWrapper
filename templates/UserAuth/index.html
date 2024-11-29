@@ -18,6 +18,7 @@
                 </div>
             </div>
             {% include "UserAuth/albumScrollDisplay.html" with album_covers=album_covers direction="left" classNames="index-page-albums-mobile" %}
+
             <div id="meet-the-team">
                 <h2 class="team-title">Meet the Team</h2>
                 <div class="team-container">
@@ -56,11 +57,9 @@
                         <img src="{% static 'UserAuth/Theo.jpg' %}"
                              alt="Theo Halphern"
                              class="team-image">
-                        <h3 class="team-name">Theo Halpern</h3>
-                        <p class="team-role">Logistical Lead</p>
-                        <p class="team-description">
-                            I did some of the auth and some of the css/js. Check me out at <a href="https://theoh.dev">theoh.dev</a>
-                        </p>
+                        <h3 class="team-name">Theo Halphern</h3>
+                        <p class="team-role">Full Stack Wizard</p>
+                        <p class="team-description">I do a bit of everything. Check me out on theoh.dev!</p>
                     </div>
                     <!-- Team Member 5 -->
                     <div class="team-member">
@@ -73,6 +72,7 @@
                             Hi, I'm Aneesh! I helped design our site's ability to post your wrap and see what others have done!
                         </p>
                     </div>
+    
                 </div>
                 <div class="promo-content">
                     <a href="{% url 'contact' %}" class="promo-button">FAQ / Contact Us</a>

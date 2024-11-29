@@ -3,6 +3,8 @@ import random
 from datetime import datetime
 
 import requests
+from django.http import JsonResponse, HttpResponseServerError
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponseNotFound, JsonResponse
@@ -14,22 +16,16 @@ from UserAuth.util import get_user_tokens
 from .models import SpotifyWrap
 
 
-@login_required
-def post_wrap(request):
-    return render(request, "Wrapped/post_wrap.html")
-
-
-def select_wraps_to_post(request):
-    wraps = SpotifyWrap.objects.filter(user=request.user)
-    return render(request,
-                  "Wrapped/select_wraps_to_post.html",
-                  {"wraps": wraps})
-
-
 def make_wraps_public(request):
     wrap_ids = request.POST.getlist("wrap_ids")
+    action = request.POST.get("action")
     wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
-    wraps.update(is_public=True)
+
+    if action == "post":
+        wraps.update(is_public=True)
+    else:
+        wraps.update(is_public=False)
+
     return redirect("view_public_wraps")
 
 
@@ -124,7 +120,7 @@ def like_wrap(request, wrap_id):
         message = "Liked"
     wrap.save()
 
-    return JsonResponse({"message": message})
+    return JsonResponse({'message': message})
 
 
 key_map = {
