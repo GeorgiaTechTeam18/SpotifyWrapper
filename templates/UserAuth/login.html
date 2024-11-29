@@ -3,7 +3,8 @@
 {% block body %}
     <form class="authForm" action='{% url 'login' %}' method="post">
         {% csrf_token %}
-        <h3>{% trans "Sign in" %}</h3><br>
+        <h3>{% trans "Sign in" %}</h3>
+        <br>
         <div>
             <label for="id_email">{% trans "Email" %}</label>
             {{ form.email.errors }}
@@ -14,7 +15,6 @@
             {{ form.password.errors }}
             {{ form.password }}
         </div>
-
         <span class="clearfix">
             <button type="submit">{% trans "Login with email" %}</button>
         </span>
@@ -22,7 +22,9 @@
     <div class="login-alternate">
         <p>{% trans "or" %}</p>
         <a href="{% url 'authWithSpotify' %}" class="spotify-login">
-            <img src="{% static 'UserAuth/spotify-icon.webp' %}" alt="{% trans "Spotify Logo" %}" class="spotify-icon">
+            <img src="{% static 'UserAuth/spotify-icon.webp' %}"
+                 alt="{% trans "Spotify Logo" %}"
+                 class="spotify-icon">
             {% trans "Connect with Spotify" %}
         </a>
     </div>

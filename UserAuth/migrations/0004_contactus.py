@@ -6,17 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('UserAuth', '0003_alter_user_default_spotify_token'),
+        ("UserAuth", "0003_alter_user_default_spotify_token"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ContactUs',
+            name="ContactUs",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254, verbose_name='User Email')),
-                ('message', models.TextField(verbose_name='Issue Description')),
-                ('submitted_at', models.DateTimeField(auto_now_add=True)),
+                ("id",
+                 models.BigAutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name="ID",
+                 ),
+                 ),
+                ("email",
+                 models.EmailField(
+                     max_length=254,
+                     verbose_name="User Email")),
+                ("message",
+                 models.TextField(
+                     verbose_name="Issue Description")),
+                ("submitted_at",
+                 models.DateTimeField(
+                     auto_now_add=True)),
             ],
         ),
     ]

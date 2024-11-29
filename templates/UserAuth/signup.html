@@ -2,7 +2,8 @@
 {% load static i18n %}
 {% block body %}
     <form class="authForm" action='{% url 'signup' %}' method="post">
-        <h3>{% trans "Create an Account" %}</h3><br>
+        <h3>{% trans "Create an Account" %}</h3>
+        <br>
         {% csrf_token %}
         <div>
             <label for="id_email">{% trans "Email" %}</label>
@@ -14,7 +15,6 @@
             {{ form.password.errors }}
             {{ form.password }}
         </div>
-
         <span class="clearfix">
             <button type="submit">{% trans "Create Account" %}</button>
         </span>
@@ -22,7 +22,9 @@
     <div class="login-alternate">
         <p>{% trans "or" %}</p>
         <a href="{% url 'authWithSpotify' %}" class="spotify-login">
-            <img src="{% static 'UserAuth/spotify-icon.webp' %}" alt="{% trans "Spotify Logo" %}" class="spotify-icon">
+            <img src="{% static 'UserAuth/spotify-icon.webp' %}"
+                 alt="{% trans "Spotify Logo" %}"
+                 class="spotify-icon">
             {% trans "Connect with Spotify" %}
         </a>
     </div>
