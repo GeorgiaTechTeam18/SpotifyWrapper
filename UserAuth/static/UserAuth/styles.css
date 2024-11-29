@@ -418,12 +418,23 @@ main {
 
 /* styles for the profile page*/
 table.linked-tokens {
-  border-collapse: collapse;
-  width: 100%;
-  background-color: white; /* Background for rows */
-  border-radius: 10px; /* Rounded corners for the table */
-  overflow: hidden; /* Ensures corners apply properly */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-collapse: collapse;
+    width: 100%;
+    background-color: white; /* Background for rows */
+    border-radius: 10px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensures corners apply properly */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-bottom: 1em;
+}
+
+h2.pf-page-heading {
+    margin-bottom: 1em;
+}
+
+.spotify-account-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 /* Table header styling */
