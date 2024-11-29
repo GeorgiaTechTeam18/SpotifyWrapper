@@ -427,6 +427,10 @@ table.linked-tokens {
     margin-bottom: 1em;
 }
 
+.table-overflow-container {
+    overflow-x: auto;
+}
+
 h2.pf-page-heading {
     margin-bottom: 1em;
 }
@@ -660,6 +664,9 @@ ul {
     .contact-us-form .btn {
         font-size: 1rem;
         padding: 8px 15px;
+    }
+    h1.pf-page-heading {
+        font-size: x-large;
     }
 }
 

@@ -1,11 +1,12 @@
 {% extends 'UserAuth/base.html' %}
 {% load static %}
 {% block body %}
-    <h1>{{ user.get_username }}'s Profile Page</h1><br>
+    <h1 class="pf-page-heading">{{ user.get_username }}'s Profile Page</h1><br>
     <div class="spotify-account-box">
         <h2 class="pf-page-heading">Your Spotify Accounts</h2>
         <a class="LinkSpotify" href="{% url 'authWithSpotify' %}">Link a Spotify account</a>
     </div>
+    <div class="table-overflow-container">
     <table class="linked-tokens">
         <tr>
             <th>Email</th>
@@ -30,6 +31,7 @@
             </tr>
         {% endfor %}
     </table>
+    </div>
     {% if wraps is not none %}
         <h2 class="pf-page-heading">Spotify Wraps</h2>
         <ul>
