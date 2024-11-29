@@ -1,17 +1,15 @@
 # Wrapped/views.py
-import functools
 import random
 from datetime import datetime
 
 import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.http import (HttpResponseNotFound, HttpResponseServerError,
-                         JsonResponse)
+from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from UserAuth.models import SpotifyToken
-from UserAuth.util import get_user_tokens, refresh_spotify_token
+from UserAuth.util import get_user_tokens
 
 from .models import SpotifyWrap
 
@@ -109,6 +107,7 @@ def view_wrap(request, wrap_id):
             "audio_features_graphs": audio_features_graphs,
             "audio_features_list": audio_features_list,
             "selected_tracks": selected_tracks,
+            "access_token": get_user_tokens(request.user).access_token,
         },
     )
 
@@ -243,7 +242,7 @@ def create_wrap(request, time_range=None):
                     "duration_ms": item.get("duration_ms"),
                     "song_url": item.get("external_urls", {}).get("spotify", ""),
                     "song_name": item.get("name"),
-                    "preview_url": item.get("preview_url"),
+                    "uri": item.get("uri"),
                     "is_playable": item.get("is_playable"),
                     "id": item.get("id"),
                 }

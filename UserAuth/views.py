@@ -53,15 +53,12 @@ def authWithSpotify(request):
             "GET",
             "https://accounts.spotify.com/authorize",
             params={
-                "scope": "user-read-email user-top-read",
+                "scope": "user-read-email user-read-private user-top-read streaming",
                 "response_type": "code",
                 "redirect_uri": REDIRECT_URI,
                 "client_id": CLIENT_ID,
             },
-        )
-        .prepare()
-        .url
-    )
+        ) .prepare() .url)
 
     return redirect(url)
 

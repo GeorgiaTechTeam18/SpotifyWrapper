@@ -10,7 +10,7 @@
         <div id="wrap-container">
             <div class="wrap-slide"
                  id="wrap-slide-0"
-                 data-preview-url="{{ selected_tracks.0.preview_url }}">
+                 data-track-uri="{{ selected_tracks.0.uri }}">
                 <div class="transition-slide">
                     <div>
                         <h2>You couldn't stop listening to:</h2>
@@ -44,7 +44,7 @@
             </div>
             <div class="wrap-slide"
                  id="wrap-slide-1"
-                 data-preview-url="{{ selected_tracks.1.preview_url }}">
+                 data-track-uri="{{ selected_tracks.1.uri }}">
                 <h1>Top Tracks</h1>
                 <div class="transition-slide left">
                     <div>
@@ -79,7 +79,7 @@
             </div>
             <div class="wrap-slide"
                  id="wrap-slide-2"
-                 data-preview-url="{{ selected_tracks.2.preview_url }}">
+                 data-track-uri="{{ selected_tracks.2.uri }}">
                 <div class="transition-slide shrink">
                     <div>
                         <h2>Your Top artists are:</h2>
@@ -107,7 +107,7 @@
             </div>
             <div class="wrap-slide"
                  id="wrap-slide-3"
-                 data-preview-url="{{ selected_tracks.3.preview_url }}">
+                 data-track-uri="{{ selected_tracks.3.uri }}">
                 <div class="transition-slide dimond">
                     <div>
                         <h2>Your Top Genres are:</h2>
@@ -130,7 +130,7 @@
             </div>
             <div class="wrap-slide"
                  id="wrap-slide-4"
-                 data-preview-url="{{ selected_tracks.4.preview_url }}">
+                 data-track-uri="{{ selected_tracks.4.uri }}">
                 <div id="emojiContainer"></div>
                 <h1>Overall Vibe</h1>
                 <div class="genre_container">
@@ -173,6 +173,8 @@
              style="position: absolute"
              src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
     </template>
-    <audio id="audio-player" controls style="display:none;"></audio>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="{% static 'Wrapped/spotify_playback.js' %}"
+            data-access-token="{{ access_token }}"></script>
     <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
 {% endblock %}
