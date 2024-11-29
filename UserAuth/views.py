@@ -6,9 +6,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
+
+import Wrapped.models
 
 from .form import ContactUsForm, RegistrationForm
 from .models import SpotifyToken
@@ -114,12 +116,14 @@ def profile_view(request):
     associated_spotify_tokens = SpotifyToken.objects.filter(
         user__username=request.user.username
     )
+    wraps = Wrapped.models.SpotifyWrap.objects.filter(user=request.user)
     return render(
         request,
         "UserAuth/profile.html",
         {
             "associated_spotify_tokens": associated_spotify_tokens,
             "messages": error_message,
+            "wraps": wraps,
         },
     )
 
@@ -136,6 +140,16 @@ def delete_account(request):
         return redirect("home")
 
     return render(request, "UserAuth/delete_account.html")
+
+
+@login_required
+def delete_wrap(request, wrap_uuid):
+    wrap = get_object_or_404(
+        Wrapped.models.SpotifyWrap, uuid=wrap_uuid, user=request.user
+    )
+    if request.method == "POST":
+        wrap.delete()
+        return redirect("profile")
 
 
 def delete_token(request):

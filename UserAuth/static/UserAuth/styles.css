@@ -168,6 +168,7 @@ main {
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 3em);
 }
 
 .team-title {
@@ -417,23 +418,204 @@ main {
 }
 
 /* styles for the profile page*/
-table.linked-tokens  {
-  border-collapse: collapse;
-  width: 100%;
+table.linked-tokens {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: white; /* Background for rows */
+    border-radius: 10px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensures corners apply properly */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-bottom: 1em;
 }
 
-.linked-tokens td, .linked-tokens th {
-  border: 1px solid #dddddd;
+.table-overflow-container {
+    overflow-x: auto;
+}
+
+h2.pf-page-heading {
+    margin-bottom: 1em;
+}
+
+.spotify-account-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+/* Table header styling */
+
+.linked-tokens tr:first-child th {
+  background-color: #1DB954;
+  color: black;
+  padding: 10px;
   text-align: left;
-  padding: 8px;
+  font-weight: bold;
+  border: none;
 }
 
-.linked-tokens tr:nth-child(even) {
-  background-color: #dddddd;
+.linked-tokens th {
+  background-color: white;
+  color: black;
+  text-align: left;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.linked-tokens td {
+  border: none;
+  padding: 10px;
+  color: black;
+  background-color: white;
+}
+
+.linked-tokens tr:hover td {
+  background-color: #f5f5f5;
+}
+
+.linked-tokens tr:nth-child(even) td {
+  background-color: #f9f9f9;
 }
 
 .linked-tokens button {
-    width: 100%;
+  background-color: #1DB954;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.linked-tokens button:hover {
+  background-color: #14863E;
+}
+
+.linked-tokens button:active {
+  transform: scale(0.95);
+}
+
+a.DeleteAccount {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #bc2775;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    border: 2px solid #bc2775;
+    transition: background-color 0.3s, transform 0.2s;
+    position: relative;
+    margin-left: auto;
+}
+
+a.DeleteAccount:hover {
+    background-color: #bc2775;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+a.DeleteAccount:active {
+    transform: scale(0.95);
+}
+
+a.LinkSpotify {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #1DB954;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    border: 2px solid #1AA34A;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 1em;
+}
+
+a.LinkSpotify:hover {
+    background-color: #1AA34A;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+a.LinkSpotify:active {
+    transform: scale(0.95);
+}
+
+.no-wraps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wrap {
+    background-color: white;
+    border: 1px solid #1DB954;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.wrap:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.wrap h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.wrap a {
+    display: inline-block;
+    color: #1DB954;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+}
+
+.wrap a:hover {
+    color: #14863E;
+}
+
+.wrap p {
+    color: black;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.wrap form button {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.wrap form button:hover {
+    background-color: #14863E;
 }
 
 @media (max-width: 768px) {
@@ -454,12 +636,11 @@ table.linked-tokens  {
         display: block;
     }
 
-    /*Index Page Styling*/
     .team-container {
-        flex-direction: column; /* Stack team members vertically */
+        flex-direction: column;
     }
     .team-member {
-        width: 90%; /* Adjust size on smaller screens */
+        width: 90%;
         margin: 0 auto;
     }
     .promo-section{
@@ -484,6 +665,9 @@ table.linked-tokens  {
     .contact-us-form .btn {
         font-size: 1rem;
         padding: 8px 15px;
+    }
+    h1.pf-page-heading {
+        font-size: x-large;
     }
 }
 
