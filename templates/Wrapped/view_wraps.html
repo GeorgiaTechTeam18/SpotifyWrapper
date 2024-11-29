@@ -1,78 +1,78 @@
 {% extends 'UserAuth/base.html' %}
 {% load i18n %}
-
 {% block body %}
     <h1>{% trans "Spotify Wraps" %}</h1>
     <ul>
         {% for wrap in wraps %}
-        <li>
-            <h2>{{ wrap.title }}</h2>
-            <a href="{% url 'view_wrap' wrap.uuid %}">{% trans "View this wrap" %}</a>
-            <p>{% trans "Posted by:" %} {{ wrap.user.username }}</p>
-            <form class="delete" method="post" action="{% url 'delete_wrap' wrap.uuid %}">
-                {% csrf_token %}
-                <button type="submit">{% trans "Delete" %}</button>
-            </form>
-            <form class="post" method="post" action="{% url 'make_wraps_public' %}">
-                {% csrf_token %}
-                <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
-                <input type="hidden" name="action" value="post">
-                <button type="submit">{% trans "Post" %}</button>
-            </form>
-        </li>
+            <li>
+                <h2>{{ wrap.title }}</h2>
+                <a href="{% url 'view_wrap' wrap.uuid %}">{% trans "View this wrap" %}</a>
+                <p>{% trans "Posted by:" %} {{ wrap.user.username }}</p>
+                <form class="delete"
+                      method="post"
+                      action="{% url 'delete_wrap' wrap.uuid %}">
+                    {% csrf_token %}
+                    <button type="submit">{% trans "Delete" %}</button>
+                </form>
+                <form class="post" method="post" action="{% url 'make_wraps_public' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
+                    <input type="hidden" name="action" value="post">
+                    <button type="submit">{% trans "Post" %}</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('form.delete').forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Request failed.');
+                    }).then(data => {
+                        console.log(data);
+                        window.location.reload();
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                });
+            });
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('form.delete').forEach(form => {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            fetch(this.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Request failed.');
-            }).then(data => {
-                console.log(data);
-                window.location.reload();
-            }).catch(error => {
-                console.error(error);
+            document.querySelectorAll('form.post').forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const actionInput = form.querySelector('input[name="action"]');
+                    const isPosting = actionInput.value === 'post';
+                    actionInput.value = isPosting ? 'unpost' : 'post';
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: new FormData(this),
+                        headers: {
+                            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Request failed.');
+                    }).then(data => {
+                        console.log(data);
+                        form.querySelector('button').innerText = isPosting ? '{% trans "Unpost" %}' : '{% trans "Post" %}';
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                });
             });
         });
-    });
-
-    document.querySelectorAll('form.post').forEach(form => {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const actionInput = form.querySelector('input[name="action"]');
-            const isPosting = actionInput.value === 'post';
-            actionInput.value = isPosting ? 'unpost' : 'post';
-
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-                headers: {
-                    'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Request failed.');
-            }).then(data => {
-                console.log(data);
-                form.querySelector('button').innerText = isPosting ? '{% trans "Unpost" %}' : '{% trans "Post" %}';
-            }).catch(error => {
-                console.error(error);
-            });
-        });
-    });
-});
-</script>
+    </script>
 {% endblock %}

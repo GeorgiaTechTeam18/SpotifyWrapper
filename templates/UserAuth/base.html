@@ -1,84 +1,60 @@
 {% extends 'UserAuth/base.html' %}
 {% load static i18n %}
 {% block body %}
-        <div id="Index-main-text">
-            <h3>
-                {% trans "Your trust is important to us, and so we would like to answer your FAQs or contact us." %}
-            </h3><br>
+    <div id="Index-main-text">
+        <h3>{% trans "Your trust is important to us, and so we would like to answer your FAQs or contact us." %}</h3>
+        <br>
+    </div>
+    <div>
+        <ul>
+            <li class="IndexAboutInfo">
+                <div class="text-container">
+                    <h3>{% trans "Year-Round Insights" %}</h3>
+                    <p>{% trans "Get personalized listening stats anytime, not just at the end of the year." %}</p>
+                </div>
+                <img src="{% static 'UserAuth/checkmark.png' %}">
+            </li>
+            <li class="IndexAboutInfo">
+                <div class="text-container">
+                    <h3>{% trans "Your Data is Safe" %}</h3>
+                    <p>{% trans "We prioritize your privacy and never share your data with third parties." %}</p>
+                </div>
+                <img src="{% static 'UserAuth/checkmark.png' %}">
+            </li>
+            <li class="IndexAboutInfo">
+                <div class="text-container">
+                    <h3>{% trans "Cross-Platform Support" %}</h3>
+                    <p>{% trans "Use our service on any device—optimized for both iOS and Android." %}</p>
+                </div>
+                <img src="{% static 'UserAuth/checkmark.png' %}">
+            </li>
+            <li class="IndexAboutInfo">
+                <div class="text-container">
+                    <h3>{% trans "Custom Insights" %}</h3>
+                    <p>{% trans "Discover your top songs, artists, and genres, or analyze listening trends by time." %}</p>
+                </div>
+                <img src="{% static 'UserAuth/checkmark.png' %}">
+            </li>
+            <li class="IndexAboutInfo">
+                <div class="text-container">
+                    <h3>{% trans "Revoke Permissions Anytime" %}</h3>
+                    <p>{% trans "You’re in control—revoke our app’s permissions anytime from Spotify settings." %}</p>
+                </div>
+                <img src="{% static 'UserAuth/checkmark.png' %}">
+            </li>
+        </ul>
+        <div id="contact-us" class="contact-us-container">
+            <h2>{% trans "Contact Us" %}</h2>
+            <form method="POST" class="contact-us-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+            </form>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+                </ul>
+            {% endif %}
         </div>
-        <div>
-            <ul>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            {% trans "Year-Round Insights" %}
-                        </h3>
-                        <p>
-                            {% trans "Get personalized listening stats anytime, not just at the end of the year." %}
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            {% trans "Your Data is Safe" %}
-                        </h3>
-                        <p>
-                            {% trans "We prioritize your privacy and never share your data with third parties." %}
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            {% trans "Cross-Platform Support" %}
-                        </h3>
-                        <p>
-                            {% trans "Use our service on any device—optimized for both iOS and Android." %}
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            {% trans "Custom Insights" %}
-                        </h3>
-                        <p>
-                            {% trans "Discover your top songs, artists, and genres, or analyze listening trends by time." %}
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-                <li class="IndexAboutInfo">
-                    <div class="text-container">
-                        <h3>
-                            {% trans "Revoke Permissions Anytime" %}
-                        </h3>
-                        <p>
-                            {% trans "You’re in control—revoke our app’s permissions anytime from Spotify settings." %}
-                        </p>
-                    </div>
-                    <img src="{% static 'UserAuth/checkmark.png' %}">
-                </li>
-            </ul>
-            <div id="contact-us" class="contact-us-container">
-                <h2>{% trans "Contact Us" %}</h2>
-                <form method="POST" class="contact-us-form">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-                </form>
-                {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-        </div>
-
+    </div>
 {% endblock %}
