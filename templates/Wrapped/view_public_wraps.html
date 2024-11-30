@@ -4,7 +4,9 @@
     <h1>Public Wraps</h1>
     <button id="filter-button">Show Liked Wraps</button>
     {{ wraps }}
-    {% for wrap in wraps %}{{ wrap }}{% endfor %}
+    {% for wrap in wraps %}
+        {{ wrap }}
+    {% endfor %}
     <ul id="wraps-list">
         {% for wrap in wraps %}
             <li>

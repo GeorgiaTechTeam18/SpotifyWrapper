@@ -1,3 +1,10 @@
+import secrets
+
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render, redirect
+from requests import Request, post, exceptions
+from .util import update_or_create_user_tokens, get_top_song_album_covers
+from .models import SpotifyToken
 import os
 import secrets
 
@@ -5,7 +12,6 @@ import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from dotenv import load_dotenv
 from requests import Request, exceptions, post
@@ -58,7 +64,10 @@ def authWithSpotify(request):
                 "redirect_uri": REDIRECT_URI,
                 "client_id": CLIENT_ID,
             },
-        ) .prepare() .url)
+        )
+        .prepare()
+        .url
+    )
 
     return redirect(url)
 
@@ -253,3 +262,5 @@ def getSpotifyUserData(access_token):
         raise Exception(
             f"Failed to retrieve user info. Status code: {response.status_code}"
         )
+
+

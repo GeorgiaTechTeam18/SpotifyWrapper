@@ -3,10 +3,11 @@ import random
 from datetime import datetime
 
 import requests
+from django.http import JsonResponse, HttpResponseServerError
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.http import (HttpResponseNotFound, HttpResponseServerError,
-                         JsonResponse)
+from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from UserAuth.models import SpotifyToken
@@ -124,7 +125,7 @@ def like_wrap(request, wrap_id):
         message = "Liked"
     wrap.save()
 
-    return JsonResponse({"message": message})
+    return JsonResponse({'message': message})
 
 
 key_map = {
