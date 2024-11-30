@@ -75,7 +75,6 @@ def authWithSpotify(request):
 def login_view(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
-        print(form)
         if form.is_valid():
             user_data = form.cleaned_data
             user = authenticate(

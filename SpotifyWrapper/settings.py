@@ -43,20 +43,7 @@ CSRF_TRUSTED_ORIGINS = ["https://spotifywrapped.theoh.dev"]
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "America/New_York"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-LANGUAGES = [
-    ("en", ("English")),
-    ("de", ("German")),
-    ("fr", ("French")),
-    ("sp", ("Spanish")),
-]
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, "locale"),
-    os.path.join(BASE_DIR, "UserAuth/locale"),
-    os.path.join(BASE_DIR, "Wrapped/locale"),
-]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,8 +67,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "SpotifyWrapper.urls"
