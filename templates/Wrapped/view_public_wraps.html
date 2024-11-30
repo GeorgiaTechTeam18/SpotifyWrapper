@@ -1,11 +1,8 @@
 {% extends 'UserAuth/base.html' %}
-{% load i18n %}
-{% block title %}
-    {% trans "Public Wraps" %}
-{% endblock %}
+{% block title %}Public Wraps{% endblock %}
 {% block body %}
-    <h1>{% trans "Public Wraps" %}</h1>
-    <button id="filter-button">{% trans "Show Liked Wraps" %}</button>
+    <h1>Public Wraps</h1>
+    <button id="filter-button">Show Liked Wraps</button>
     {{ wraps }}
     {% for wrap in wraps %}
         {{ wrap }}
@@ -19,7 +16,7 @@
                       method="post"
                       style="display:inline">
                     {% csrf_token %}
-                    <button type="submit">{% trans "Like" %}</button>
+                    <button type="submit">Like</button>
                 </form>
             </li>
         {% endfor %}
@@ -34,7 +31,7 @@
                 padding:20px;
                 border:1px solid black">
         <span id="popup-message"></span>
-        <button onclick="document.getElementById('popup').style.display='none'">{% trans "Close" %}</button>
+        <button onclick="document.getElementById('popup').style.display='none'">Close</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -81,11 +78,11 @@
                             li.innerHTML = `<a href="/view_wrap/${wrap.id}">${wrap.title}</a>
                                 <form class="like-form" action="/like_wrap/${wrap.id}" method="post" style="display:inline;">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="${wrap.csrf_token}">
-                                    <button type="submit">{% trans "Like" %}</button>
+                                    <button type="submit">Like</button>
                                 </form>`;
                             wrapsList.appendChild(li);
                         });
-                        filterButton.innerText = isFiltered ? '{% trans "Show Liked Wraps" %}' : '{% trans "Show All Wraps" %}';
+                        filterButton.innerText = isFiltered ? 'Show Liked Wraps' : 'Show All Wraps';
                         filterButton.setAttribute('data-filtered', !isFiltered);
                     })
                     .catch(error => {

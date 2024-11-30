@@ -1,5 +1,4 @@
 {% extends 'UserAuth/base.html' %}
-{% load i18n %}
 {% block body %}
     <h1 class="pf-page-heading">{{ user.get_username }}'s Profile Page</h1>
     <br>
@@ -55,7 +54,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
                         <input type="hidden" name="action" value="post">
-                        <button type="submit">{% trans "Post" %}</button>
+                        <button type="submit">Post</button>
                     </form>
                 </li>
             {% endfor %}

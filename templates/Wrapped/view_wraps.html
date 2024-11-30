@@ -1,24 +1,23 @@
 {% extends 'UserAuth/base.html' %}
-{% load i18n %}
 {% block body %}
-    <h1>{% trans "Spotify Wraps" %}</h1>
+    <h1>Spotify Wraps</h1>
     <ul>
         {% for wrap in wraps %}
             <li>
                 <h2>{{ wrap.title }}</h2>
-                <a href="{% url 'view_wrap' wrap.uuid %}">{% trans "View this wrap" %}</a>
-                <p>{% trans "Posted by:" %} {{ wrap.user.username }}</p>
+                <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
+                <p>Posted by: {{ wrap.user.username }}</p>
                 <form class="delete"
                       method="post"
                       action="{% url 'delete_wrap' wrap.uuid %}">
                     {% csrf_token %}
-                    <button type="submit">{% trans "Delete" %}</button>
+                    <button type="submit">Delete</button>
                 </form>
                 <form class="post" method="post" action="{% url 'make_wraps_public' %}">
                     {% csrf_token %}
                     <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
                     <input type="hidden" name="action" value="post">
-                    <button type="submit">{% trans "Post" %}</button>
+                    <button type="submit">Post</button>
                 </form>
             </li>
         {% endfor %}
@@ -67,7 +66,7 @@
                         throw new Error('Request failed.');
                     }).then(data => {
                         console.log(data);
-                        form.querySelector('button').innerText = isPosting ? '{% trans "Unpost" %}' : '{% trans "Post" %}';
+                        form.querySelector('button').innerText = isPosting ? 'Unpost' : 'Post';
                     }).catch(error => {
                         console.error(error);
                     });
