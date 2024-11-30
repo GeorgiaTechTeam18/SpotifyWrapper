@@ -1,14 +1,11 @@
 {% extends 'Wrapped/base.html' %}
-{% load i18n %}
-{% block title %}
-    {% trans "Wrap Detail" %}
-{% endblock %}
+{% block title %}Wrap Detail{% endblock %}
 {% block content %}
     <h2>{{ wrap.title }}</h2>
     <p>{{ wrap.description }}</p>
-    <p>{% trans "Posted by:" %} {{ wrap.user.username }}</p>
+    <p>Posted by: {{ wrap.user.username }}</p>
     <form method="post" action="{% url 'like_wrap' wrap.id %}">
         {% csrf_token %}
-        <button type="submit">{% trans "Like" %}</button>
+        <button type="submit">Like</button>
     </form>
 {% endblock %}

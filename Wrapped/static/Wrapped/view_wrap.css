@@ -1,18 +1,41 @@
+:root {
+    --transition-time: 3s;
+}
+
 #wrap-container {
     height: calc(100vh - 11em);
-    overflow-y: unset;
+    height: calc(100svh - 9em); /* smallest view height to ensure no overflow on mobile */
+    overflow-y: auto;
+}
+
+#outer-wrap-container {
     width: calc(100% - 4em);
     max-width: 900px;
     margin: auto;
     border-radius: 1em 1em 0em 0em;
     border: .5em solid purple;
     border-bottom: none;
-    padding: 1em;
     position: relative;
+}
+
+#emojiContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    pointer-events: none;
 }
 
 .wrap-slide {
     display: none;
+    margin: 1em;
+}
+
+.view-wrap-title {
+    font-size: medium;
+    text-align: center;
 }
 
 .wrap-slide h1 {
@@ -41,7 +64,6 @@
     font-size: 1em;
 }
 
-
 .artist, .track {
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -69,11 +91,82 @@
     text-decoration: underline;
 }
 
+.number-1-track.track {
+    max-width: 370px;
+    margin: auto;
+    flex-direction: column;
+}
+
+.number-1-track img {
+    width: 100%;
+    height: unset;
+    margin: 0;
+}
+
+.number-1-track p {
+    font-size: large;
+}
+
+.number-1-track div {
+    margin-top: 1em;
+}
+
+.genre_transition_debate {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: .3em;
+    align-items: center;
+    flex-direction: column;
+}
+.genre_transition_debate img {
+    width: 70%;
+}
+
+.genre_container {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    font-size: large;
+    margin-top: 1em;
+}
+
+.genre_list {
+    font-size: large;
+    display: flex;
+    align-items: baseline;
+}
+
+.genre_container progress {
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+}
+
+.genre_container progress[value]::-webkit-progress-bar {
+    background: transparent;
+}
+
+.genre_container progress[value]::-webkit-progress-value {
+    background: blue;
+}
+
+
+.genre {
+    text-transform: capitalize;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
+.genre_number {
+    margin-left: 1em;
+}
+
 /* pagination element */
 .pagination {
     display: flex;
     justify-content: center;
-    gap: .5em;
+    gap: .2em;
     margin-top: .5em;
 }
 
@@ -106,7 +199,6 @@
     width: 100%;
     background: purple;
     height: .5em;
-    margin-left: -1em;
 }
 
 #progress-bar.active {
@@ -118,4 +210,175 @@
 @keyframes progress-bar_active {
   from {width: 0;}
   to {width: 100%;}
+}
+
+.emojiForAnimation {
+    transform: translate(-50%, -50%);
+    animation-name: emojiAnimation;
+    animation-duration: var(--transition-time);
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes emojiAnimation {
+    0% {width: 4em;}
+    10% {width: 12em;}
+    99% {width: .2em;}
+    100% {width: 0}
+}
+
+.slide-button-label {
+    display: none;
+}
+
+.transition-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: .4em .4em 0 0;
+    background: #f3a7f3;
+    animation-name: transition-slide-leaves;
+    animation-duration: var(--transition-time);
+    animation-timing-function: linear;
+    overflow: hidden;
+    max-height: 0;
+    pointer-events: none;
+}
+
+.transition-slide div {
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+}
+
+@keyframes transition-slide-leaves {
+  0% {max-height: 100vh;}
+  70%  {max-height: 100vh; }
+  100% {max-height: 0;}
+}
+
+.transition-slide.left {
+    max-height: unset;
+    max-width: 0;
+    animation-name: transition-slide-leaves-left;
+}
+
+@keyframes transition-slide-leaves-left  {
+  0% {max-width: 100vw;}
+  70%  {max-width: 100vw; }
+  100% {max-width: 0;}
+}
+
+.transition-slide.shrink {
+    top: 50vh; bottom: 50vh; left: 50vw; right: 50vw;
+    max-height: unset;
+    animation-name: transition-slide-leaves-shrink;
+}
+
+@keyframes transition-slide-leaves-shrink  {
+  0% {top: 0; bottom: 0; left: 0; right: 0;}
+  70%  {top: 0; bottom: 0; left: 0; right: 0;}
+  100% {top: 50vh; bottom: 50vh; left: 50vw; right: 50vw;}
+}
+
+.transition-slide.dimond {
+    max-height: unset;
+    animation-name: transition-slide-leaves-dimond;
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+}
+
+@keyframes transition-slide-leaves-dimond {
+    0% {clip-path: polygon(50% -50%, 150% 50%, 50% 150%, -50% 50%);}
+    70% {clip-path: polygon(50% -50%, 150% 50%, 50% 150%, -50% 50%);}
+    100% {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
+}
+
+.transition-slide.none {
+    max-height: unset;
+    animation-name: unset;
+}
+
+/*View wrap styling*/
+/* Styling the label and input field */
+#wrap-name-selection h1 {
+    font-size: 2rem;
+    color: #1DB954; /* Spotify green */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+#wrap-name-selection label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#wrap-name-selection input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid #1DB954;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+#wrap-name-selection input[type="text"]:focus {
+    border-color: #55d982; /* A lighter shade of green */
+    outline: none;
+}
+
+/* Styling for the buttons */
+.button-group button {
+    display: inline-block;
+    margin: 10px 15px 0 0;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: white;
+    background-color: #1DB954; /* Spotify green */
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+    background-color: #55d982; /* A lighter shade of green */
+}
+
+/* Optional: Adjust button spacing */
+.button-group {
+    margin-top: 15px;
+}
+
+/* Styling for the duration selection label */
+#wrap-duration-selection label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    display: block;
+    margin-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .slide-button-label {
+        display: inline;
+    }
+    .pagination {
+        gap: .5em;
+    }
+    .view-wrap-title {
+        font-size: x-large;
+    }
+    .genre_transition_debate {
+        flex-direction: row;
+        align-items: baseline;
+    }
+    .genre_transition_debate img {
+        width: 40%;
+    }
 }

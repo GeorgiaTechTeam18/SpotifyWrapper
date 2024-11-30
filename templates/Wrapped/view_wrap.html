@@ -1,97 +1,148 @@
 {% extends 'UserAuth/base.html' %}
-{% load static i18n %}
+{% load static django_template_filters %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'Wrapped/view_wrap.css' %}">
 {% endblock %}
 {% block body %}
-    <div id="wrap-container">
-        <div class="wrap-slide" id="wrap-slide-0">
-            <h1>{% trans "#1 Song" %}</h1>
-            <ul class="wrap-item-list">
-                {% with top_track as track %}
-                    <li class="track">
-                        <img src="{{ track.album_image_url }}"
-                             alt="{{ track.album_name }}"
+    <h1 class="view-wrap-title">{{ wrap_title }}</h1>
+    <div id="outer-wrap-container">
+        <div id="wrap-container">
+            <div class="wrap-slide"
+                 id="wrap-slide-0"
+                 data-track-uri="{{ selected_tracks.0.uri }}">
+                <div class="transition-slide">
+                    <div>
+                        <h2>You couldn't stop listening to:</h2>
+                        <img src="https://media.tenor.com/YwZ12sFYzfUAAAAM/drumroll-sesame-street.gif"
+                             loading="eager">
+                    </div>
+                </div>
+                <h1>#1 Song</h1>
+                <ul class="wrap-item-list">
+                    <li class="track number-1-track">
+                        <img src="{{ top_track.album_image_url }}"
+                             alt="{{ top_track.album_name }}"
                              width="50"
                              height="50" />
                         <div>
                             <p>
-                                <strong>{% trans "Song:" %}</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a>
+                                <strong>Song:</strong> <a href="{{ top_track.song_url }}">{{ top_track.song_name }}</a>
                             </p>
                             <p>
-                                <strong>{% trans "Artist:" %}</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a>
+                                <strong>Artist:</strong> <a href="{{ top_track.artist_url }}">{{ top_track.artist_name }}</a>
                             </p>
                             <p>
-                                <strong>{% trans "Album:" %}</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a>
+                                <strong>Album:</strong> <a href="{{ top_track.album_url }}">{{ top_track.album_name }}</a>
                             </p>
                             <p>
-                                <strong>{% trans "Duration:" %}</strong> {{ track.duration_ms }} ms
+                                <strong>Duration:</strong> {{ top_track.duration_ms|ms_to_minutes_and_seconds }}
                             </p>
                         </div>
                     </li>
-                {% endwith %}
-            </ul>
-        </div>
-        <div class="wrap-slide" id="wrap-slide-1">
-            <h1>{% trans "Top Tracks" %}</h1>
-            <ul class="wrap-item-list">
-                {% for track in tracks %}
-                    <ol start="2" class="track">
-                        <img src="{{ track.album_image_url }}"
-                             alt="{{ track.album_name }}"
-                             width="50"
-                             height="50" />
-                        <div>
-                            <p>
-                                <strong>{% trans "Song:" %}</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a>
-                            </p>
-                            <p>
-                                <strong>{% trans "Artist:" %}</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a>
-                            </p>
-                            <p>
-                                <strong>{% trans "Album:" %}</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a>
-                            </p>
-                            <p>
-                                <strong>{% trans "Duration:" %}</strong> {{ track.duration_ms }} ms
-                            </p>
+                </ul>
+            </div>
+            <div class="wrap-slide"
+                 id="wrap-slide-1"
+                 data-track-uri="{{ selected_tracks.1.uri }}">
+                <h1>Top Tracks</h1>
+                <div class="transition-slide left">
+                    <div>
+                        <h2>Your next 5 most repeated tracks are:</h2>
+                        <img src="https://media2.giphy.com/media/6FxJBpNTBgWdJCXKD4/200w.gif?cid=6c09b952oa05x0wyabredfz5jol9t73q3e7tsxslylzcaeor&ep=v1_gifs_search&rid=200w.gif&ct=g">
+                    </div>
+                </div>
+                <ul class="wrap-item-list">
+                    {% for track in tracks %}
+                        <ol start="2" class="track">
+                            <img src="{{ track.album_image_url }}"
+                                 alt="{{ track.album_name }}"
+                                 width="50"
+                                 height="50" />
+                            <div>
+                                <p>
+                                    <strong>Song:</strong> <a href="{{ track.song_url }}">{{ track.song_name }}</a>
+                                </p>
+                                <p>
+                                    <strong>Artist:</strong> <a href="{{ track.artist_url }}">{{ track.artist_name }}</a>
+                                </p>
+                                <p>
+                                    <strong>Album:</strong> <a href="{{ track.album_url }}">{{ track.album_name }}</a>
+                                </p>
+                                <p>
+                                    <strong>Duration:</strong> {{ track.duration_ms|ms_to_minutes_and_seconds }}
+                                </p>
+                            </div>
+                        </ol>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="wrap-slide"
+                 id="wrap-slide-2"
+                 data-track-uri="{{ selected_tracks.2.uri }}">
+                <div class="transition-slide shrink">
+                    <div>
+                        <h2>Your Top artists are:</h2>
+                    </div>
+                </div>
+                <h1>Top Artists</h1>
+                <ul class="wrap-item-list">
+                    {% for artist in artists %}
+                        <li class="artist">
+                            <img src="{{ artist.image_url }}"
+                                 alt="{{ artist.name }}"
+                                 width="50"
+                                 height="50" />
+                            <div>
+                                <p>
+                                    <strong>Name:</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a>
+                                </p>
+                                <p>
+                                    <strong>Genres:</strong> {{ artist.genres|join:", " }}
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="wrap-slide"
+                 id="wrap-slide-3"
+                 data-track-uri="{{ selected_tracks.3.uri }}">
+                <div class="transition-slide dimond">
+                    <div>
+                        <h2>Your Top Genres are:</h2>
+                        <div class="genre_transition_debate">
+                            <img width="100"
+                                 src="https://media3.giphy.com/media/3oz8xqZfMDJYevW0h2/giphy.gif?cid=6c09b952hppa0zkk3et7uagnuj2fc1nhj347b59gdzdj2uzb&ep=v1_gifs_search&rid=giphy.gif&ct=g">
+                            <img width="100"
+                                 src="https://media1.tenor.com/m/XLTOaWvKSfoAAAAd/well-im-a-little-bit-rock-n-roll-ah-randy-marsh.gif">
                         </div>
-                    </ol>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="wrap-slide" id="wrap-slide-2">
-            <h1>{% trans "Top Artists" %}</h1>
-            <ul class="wrap-item-list">
-                {% for artist in artists %}
-                    <li class="artist">
-                        <img src="{{ artist.image_url }}"
-                             alt="{{ artist.name }}"
-                             width="50"
-                             height="50" />
-                        <div>
-                            <p>
-                                <strong>{% trans "Name:" %}</strong> <a href="{{ artist.artist_url }}">{{ artist.name }}</a>
-                            </p>
-                            <p>
-                                <strong>{% trans "Genres:" %}</strong> {{ artist.genres|join:", " }}
-                            </p>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="wrap-slide" id="wrap-slide-3">
-            <h1>{% trans "Top Genres" %}</h1>
-            {{ genres }}
-            <p>{% trans "still deciding how to display" %}</p>
-        </div>
-        <div class="wrap-slide" id="wrap-slide-4">
-            <h1>{% trans "Overall Vibe" %}</h1>
-            {{ audio_features }}
-            <br>
-            <br>
-            <p>{% trans "still deciding how to display" %}</p>
-            <h2>{% trans "valance means happiness" %}</h2>
+                    </div>
+                </div>
+                <h1>Top Genres</h1>
+                <div class="genre_container">
+                    {% for genre in genres %}
+                        <div class="genre">{{ genre.0 }}</div>
+                        <progress max="{{ max_genre }}" value="{{ genre.1 }}"></progress>
+                        <span class="genre_number">{{ genre.1 }}%</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="wrap-slide"
+                 id="wrap-slide-4"
+                 data-track-uri="{{ selected_tracks.4.uri }}">
+                <div id="emojiContainer"></div>
+                <h1>Overall Vibe</h1>
+                <div class="genre_container">
+                    {% for key, values in audio_features_graphs.items %}
+                        <div class="genre">{{ key }}</div>
+                        <progress max="100" value="{{ values }}"></progress>
+                        <span class="genre_number">{{ values }}%</span>
+                    {% endfor %}
+                </div>
+                <div class="genre_list">
+                    {% for key, values in audio_features_list.items %}<div class="genre">{{ key }}: {{ values }}</div>{% endfor %}
+                </div>
+            </div>
         </div>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
@@ -99,12 +150,30 @@
     </div>
     <div class="pagination">
         <button id="slide-back-button">&lt;</button>
-        <button id="slide-button-0">{% trans "#1 Song" %}</button>
-        <button id="slide-button-1">{% trans "Top Tracks" %}</button>
-        <button id="slide-button-2">{% trans "Top Artists" %}</button>
-        <button id="slide-button-3">{% trans "Top Genres" %}</button>
-        <button id="slide-button-4">{% trans "Overall Vibes" %}</button>
+        <button id="slide-button-0">
+            <span class="slide-button-label">#1 Song</span>
+        </button>
+        <button id="slide-button-1">
+            <span class="slide-button-label">Top Tracks</span>
+        </button>
+        <button id="slide-button-2">
+            <span class="slide-button-label">Top Artists</span>
+        </button>
+        <button id="slide-button-3">
+            <span class="slide-button-label">Top Genres</span>
+        </button>
+        <button id="slide-button-4">
+            <span class="slide-button-label">Overall Vibes</span>
+        </button>
         <button id="slide-forward-button">&gt;</button>
     </div>
+    <template id="emojiTemplate">
+        <img class="emojiForAnimation"
+             style="position: absolute"
+             src="https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png">
+    </template>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="{% static 'Wrapped/spotify_playback.js' %}"
+            data-access-token="{{ access_token }}"></script>
     <script src="{% static 'Wrapped/view_wrap.js' %}"></script>
 {% endblock %}

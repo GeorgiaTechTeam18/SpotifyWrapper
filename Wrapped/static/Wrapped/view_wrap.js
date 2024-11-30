@@ -8,6 +8,7 @@ const startProgressAnimation = (nextSlideIndex) => {
     progressBar.classList.remove("active");
     progressBar.offsetHeight
     progressBar.classList.add("active");
+    clearTimeout(progressTimeout)
     progressTimeout = setTimeout(() => {
         selectSlide(nextSlideIndex, true);
     }, 10 * 1000)
@@ -15,7 +16,9 @@ const startProgressAnimation = (nextSlideIndex) => {
 
 const selectSlide = (slideIndex, animate) => {
     if(animate){
-        startProgressAnimation(slideIndex+1)
+        if (slideIndex < numberOfSlides - 1) {
+            startProgressAnimation(slideIndex+1)
+        }
     } else if (progressBar.classList.contains("active")) {
         progressBar.classList.remove("active");
         progressBar.offsetHeight
@@ -30,6 +33,9 @@ const selectSlide = (slideIndex, animate) => {
     }
     let activeButtonElement = document.getElementById(`slide-button-${slideIndex}`);
     activeButtonElement.classList.add("active");
+
+    play(slideElement.dataset.trackUri);
+
     currentSlide = slideIndex;
 }
 
@@ -46,12 +52,25 @@ for (let i = 0; i < numberOfSlides; i++) {
 
 document.getElementById("slide-back-button").addEventListener("click", () => {
     if (currentSlide > 0) {
-        selectSlide(currentSlide - 1, false)
+        selectSlide(currentSlide - 1, true)
     }
 })
 
 document.getElementById("slide-forward-button").addEventListener("click", () => {
     if (currentSlide < numberOfSlides - 1) {
-        selectSlide(currentSlide + 1, false)
+        selectSlide(currentSlide + 1, true)
     }
 })
+
+const emojis = ["https://em-content.zobj.net/source/apple/391/grinning-face-with-big-eyes_1f603.png", "https://em-content.zobj.net/source/apple/391/guitar_1f3b8.png", "https://em-content.zobj.net/source/apple/391/woman-dancing_1f483.png"];
+
+const temp = document.getElementById("emojiTemplate").content.querySelector("img");
+const emojiContainer = document.getElementById("emojiContainer");
+
+for (let i = 0; i < 150; i++) {
+    let clone = temp.cloneNode(true);
+    clone.src = emojis[Math.floor(Math.random() * emojis.length)]
+    clone.style.top = Math.floor(Math.random() * 90) + 5 + "%"
+    clone.style.left = Math.floor(Math.random() * 90) + 5 + "%"
+    emojiContainer.appendChild(clone);
+}
