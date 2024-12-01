@@ -1,7 +1,7 @@
 {% extends 'UserAuth/base.html' %}
-{% block title %}Public Wraps{% endblock %}
+{% block title %}Liked Wraps{% endblock %}
 {% block body %}
-    <h1>Public Wraps</h1>
+    <h1>Liked Wraps</h1>
     <a href="{% url 'view_public_wraps' %}" class="btn btn-primary">Show All Public Wraps</a>
     <ul id="wraps-list">
         {% for wrap in wraps %}
