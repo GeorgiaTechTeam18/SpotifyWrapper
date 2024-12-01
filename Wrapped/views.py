@@ -31,7 +31,22 @@ def make_wraps_public(request):
     else:
         wraps.update(is_public=False)
 
-    return redirect("view_public_wraps")
+    return redirect("profile")
+
+def make_wraps_private(request):
+    wrap_ids = request.POST.getlist("wrap_ids")
+    action = request.POST.get("action")
+    print(wrap_ids)
+    wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
+
+    print(wraps.first())
+
+    if action == "post":
+        wraps.update(is_public=False)
+    else:
+        wraps.update(is_public=True)
+
+    return redirect("profile")
 
 
 def view_liked_wraps(request):

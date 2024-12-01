@@ -49,11 +49,16 @@
                     {% csrf_token %}
                     <button type="button" class="delete-button">Delete</button>
                 </form>
-                <form class="post" method="post" action="{% url 'make_wraps_public' %}">
+                <form class="toggle-public-form" method="post" action="{% url 'make_wraps_public' %}">
                     {% csrf_token %}
                     <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
-                    <input type="hidden" name="action" value="post">
-                    <button type="submit" class="post-button">Post</button>
+                    {% if wrap.is_public %}
+                        <input type="hidden" name="action" value="private">
+                        <button type="submit" class="post-button">Make Private</button>
+                    {% else %}
+                        <input type="hidden" name="action" value="post">
+                        <button type="submit" class="post-button">Make Public</button>
+                    {% endif %}
                 </form>
             </div>
         </li>
