@@ -8,7 +8,7 @@
         </div>
         <a href="{% url 'view_public_wraps' %}" class="spotify-button">Public Wraps</a>
     </div>
-    {% if wraps is not none %}
+    {% if wraps %}
         <ul class="wrap-list">
             {% for wrap in wraps %}
             <li class="wrap">

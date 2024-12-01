@@ -9,7 +9,7 @@
         </div>
         <a href="{% url 'view_liked_wraps' %}" class="spotify-button">My Favorite Wraps</a>
     </div>
-    {% if wraps is not none %}
+    {% if wraps %}
         <ul class="wrap-list">
             {% for wrap in wraps %}
             <li class="wrap">
@@ -48,11 +48,11 @@
             <p>Your wraps will show up here when you create them.</p>
         </div>
     {% endif %}
-    
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('.like-form');
-    
+
     forms.forEach(form => {
         form.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent form submission
