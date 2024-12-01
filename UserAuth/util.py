@@ -1,9 +1,5 @@
-from .models import User, SpotifyToken
-from django.utils import timezone
 import datetime
-from requests import post, get
 import os
-from dotenv import load_dotenv
 from functools import cache
 
 from django.utils import timezone
