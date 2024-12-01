@@ -2,7 +2,13 @@
 {% block title %}Public Wraps{% endblock %}
 {% block body %}
     <h1>Public Wraps</h1>
-    <button id="filter-button">Show Liked Wraps</button>
+    <button id="filter-button" data-filtered="{{ liked_filter|default_if_none:False|yesno:'true,false' }}">
+        {% if liked_filter %}
+            Show All Public Wraps
+        {% else %}
+            Show Liked Wraps
+        {% endif %}
+    </button>
     <ul id="wraps-list">
         {% for wrap in wraps %}
             <li id="wrap-{{ wrap.id }}">
@@ -24,6 +30,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('.like-form');
+    const filterButton = document.getElementById('filter-button');
     
     forms.forEach(form => {
         form.addEventListener('submit', function (event) {
@@ -60,6 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('An unexpected error occurred.');
             });
         });
+    });
+    
+    filterButton.addEventListener('click', function () {
+        const isFiltered = filterButton.getAttribute('data-filtered') === 'true';
+        window.location.href = isFiltered ? '{% url "view_public_wraps" %}' : '{% url "view_public_wraps" %}?liked_filter=true';
     });
 });
 </script>

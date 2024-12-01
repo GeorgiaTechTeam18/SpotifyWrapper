@@ -36,8 +36,7 @@ def make_wraps_public(request):
 
 
 
-def view_public_wraps(request):
-    liked_filter = request.GET.get("liked") == "true"
+def view_public_wraps(request, liked_filter=False):
     public_wraps = SpotifyWrap.objects.filter(is_public=True).annotate(
         is_liked_by_user=Exists(
             SpotifyWrap.liked_by.through.objects.filter(
@@ -46,6 +45,7 @@ def view_public_wraps(request):
             )
         )
     )
+
     if liked_filter:
         public_wraps = public_wraps.filter(is_liked_by_user=True)
 
@@ -72,6 +72,7 @@ def view_public_wraps(request):
         })
     return render(request, "Wrapped/view_public_wraps.html", {
         "wraps": public_wraps,
+        "liked_filter": liked_filter,
     })
 
 
