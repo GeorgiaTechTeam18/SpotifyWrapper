@@ -7,18 +7,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Wrapped', '0007_spotifywrap_liked_by'),
+        ("Wrapped", "0007_spotifywrap_liked_by"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='spotifywrap',
-            name='liked_by',
+            model_name="spotifywrap",
+            name="liked_by",
         ),
         migrations.AddField(
-            model_name='spotifywrap',
-            name='liked_by',
-            field=models.ManyToManyField(blank=True, related_name='liked_wraps', to=settings.AUTH_USER_MODEL),
+            model_name="spotifywrap",
+            name="liked_by",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="liked_wraps",
+                to=settings.AUTH_USER_MODEL),
         ),
     ]
