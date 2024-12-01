@@ -602,20 +602,41 @@ ul {
     margin-bottom: 10px;
 }
 
-.wrap form button {
-    background-color: #1DB954;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 0.9em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+.wrap-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px; /* Add some spacing above the buttons */
 }
 
-.wrap form button:hover {
-    background-color: #14863E;
+.wrap-buttons form {
+    margin: 0;
+}
+
+.wrap-buttons button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.wrap-buttons button:hover {
+    background-color: #e9ecef;
+    border-color: #bbb;
+}
+
+.wrap-buttons .like-button {
+    color: #007bff;
+}
+
+.wrap-buttons .delete-button {
+    color: #dc3545;
+}
+
+.wrap-buttons .post-button {
+    color: #28a745;
 }
 
 @media (max-width: 768px) {
