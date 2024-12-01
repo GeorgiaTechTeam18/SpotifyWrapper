@@ -2,7 +2,7 @@
 {% block title %}Public Wraps{% endblock %}
 {% block body %}
     <h1>Public Wraps</h1>
-    <a href="{% url 'view_liked_wraps' %}" class="btn btn-primary">Show Liked Wraps</a>
+    <a href="{% url 'view_public_wraps' %}" class="btn btn-primary">Show All Public Wraps</a>
     <ul id="wraps-list">
         {% for wrap in wraps %}
             <li id="wrap-{{ wrap.id }}">
