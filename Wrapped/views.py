@@ -76,9 +76,9 @@ def view_public_wraps(request):
 
 
 @login_required
-def like_unlike_wrap(request, wrap_uuid):
+def like_unlike_wrap(request, wrap_id):
     if request.method == "POST":
-        wrap = get_object_or_404(SpotifyWrap, uuid=wrap_uuid)
+        wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
         # Toggle like/unlike status
         if request.user in wrap.liked_by.all():
@@ -154,8 +154,6 @@ def view_wrap(request, wrap_id):
         },
     )
 
-
-# TODO
 def like_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
