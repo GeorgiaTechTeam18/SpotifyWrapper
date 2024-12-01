@@ -22,37 +22,45 @@
         {% endfor %}
     </ul>
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        const forms = document.querySelectorAll('.like-form');
-        
-        forms.forEach(form => {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent form submission
+document.addEventListener('DOMContentLoaded', function () {
+    const forms = document.querySelectorAll('.like-form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
 
-                const button = form.querySelector('.like-button');
-                const formData = new FormData(form);
+            const button = form.querySelector('.like-button');
+            const formData = new FormData(form);
 
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    if (data.success) {
-                        button.innerText = data.liked == 'Unlike' ? 'Unlike' : 'Like';
-                        button.setAttribute('data-liked', data.liked);
-                        
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the button text and attributes based on the response
+                    if (data.liked) {
+                        button.innerText = 'Unlike';
+                        button.setAttribute('data-liked', 'true');
                     } else {
-                        alert('An error occurred. Please try again.');
+                        button.innerText = 'Like';
+                        button.setAttribute('data-liked', 'false');
                     }
-                })
+                } else {
+                    alert('An error occurred. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred.');
             });
         });
     });
+});
 </script>
 {% endblock %}
