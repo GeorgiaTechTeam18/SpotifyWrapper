@@ -3,13 +3,17 @@
 {% block body %}
     <h1>Public Wraps</h1>
     <a href="{% url 'view_liked_wraps' %}" class="btn btn-primary">Show Liked Wraps</a>
-    <ul id="wraps-list">
-        {% for wrap in wraps %}
-            <li id="wrap-{{ wrap.id }}">
-                <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
-                <form class="like-form" action="{% url 'like_unlike_wrap' wrap.uuid %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="wrap_uuid" value="{{ wrap.uuid }}">
+    
+    {% if wraps is not none %}
+        <ul class="wrap-list">
+            {% for wrap in wraps %}
+            <li class="wrap">
+                <h3>{{ wrap.title }}</h3>
+                <a href="{% url 'view_wrap' wrap.uuid %}" class="view-wrap-link">View this wrap</a>
+                <p>Posted by: {{ wrap.user.username }}</p>
+                <div class="wrap-buttons">
+                    <form class="like-form" method="post" action="{% url 'like_unlike_wrap' wrap.uuid %}">
+                        {% csrf_token %}
                         <button type="submit" class="like-button" data-liked="{{ wrap.is_liked_by_user }}">
                             {% if wrap.is_liked_by_user %}
                                 Unlike
@@ -17,14 +21,31 @@
                                 Like
                             {% endif %}
                         </button>
-                </form>
+                    </form>
+                
+                    <form method="post" action="{% url 'delete_wrap' wrap.uuid %}" class="delete-form">
+                        {% csrf_token %}
+                        <button type="button" class="delete-button">Delete</button>
+                    </form>
+                    <form class="post" method="post" action="{% url 'make_wraps_public' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
+                        <input type="hidden" name="action" value="post">
+                        <button type="submit" class="post-button">Post</button>
+                    </form>
+                </div>
             </li>
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="no-wraps">
+            <p>Your wraps will show up here when you create them.</p>
+        </div>
+    {% endif %}
+    
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('.like-form');
-    const filterButton = document.getElementById('filter-button');
     
     forms.forEach(form => {
         form.addEventListener('submit', function (event) {

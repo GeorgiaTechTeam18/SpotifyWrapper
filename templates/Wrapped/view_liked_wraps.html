@@ -3,13 +3,17 @@
 {% block body %}
     <h1>Liked Wraps</h1>
     <a href="{% url 'view_public_wraps' %}" class="btn btn-primary">Show All Public Wraps</a>
-    <ul id="wraps-list">
-        {% for wrap in wraps %}
-            <li id="wrap-{{ wrap.id }}">
-                <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
-                <form class="like-form" action="{% url 'like_unlike_wrap' wrap.uuid %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="wrap_uuid" value="{{ wrap.uuid }}">
+
+    {% if wraps is not none %}
+        <ul class="wrap-list">
+            {% for wrap in wraps %}
+            <li class="wrap">
+                <h3>{{ wrap.title }}</h3>
+                <a href="{% url 'view_wrap' wrap.uuid %}" class="view-wrap-link">View this wrap</a>
+                <p>Posted by: {{ wrap.user.username }}</p>
+                <div class="wrap-buttons">
+                    <form class="like-form" method="post" action="{% url 'like_unlike_wrap' wrap.uuid %}">
+                        {% csrf_token %}
                         <button type="submit" class="like-button" data-liked="{{ wrap.is_liked_by_user }}">
                             {% if wrap.is_liked_by_user %}
                                 Unlike
@@ -17,14 +21,20 @@
                                 Like
                             {% endif %}
                         </button>
-                </form>
+                    </form>
+                </div>
             </li>
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="no-wraps">
+            <p>You haven't liked any wraps yet. Check out some public wraps!</p>
+        </div>
+    {% endif %}
+    
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('.like-form');
-    const filterButton = document.getElementById('filter-button');
     
     forms.forEach(form => {
         form.addEventListener('submit', function (event) {
