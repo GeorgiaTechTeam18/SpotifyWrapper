@@ -35,29 +35,31 @@
     {% if wraps is not none %}
         <h2 class="pf-page-heading">Spotify Wraps</h2>
         <ul>
-        {% for wrap in wraps %}
-        <li class="wrap">
-            <h3>{{ wrap.title }}</h3>
-            <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
-            <p>Posted by: {{ wrap.user.username }}</p>
-            <div class="wrap-buttons">
-                <form method="post" action="{% url 'like_unlike_wrap' wrap.uuid %}">
-                    {% csrf_token %}
-                    <button type="submit" class="like-button">Like</button>
-                </form>
-                <form method="post" action="{% url 'delete_wrap' wrap.uuid %}" class="delete-form">
-                    {% csrf_token %}
-                    <button type="button" class="delete-button">Delete</button>
-                </form>
-                <form class="post" method="post" action="{% url 'make_wraps_public' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
-                    <input type="hidden" name="action" value="post">
-                    <button type="submit" class="post-button">Post</button>
-                </form>
-            </div>
-        </li>
-        {% endfor %}
+            {% for wrap in wraps %}
+                <li class="wrap">
+                    <h3>{{ wrap.title }}</h3>
+                    <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
+                    <p>Posted by: {{ wrap.user.username }}</p>
+                    <div class="wrap-buttons">
+                        <form method="post" action="{% url 'like_unlike_wrap' wrap.uuid %}">
+                            {% csrf_token %}
+                            <button type="submit" class="like-button">Like</button>
+                        </form>
+                        <form method="post"
+                              action="{% url 'delete_wrap' wrap.uuid %}"
+                              class="delete-form">
+                            {% csrf_token %}
+                            <button type="button" class="delete-button">Delete</button>
+                        </form>
+                        <form class="post" method="post" action="{% url 'make_wraps_public' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
+                            <input type="hidden" name="action" value="post">
+                            <button type="submit" class="post-button">Post</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
         </ul>
     {% else %}
         <div class="no-wraps">

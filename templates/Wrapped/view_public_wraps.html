@@ -13,74 +13,79 @@
         {% for wrap in wraps %}
             <li id="wrap-{{ wrap.id }}">
                 <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
-                <form class="like-form" action="{% url 'like_unlike_wrap' wrap.uuid %}" method="post" style="display:inline;">
+                <form class="like-form"
+                      action="{% url 'like_unlike_wrap' wrap.uuid %}"
+                      method="post"
+                      style="display:inline">
                     {% csrf_token %}
                     <input type="hidden" name="wrap_uuid" value="{{ wrap.uuid }}">
-                        <button type="submit" class="like-button" data-liked="{{ wrap.is_liked_by_user }}">
-                            {% if wrap.is_liked_by_user %}
-                                Unlike
-                            {% else %}
-                                Like
-                            {% endif %}
-                        </button>
+                    <button type="submit"
+                            class="like-button"
+                            data-liked="{{ wrap.is_liked_by_user }}">
+                        {% if wrap.is_liked_by_user %}
+                            Unlike
+                        {% else %}
+                            Like
+                        {% endif %}
+                    </button>
                 </form>
             </li>
         {% endfor %}
     </ul>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const forms = document.querySelectorAll('.like-form');
-    const filterButton = document.getElementById('filter-button');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form submission
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.like-form');
+            const filterButton = document.getElementById('filter-button');
 
-            const button = form.querySelector('.like-button');
-            const formData = new FormData(form);
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent form submission
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update the button text and attributes based on the response
-                    if (data.liked) {
-                        button.innerText = 'Unlike';
-                        button.setAttribute('data-liked', 'true');
-                    } else {
-                        button.innerText = 'Like';
-                        button.setAttribute('data-liked', 'false');
-                    }
+                    const button = form.querySelector('.like-button');
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Update the button text and attributes based on the response
+                                if (data.liked) {
+                                    button.innerText = 'Unlike';
+                                    button.setAttribute('data-liked', 'true');
+                                } else {
+                                    button.innerText = 'Like';
+                                    button.setAttribute('data-liked', 'false');
+                                }
+                            } else {
+                                alert('An error occurred. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An unexpected error occurred.');
+                        });
+                });
+            });
+
+            filterButton.addEventListener('click', function() {
+                const isFiltered = filterButton.getAttribute('data-filtered') === 'true';
+                if (isFiltered) {
+                    filterButton.setAttribute('data-filtered', 'false');
+                    filterButton.innerText = 'Show Liked Wraps';
+                    window.location.href = '{% url "view_public_wraps" %}';
                 } else {
-                    alert('An error occurred. Please try again.');
+                    filterButton.setAttribute('data-filtered', 'true');
+                    filterButton.innerText = 'Show All Public Wraps';
+                    window.location.href = '{% url "view_public_wraps" %}?liked_filter=true';
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An unexpected error occurred.');
             });
         });
-    });
-    
-    filterButton.addEventListener('click', function () {
-        const isFiltered = filterButton.getAttribute('data-filtered') === 'true';
-        if (isFiltered) {
-            filterButton.setAttribute('data-filtered', 'false');
-            filterButton.innerText = 'Show Liked Wraps';
-            window.location.href = '{% url "view_public_wraps" %}';
-        } else {
-            filterButton.setAttribute('data-filtered', 'true');
-            filterButton.innerText = 'Show All Public Wraps';
-            window.location.href = '{% url "view_public_wraps" %}?liked_filter=true';
-        }
-    });
-});
-</script>
+    </script>
 {% endblock %}

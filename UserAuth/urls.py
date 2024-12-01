@@ -13,6 +13,5 @@ urlpatterns = [
     path("unlink/", views.delete_token, name="unlink_token"),
     path("view_wraps/", include("Wrapped.urls"), name="view_wraps"),
     path("delete-wrap/<uuid:wrap_uuid>/", views.delete_wrap, name="delete_wrap"),
-
     path("contact/", views.contact, name="contact"),
 ]
