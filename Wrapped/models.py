@@ -15,8 +15,9 @@ class SpotifyWrap(models.Model):
     artists = models.TextField(default="[]")
     tracks = models.TextField(default="[]")
     audio_features = models.TextField(default="{}")
-    is_public = models.BooleanField(default=True)
+    is_public = models.BooleanField(default=False)
     likes = models.IntegerField(default=0)
+    liked_by = models.ManyToManyField(User, related_name="liked_wraps", blank=True)
 
     def set_top_artists(self, artists_data):
         self.artists = json.dumps(artists_data)

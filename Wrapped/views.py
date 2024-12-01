@@ -3,14 +3,17 @@ import random
 from datetime import datetime
 
 import requests
+from django.http import JsonResponse, HttpResponseServerError
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.http import (HttpResponseNotFound, HttpResponseServerError,
-                         JsonResponse)
+from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from UserAuth.models import SpotifyToken
 from UserAuth.util import get_user_tokens
+from django.db.models import Exists, OuterRef
 
 from .models import SpotifyWrap
 
@@ -28,34 +31,122 @@ def make_wraps_public(request):
     else:
         wraps.update(is_public=False)
 
-    return redirect("view_public_wraps")
+    return redirect("profile")
 
+def make_wraps_private(request):
+    wrap_ids = request.POST.getlist("wrap_ids")
+    action = request.POST.get("action")
+    print(wrap_ids)
+    wraps = SpotifyWrap.objects.filter(id__in=wrap_ids, user=request.user)
+
+    print(wraps.first())
+
+    if action == "post":
+        wraps.update(is_public=False)
+    else:
+        wraps.update(is_public=True)
+
+    return redirect("profile")
+
+
+def view_liked_wraps(request):
+    public_wraps = SpotifyWrap.objects.filter(is_public=True).annotate(
+        is_liked_by_user=Exists(
+            SpotifyWrap.liked_by.through.objects.filter(
+                spotifywrap_id=OuterRef("id"),
+                user_id=request.user.id,
+            )
+        )
+    )
+
+    public_wraps = public_wraps.filter(is_liked_by_user=True)
+
+    if request.method == 'POST':
+        wrap_uuid = request.POST.get('wrap_uuid')
+        wrap = get_object_or_404(SpotifyWrap, uuid=wrap_uuid)
+
+        liked = None
+        if request.user in wrap.liked_by.all():
+            wrap.liked_by.remove(request.user)
+            wrap.likes -= 1
+            liked = False
+        else:
+            wrap.liked_by.add(request.user)
+            wrap.likes += 1
+            liked = True
+
+        wrap.save()
+        print(liked)
+        return JsonResponse({
+            "success": True,
+            "liked": liked,
+            "wrap_uuid": wrap.uuid,
+        })
+    return render(request, "Wrapped/view_liked_wraps.html", {
+        "wraps": public_wraps,
+    })
 
 def view_public_wraps(request):
-    liked = request.GET.get("liked") == "true"
-    if liked:
-        public_wraps = SpotifyWrap.objects.filter(
-            is_public=True, liked_by=request.user)
-    else:
-        public_wraps = SpotifyWrap.objects.filter(is_public=True)
+    public_wraps = SpotifyWrap.objects.filter(is_public=True).annotate(
+        is_liked_by_user=Exists(
+            SpotifyWrap.liked_by.through.objects.filter(
+                spotifywrap_id=OuterRef("id"),
+                user_id=request.user.id,
+            )
+        )
+    )
 
-    print(public_wraps)
 
-    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        wraps_data = [
-            {
-                "id": wrap.id,
-                "title": wrap.title,
-                "csrf_token": request.COOKIES["csrftoken"],
-            }
-            for wrap in public_wraps
-        ]
-        return JsonResponse({"wraps": wraps_data})
+    if request.method == 'POST':
+        wrap_uuid = request.POST.get('wrap_uuid')
+        wrap = get_object_or_404(SpotifyWrap, uuid=wrap_uuid)
 
-    return render(request,
-                  "Wrapped/view_public_wraps.html",
-                  {"wraps": public_wraps})
+        liked = None
+        if request.user in wrap.liked_by.all():
+            wrap.liked_by.remove(request.user)
+            wrap.likes -= 1
+            liked = False
+        else:
+            wrap.liked_by.add(request.user)
+            wrap.likes += 1
+            liked = True
 
+        wrap.save()
+        print(liked)
+        return JsonResponse({
+            "success": True,
+            "liked": liked,
+            "wrap_uuid": wrap.uuid,
+        })
+    return render(request, "Wrapped/view_public_wraps.html", {
+        "wraps": public_wraps,
+    })
+
+
+@login_required
+def like_unlike_wrap(request, wrap_id):
+    if request.method == "POST":
+        wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
+
+        # Toggle like/unlike status
+        if request.user in wrap.liked_by.all():
+            wrap.liked_by.remove(request.user)
+            wrap.likes -= 1
+            liked = False
+        else:
+            wrap.liked_by.add(request.user)
+            wrap.likes += 1
+            liked = True
+
+        wrap.save()
+
+        return JsonResponse({
+            "success": True,
+            "liked": liked,
+            "wrap_uuid": wrap.uuid,
+        })
+
+    return JsonResponse({"success": False, "message": "Invalid request."})
 
 def view_wraps(request):
     wraps = SpotifyWrap.objects.filter(user=request.user)
@@ -111,8 +202,6 @@ def view_wrap(request, wrap_id):
         },
     )
 
-
-# TODO
 def like_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
@@ -124,7 +213,7 @@ def like_wrap(request, wrap_id):
         message = "Liked"
     wrap.save()
 
-    return JsonResponse({"message": message})
+    return JsonResponse({'message': message})
 
 
 key_map = {
