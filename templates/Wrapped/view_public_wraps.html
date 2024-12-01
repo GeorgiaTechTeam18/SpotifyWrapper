@@ -26,19 +26,6 @@
                                 Like
                             {% endif %}
                         </button>
-                    </form>
-                    {% if wrap.user == user %}
-                        <form method="post" action="{% url 'delete_wrap' wrap.uuid %}" class="delete-form">
-                            {% csrf_token %}
-                            <button type="button" class="delete-button">Delete</button>
-                        </form>
-                        <form class="post" method="post" action="{% url 'make_wraps_public' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
-                            <input type="hidden" name="action" value="post">
-                            <button type="submit" class="post-button">Post</button>
-                        </form>
-                    {% endif %}
                 </div>
             </li>
             {% endfor %}
