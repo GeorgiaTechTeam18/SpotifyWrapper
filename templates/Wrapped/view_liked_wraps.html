@@ -1,9 +1,13 @@
 {% extends 'UserAuth/base.html' %}
 {% block title %}Liked Wraps{% endblock %}
 {% block body %}
-    <h1>Liked Wraps</h1>
-    <a href="{% url 'view_public_wraps' %}" class="btn btn-primary">Show All Public Wraps</a>
-
+    <br><br>
+    <div class="header-container">
+        <div class="text-container">
+            <h1>Favorite Wraps</h1>
+        </div>
+        <a href="{% url 'view_public_wraps' %}" class="spotify-button">Public Wraps</a>
+    </div>
     {% if wraps is not none %}
         <ul class="wrap-list">
             {% for wrap in wraps %}
@@ -31,11 +35,11 @@
             <p>You haven't liked any wraps yet. Check out some public wraps!</p>
         </div>
     {% endif %}
-    
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('.like-form');
-    
+
     forms.forEach(form => {
         form.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent form submission
