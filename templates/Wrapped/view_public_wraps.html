@@ -2,7 +2,7 @@
 {% block title %}Public Wraps{% endblock %}
 {% block body %}
     <h1>Public Wraps</h1>
-    <button id="filter-button" data-filtered="{{ liked_filter|default_if_none:False|yesno:'true,false' }}">
+    <button id="filter-button">
         {% if liked_filter %}
             Show All Public Wraps
         {% else %}
@@ -71,7 +71,15 @@ document.addEventListener('DOMContentLoaded', function () {
     
     filterButton.addEventListener('click', function () {
         const isFiltered = filterButton.getAttribute('data-filtered') === 'true';
-        window.location.href = isFiltered ? '{% url "view_public_wraps" %}' : '{% url "view_public_wraps" %}?liked_filter=true';
+        if (isFiltered) {
+            filterButton.setAttribute('data-filtered', 'false');
+            filterButton.innerText = 'Show Liked Wraps';
+            window.location.href = '{% url "view_public_wraps" %}';
+        } else {
+            filterButton.setAttribute('data-filtered', 'true');
+            filterButton.innerText = 'Show All Public Wraps';
+            window.location.href = '{% url "view_public_wraps" %}?liked_filter=true';
+        }
     });
 });
 </script>
