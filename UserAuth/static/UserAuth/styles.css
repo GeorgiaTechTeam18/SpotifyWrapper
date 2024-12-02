@@ -692,6 +692,23 @@ ul {
     }
 }
 
+/* Share buttons */
+.share-container {
+    margin-left: auto;
+}
+
+.share-button {
+    border-radius: .3em;
+    padding: .3em;
+    background: #f8f9fa;
+    margin: 0;
+    font-size: large;
+}
+
+.share-button:hover {
+    background: #e3e3e4;
+}
+
 @media (min-width: 768px) {
     #hamburger {
         display: none !important;
