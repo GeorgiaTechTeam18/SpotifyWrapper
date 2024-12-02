@@ -1,11 +1,11 @@
-# AtlantaFoodFinder
+# SpotifyWrapper
 
 ## Deliverables 
 
 ### Team Website
 https://team18gt.weebly.com/
 
-### ATL Food Finder GitHub repo
+### Spotify Wrapper GitHub repo
 https://github.com/GeorgiaTechTeam18/SpotifyWrapper
 
 ### Project management board
