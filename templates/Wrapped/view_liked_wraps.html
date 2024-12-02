@@ -3,27 +3,30 @@
 {% block body %}
     <h1>Liked Wraps</h1>
     <a href="{% url 'view_public_wraps' %}" class="btn btn-primary">Show All Public Wraps</a>
-
     {% if wraps is not none %}
         <ul class="wrap-list">
             {% for wrap in wraps %}
-            <li class="wrap">
-                <h3>{{ wrap.title }}</h3>
-                <a href="{% url 'view_wrap' wrap.uuid %}" class="view-wrap-link">View this wrap</a>
-                <p>Posted by: {{ wrap.user.username }}</p>
-                <div class="wrap-buttons">
-                    <form class="like-form" method="post" action="{% url 'like_unlike_wrap' wrap.uuid %}">
-                        {% csrf_token %}
-                        <button type="submit" class="like-button" data-liked="{{ wrap.is_liked_by_user }}">
-                            {% if wrap.is_liked_by_user %}
-                                Unlike
-                            {% else %}
-                                Like
-                            {% endif %}
-                        </button>
-                    </form>
-                </div>
-            </li>
+                <li class="wrap">
+                    <h3>{{ wrap.title }}</h3>
+                    <a href="{% url 'view_wrap' wrap.uuid %}" class="view-wrap-link">View this wrap</a>
+                    <p>Posted by: {{ wrap.user.username }}</p>
+                    <div class="wrap-buttons">
+                        <form class="like-form"
+                              method="post"
+                              action="{% url 'like_unlike_wrap' wrap.uuid %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="like-button"
+                                    data-liked="{{ wrap.is_liked_by_user }}">
+                                {% if wrap.is_liked_by_user %}
+                                    Unlike
+                                {% else %}
+                                    Like
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </li>
             {% endfor %}
         </ul>
     {% else %}
@@ -31,47 +34,46 @@
             <p>You haven't liked any wraps yet. Check out some public wraps!</p>
         </div>
     {% endif %}
-    
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const forms = document.querySelectorAll('.like-form');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form submission
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.like-form');
 
-            const button = form.querySelector('.like-button');
-            const formData = new FormData(form);
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent form submission
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update the button text and attributes based on the response
-                    if (data.liked) {
-                        button.innerText = 'Unlike';
-                        button.setAttribute('data-liked', 'true');
-                    } else {
-                        button.innerText = 'Like';
-                        button.setAttribute('data-liked', 'false');
-                    }
-                } else {
-                    alert('An error occurred. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An unexpected error occurred.');
+                    const button = form.querySelector('.like-button');
+                    const formData = new FormData(form);
+
+                    fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Update the button text and attributes based on the response
+                                if (data.liked) {
+                                    button.innerText = 'Unlike';
+                                    button.setAttribute('data-liked', 'true');
+                                } else {
+                                    button.innerText = 'Like';
+                                    button.setAttribute('data-liked', 'false');
+                                }
+                            } else {
+                                alert('An error occurred. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An unexpected error occurred.');
+                        });
+                });
             });
         });
-    });
-});
-</script>
+    </script>
 {% endblock %}
