@@ -56,6 +56,11 @@
                         <button type="submit" class="post-button">Make Public</button>
                     {% endif %}
                 </form>
+                <div class="share-container">
+                    <a class="share-button" href="https://x.com/intent/post?text=Check out my anytime Spotify wrap on Spotify Wrapper&url={{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-twitter"></i></a>
+                    <a class="share-button" href="https://www.linkedin.com/feed/?shareActive=true&text=Check out my anytime Spotify wrap on Spotify Wrapper {{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-linkedin"></i></a>
+                    <a class="share-button" onclick="share('Check out my anytime Spotify wrap on Spotify Wrapper', '{{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}')"><i class="fa fa-share"></i></a>
+                </div>
             </div>
         </li>
         {% endfor %}
@@ -96,6 +101,16 @@
                 }
             });
         });
+        
+        function share(text, url) {
+            const shareData = {
+                  title: "SpotifyWrapped",
+                  text: text,
+                  url: url,
+            };
+            
+            navigator.share(shareData);
+        }
     </script>
     <div class="button-container">
         <a class="DeleteAccount" href="{% url 'delete_account' %}">Delete Account</a>
