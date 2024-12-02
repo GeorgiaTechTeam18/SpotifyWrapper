@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Wrapped', '0008_remove_spotifywrap_liked_by_spotifywrap_liked_by'),
+        ("Wrapped", "0008_remove_spotifywrap_liked_by_spotifywrap_liked_by"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='spotifywrap',
-            name='is_public',
+            model_name="spotifywrap",
+            name="is_public",
             field=models.BooleanField(default=False),
         ),
     ]
