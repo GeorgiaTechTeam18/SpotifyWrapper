@@ -15,8 +15,8 @@ https://github.com/orgs/GeorgiaTechTeam18/projects/2/
 #### run the project
 ```bash
 . .venv/bin/activate
-python manage.py runserver
 python manage.py migrate
+python manage.py runserver
 ```
 #### regenerate files after modifications
 ```bash
