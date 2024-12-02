@@ -380,6 +380,29 @@ main {
     color: #A268DB;
 }
 
+.form-errors {
+    color: #ff4d4d; /* Red color for errors */
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    margin: 5px 0;
+}
+
+.authForm .form-errors {
+    margin-bottom: 15px; /* Space between the errors and the form */
+}
+
+.authForm label {
+    display: block;
+    margin-top: 10px;
+}
+
+.authForm input, .authForm button {
+    margin-top: 5px;
+}
+
 .login-alternate {
     display: flex;
     flex-direction: column;
