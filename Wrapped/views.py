@@ -3,17 +3,15 @@ import random
 from datetime import datetime
 
 import requests
-from django.http import JsonResponse, HttpResponseServerError
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
-from django.http import HttpResponseRedirect
-from django.http import HttpResponseNotFound, JsonResponse
+from django.db.models import Exists, OuterRef
+from django.http import (HttpResponseNotFound, HttpResponseRedirect,
+                         HttpResponseServerError, JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
 
 from UserAuth.models import SpotifyToken
 from UserAuth.util import get_user_tokens
-from django.db.models import Exists, OuterRef
 
 from .models import SpotifyWrap
 
@@ -32,6 +30,7 @@ def make_wraps_public(request):
         wraps.update(is_public=False)
 
     return redirect("profile")
+
 
 def make_wraps_private(request):
     wrap_ids = request.POST.getlist("wrap_ids")
@@ -61,8 +60,8 @@ def view_liked_wraps(request):
 
     public_wraps = public_wraps.filter(is_liked_by_user=True)
 
-    if request.method == 'POST':
-        wrap_uuid = request.POST.get('wrap_uuid')
+    if request.method == "POST":
+        wrap_uuid = request.POST.get("wrap_uuid")
         wrap = get_object_or_404(SpotifyWrap, uuid=wrap_uuid)
 
         liked = None
@@ -77,14 +76,21 @@ def view_liked_wraps(request):
 
         wrap.save()
         print(liked)
-        return JsonResponse({
-            "success": True,
-            "liked": liked,
-            "wrap_uuid": wrap.uuid,
-        })
-    return render(request, "Wrapped/view_liked_wraps.html", {
-        "wraps": public_wraps,
-    })
+        return JsonResponse(
+            {
+                "success": True,
+                "liked": liked,
+                "wrap_uuid": wrap.uuid,
+            }
+        )
+    return render(
+        request,
+        "Wrapped/view_liked_wraps.html",
+        {
+            "wraps": public_wraps,
+        },
+    )
+
 
 def view_public_wraps(request):
     public_wraps = SpotifyWrap.objects.filter(is_public=True).annotate(
@@ -96,9 +102,8 @@ def view_public_wraps(request):
         )
     )
 
-
-    if request.method == 'POST':
-        wrap_uuid = request.POST.get('wrap_uuid')
+    if request.method == "POST":
+        wrap_uuid = request.POST.get("wrap_uuid")
         wrap = get_object_or_404(SpotifyWrap, uuid=wrap_uuid)
 
         liked = None
@@ -113,14 +118,20 @@ def view_public_wraps(request):
 
         wrap.save()
         print(liked)
-        return JsonResponse({
-            "success": True,
-            "liked": liked,
-            "wrap_uuid": wrap.uuid,
-        })
-    return render(request, "Wrapped/view_public_wraps.html", {
-        "wraps": public_wraps,
-    })
+        return JsonResponse(
+            {
+                "success": True,
+                "liked": liked,
+                "wrap_uuid": wrap.uuid,
+            }
+        )
+    return render(
+        request,
+        "Wrapped/view_public_wraps.html",
+        {
+            "wraps": public_wraps,
+        },
+    )
 
 
 @login_required
@@ -140,13 +151,16 @@ def like_unlike_wrap(request, wrap_id):
 
         wrap.save()
 
-        return JsonResponse({
-            "success": True,
-            "liked": liked,
-            "wrap_uuid": wrap.uuid,
-        })
+        return JsonResponse(
+            {
+                "success": True,
+                "liked": liked,
+                "wrap_uuid": wrap.uuid,
+            }
+        )
 
     return JsonResponse({"success": False, "message": "Invalid request."})
+
 
 def view_wraps(request):
     wraps = SpotifyWrap.objects.filter(user=request.user)
@@ -202,6 +216,7 @@ def view_wrap(request, wrap_id):
         },
     )
 
+
 def like_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, uuid=wrap_id)
 
@@ -213,7 +228,7 @@ def like_wrap(request, wrap_id):
         message = "Liked"
     wrap.save()
 
-    return JsonResponse({'message': message})
+    return JsonResponse({"message": message})
 
 
 key_map = {
