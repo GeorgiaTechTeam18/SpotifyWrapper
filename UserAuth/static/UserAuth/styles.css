@@ -380,6 +380,29 @@ main {
     color: #A268DB;
 }
 
+.form-errors {
+    color: #ff4d4d; /* Red color for errors */
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    margin: 5px 0;
+}
+
+.authForm .form-errors {
+    margin-bottom: 15px; /* Space between the errors and the form */
+}
+
+.authForm label {
+    display: block;
+    margin-top: 10px;
+}
+
+.authForm input, .authForm button {
+    margin-top: 5px;
+}
+
 .login-alternate {
     display: flex;
     flex-direction: column;
@@ -707,6 +730,37 @@ ul {
 
 .share-button:hover {
     background: #e3e3e4;
+}
+
+/* View public and liked wraps styling*/
+.header-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Keep the button to the right */
+    margin-bottom: 20px;
+}
+
+/* Text container to stack the heading and paragraph */
+.text-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+/* Style the anchor tag like a Spotify button */
+.spotify-button {
+    background-color: #1DB954;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Add hover effect */
+.spotify-button:hover {
+    background-color: #1ed760;
 }
 
 @media (min-width: 768px) {
