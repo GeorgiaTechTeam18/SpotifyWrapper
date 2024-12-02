@@ -57,8 +57,8 @@
                     {% endif %}
                 </form>
                 <div class="share-container">
-                    <a class="share-button" href="https://x.com/intent/post?text=Check out my anytime Spotify wrap on Spotify Wrapper&url={{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-linkedin"></i></a>
-                    <a class="share-button" href="https://www.linkedin.com/feed/?shareActive=true&text=Check out my anytime Spotify wrap on Spotify Wrapper {{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-twitter"></i></a>
+                    <a class="share-button" href="https://x.com/intent/post?text=Check out my anytime Spotify wrap on Spotify Wrapper&url={{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-twitter"></i></a>
+                    <a class="share-button" href="https://www.linkedin.com/feed/?shareActive=true&text=Check out my anytime Spotify wrap on Spotify Wrapper {{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-linkedin"></i></a>
                     <a class="share-button" onclick="share('Check out my anytime Spotify wrap on Spotify Wrapper', '{{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}')"><i class="fa fa-share"></i></a>
                 </div>
             </div>
