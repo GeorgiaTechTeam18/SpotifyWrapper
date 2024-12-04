@@ -185,6 +185,9 @@ def view_wrap(request, wrap_id):
         wrap.get_audio_features()
     )
     selected_tracks = select_tracks(tracks, artists, genres)
+    spotify_webplayback_token = ""
+    if (request.user.is_authenticated and get_user_tokens(request.user)):
+        spotify_webplayback_token = get_user_tokens(request.user).access_token
     return render(
         request,
         "Wrapped/view_wrap.html",
@@ -198,7 +201,7 @@ def view_wrap(request, wrap_id):
             "audio_features_graphs": audio_features_graphs,
             "audio_features_list": audio_features_list,
             "selected_tracks": selected_tracks,
-            "access_token": get_user_tokens(request.user).access_token,
+            "access_token": spotify_webplayback_token,
         },
     )
 
