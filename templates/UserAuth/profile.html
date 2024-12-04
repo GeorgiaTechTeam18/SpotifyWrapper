@@ -35,35 +35,42 @@
     {% if wraps is not none %}
         <h2 class="pf-page-heading">Spotify Wraps</h2>
         <ul>
-        {% for wrap in wraps %}
-        <li class="wrap">
-            <h3>{{ wrap.title }}</h3>
-            <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
-            <p>Posted by: {{ wrap.user.username }}</p>
-            <div class="wrap-buttons">
-                <form method="post" action="{% url 'delete_wrap' wrap.uuid %}" class="delete-form">
-                    {% csrf_token %}
-                    <button type="button" class="delete-button">Delete</button>
-                </form>
-                <form class="toggle-public-form" method="post" action="{% url 'make_wraps_public' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
-                    {% if wrap.is_public %}
-                        <input type="hidden" name="action" value="private">
-                        <button type="submit" class="post-button">Make Private</button>
-                    {% else %}
-                        <input type="hidden" name="action" value="post">
-                        <button type="submit" class="post-button">Make Public</button>
-                    {% endif %}
-                </form>
-                <div class="share-container">
-                    <a class="share-button" href="https://x.com/intent/post?text=Check out my anytime Spotify wrap on Spotify Wrapper&url={{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-twitter"></i></a>
-                    <a class="share-button" href="https://www.linkedin.com/feed/?shareActive=true&text=Check out my anytime Spotify wrap on Spotify Wrapper {{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-linkedin"></i></a>
-                    <a class="share-button" onclick="share('Check out my anytime Spotify wrap on Spotify Wrapper', '{{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}')"><i class="fa fa-share"></i></a>
-                </div>
-            </div>
-        </li>
-        {% endfor %}
+            {% for wrap in wraps %}
+                <li class="wrap">
+                    <h3>{{ wrap.title }}</h3>
+                    <a href="{% url 'view_wrap' wrap.uuid %}">View this wrap</a>
+                    <p>Posted by: {{ wrap.user.username }}</p>
+                    <div class="wrap-buttons">
+                        <form method="post"
+                              action="{% url 'delete_wrap' wrap.uuid %}"
+                              class="delete-form">
+                            {% csrf_token %}
+                            <button type="button" class="delete-button">Delete</button>
+                        </form>
+                        <form class="toggle-public-form"
+                              method="post"
+                              action="{% url 'make_wraps_public' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="wrap_ids" value="{{ wrap.id }}">
+                            {% if wrap.is_public %}
+                                <input type="hidden" name="action" value="private">
+                                <button type="submit" class="post-button">Make Private</button>
+                            {% else %}
+                                <input type="hidden" name="action" value="post">
+                                <button type="submit" class="post-button">Make Public</button>
+                            {% endif %}
+                        </form>
+                        <div class="share-container">
+                            <a class="share-button"
+                               href="https://x.com/intent/post?text=Check out my anytime Spotify wrap on Spotify Wrapper&url={{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-twitter"></i></a>
+                            <a class="share-button"
+                               href="https://www.linkedin.com/feed/?shareActive=true&text=Check out my anytime Spotify wrap on Spotify Wrapper {{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}"><i class="fa fa-linkedin"></i></a>
+                            <a class="share-button"
+                               onclick="share('Check out my anytime Spotify wrap on Spotify Wrapper', '{{ request.scheme }}://{{ request.get_host }}{% url 'view_wrap' wrap.uuid %}')"><i class="fa fa-share"></i></a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
         </ul>
     {% else %}
         <div class="no-wraps">
@@ -101,14 +108,14 @@
                 }
             });
         });
-        
+
         function share(text, url) {
             const shareData = {
-                  title: "SpotifyWrapped",
-                  text: text,
-                  url: url,
+                title: "SpotifyWrapped",
+                text: text,
+                url: url,
             };
-            
+
             navigator.share(shareData);
         }
     </script>
